@@ -8,6 +8,8 @@
 
 **Agent Skill Hub：[公开详情页](https://agentskillhub.dev/u/weishao2/sk/question-bank)**
 
+**ClawHub：[题庄中小学真题题库](https://clawhub.ai/weishao2/tizhuang-question-bank)**
+
 题庄 Question Bank Skill 让 Codex、Claude Code、Cursor 等 AI Agent 可以直接检索和调用中小学 K12 题库。面向题庄公开展示的 **2000 万+ K12 题目资源储备**，按学科、年级、教材版本、章节、知识点、题型、难度、年份等条件免费抽题、随机抽题、精准找题，并生成练习、测验和组卷要求。
 
 适用于老师备课、学生练习、家长辅导、同步训练、章节测验、知识点巩固、单元测试、期中期末复习、历年真题训练和 AI 智能组卷等中小学教育场景。
@@ -103,6 +105,12 @@ Agent Skill Hub 安装：
 npx skhub add weishao2/question-bank
 ```
 
+OpenClaw / ClawHub 安装：
+
+```bash
+openclaw skills install @weishao2/tizhuang-question-bank
+```
+
 国内技能平台的全中文名称、简介、详情、关键词和版本说明见 [`marketplace/china-listing.md`](marketplace/china-listing.md)。
 
 ## 使用示例
@@ -133,4 +141,4 @@ K12 题库、中小学题库、中小学真题、小学题库、初中题库、�
 
 ## License
 
-Skill 适配器源码使用 MIT License。题庄题库内容及在线服务适用其各自的服务规则。
+Skill 适配器源码使用 MIT License；ClawHub 上架版本按该平台要求以 MIT-0 发布。题庄题库内容及在线服务适用其各自的服务规则。
