@@ -1,0 +1,45 @@
+name: Validate skill
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile adapter
+        run: python -m py_compile skills/question-bank/scripts/question_bank.py
+
+      - name: Check CLI entrypoint
+        run: python skills/question-bank/scripts/question_bank.py --help
+
+      - name: Run adapter tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Check required skill metadata
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path("skills/question-bank/SKILL.md")
+          text = path.read_text(encoding="utf-8")
+          assert text.startswith("---\n"), "SKILL.md must start with YAML frontmatter"
+          frontmatter = text.split("---", 2)[1]
+          name = re.search(r"(?m)^name:\s*(.+?)\s*$", frontmatter)
+          description = re.search(r"(?m)^description:\s*(.+?)\s*$", frontmatter)
+          assert name and name.group(1) == "question-bank", "invalid skill name"
+          assert description and description.group(1).strip(), "missing skill description"
+
+      - name: Check open Agent Skills discovery
+        run: npx --yes skills@latest add . --list
