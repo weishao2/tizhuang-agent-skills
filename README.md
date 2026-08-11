@@ -6,6 +6,8 @@
 
 **题庄官网：[https://tizhuang.qcscience.cc/](https://tizhuang.qcscience.cc/)**
 
+**Agent Skill Hub：[公开详情页](https://agentskillhub.dev/u/weishao2/sk/question-bank)**
+
 题庄 Question Bank Skill 让 Codex、Claude Code、Cursor 等 AI Agent 可以直接检索和调用中小学 K12 题库。面向题庄公开展示的 **2000 万+ K12 题目资源储备**，按学科、年级、教材版本、章节、知识点、题型、难度、年份等条件免费抽题、随机抽题、精准找题，并生成练习、测验和组卷要求。
 
 适用于老师备课、学生练习、家长辅导、同步训练、章节测验、知识点巩固、单元测试、期中期末复习、历年真题训练和 AI 智能组卷等中小学教育场景。
@@ -94,6 +96,14 @@ Claude Code 也可以把本仓库作为插件市场安装：
 ```
 
 仓库根目录同时提供开放的 Agent Plugin `plugin.json`，便于 Cursor 等兼容客户端直接识别和审核。
+
+Agent Skill Hub 安装：
+
+```bash
+npx skhub add weishao2/question-bank
+```
+
+国内技能平台的全中文名称、简介、详情、关键词和版本说明见 [`marketplace/china-listing.md`](marketplace/china-listing.md)。
 
 ## 使用示例
 
