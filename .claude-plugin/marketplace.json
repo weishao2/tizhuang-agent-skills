@@ -1,0 +1,29 @@
+{
+  "name": "tizhuang-skills",
+  "description": "题庄中小学 K12 真题检索、免费抽题、练习测验与 AI 智能组卷 Skills。",
+  "owner": {
+    "name": "Tizhuang"
+  },
+  "plugins": [
+    {
+      "name": "tizhuang-question-bank",
+      "source": "./",
+      "description": "2000万+中小学K12真题题库：免费注册、免费抽题、教材/章节/知识点检索、练习测验与AI智能组卷。",
+      "version": "1.0.1",
+      "author": {
+        "name": "Tizhuang"
+      },
+      "homepage": "https://tizhuang.qcscience.cc/",
+      "repository": "https://github.com/weishao2/tizhuang-agent-skills",
+      "license": "MIT",
+      "category": "education",
+      "tags": [
+        "k12",
+        "question-bank",
+        "quiz",
+        "exam",
+        "education"
+      ]
+    }
+  ]
+}

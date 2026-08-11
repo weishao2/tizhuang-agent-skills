@@ -1,4 +1,4 @@
 interface:
   display_name: "题庄题库"
-  short_description: "按教材、章节和知识点找真题，并衔接组卷、分享与打印"
-  default_prompt: "Use $question-bank to start with the free guest flow, retrieve answer-hidden real questions, and hand persistent paper work off to Tizhuang."
+  short_description: "免费检索中小学 K12 真题，生成练习测验与 AI 组卷"
+  default_prompt: "Use $question-bank to retrieve real K12 questions through the free path and create an answer-hidden quiz."

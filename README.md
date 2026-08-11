@@ -1,5 +1,7 @@
 # 题庄 Question Bank Skill
 
+[![skills.sh](https://skills.sh/b/weishao2/tizhuang-agent-skills)](https://skills.sh/weishao2/tizhuang-agent-skills)
+
 > 面向中小学 K12 教育场景的真题检索、免费抽题、练习测验与智能组卷 Skill。
 
 **题庄官网：[https://tizhuang.qcscience.cc/](https://tizhuang.qcscience.cc/)**
@@ -83,6 +85,15 @@ npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent code
 npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent claude-code
 npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent cursor
 ```
+
+Claude Code 也可以把本仓库作为插件市场安装：
+
+```text
+/plugin marketplace add weishao2/tizhuang-agent-skills
+/plugin install tizhuang-question-bank@tizhuang-skills
+```
+
+仓库根目录同时提供开放的 Agent Plugin `plugin.json`，便于 Cursor 等兼容客户端直接识别和审核。
 
 ## 使用示例
 
