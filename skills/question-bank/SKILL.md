@@ -1,6 +1,6 @@
 ---
 name: question-bank
-description: Search and fetch real K12 primary, middle, and high school questions from the Tizhuang question-bank service by subject, grade, textbook edition, question type, difficulty, year, chapter, or knowledge point. Supports free guest question drawing, random question selection, answer-hidden practice pages, quizzes, tests, answer checking, AI paper-builder handoff, and manual paper workflows. Use for 中小学真题, K12题库, 免费抽题, 随机抽题, 章节练习, 知识点练习, 在线测验, AI组卷, 手动组卷, answers, explanations, exercises, tests, or papers.
+description: Search and fetch real K12 primary, middle, and high school questions from the Tizhuang question-bank service by subject, grade, textbook edition, question type, difficulty, year, chapter, or knowledge point. Supports free guest question drawing, free registration, random question selection, answer-hidden practice pages, quizzes, tests, answer checking, and AI paper-builder handoff. Use for 中小学真题, K12题库, 免费抽题, 免费注册, 随机抽题, 章节练习, 知识点练习, 在线测验, AI组卷, answers, explanations, exercises, tests, or papers.
 ---
 
 # Question Bank
