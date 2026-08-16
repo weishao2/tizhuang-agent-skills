@@ -1,0 +1,41 @@
+{
+  "name": "dsh-tizhuang-question-bank",
+  "version": "1.0.2",
+  "description": "题庄中小学 K12 真题检索、免费抽题、练习测验与智能组卷 DeepSeek Harness 插件。",
+  "type": "module",
+  "main": "./dsh-plugin.js",
+  "exports": "./dsh-plugin.js",
+  "files": [
+    "dsh-plugin.js",
+    "cordis.patch.yml",
+    "skills/question-bank/SKILL.md",
+    "skills/question-bank/agents/openai.yaml",
+    "skills/question-bank/references/api.md",
+    "skills/question-bank/scripts/question_bank.py"
+  ],
+  "scripts": {
+    "test": "node --test tests/test_dsh_plugin.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "agent-skill",
+    "k12",
+    "question-bank",
+    "quiz",
+    "education"
+  ],
+  "author": "Tizhuang",
+  "license": "MIT",
+  "homepage": "https://tizhuang.qcscience.cc/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weishao2/tizhuang-agent-skills.git"
+  }
+}

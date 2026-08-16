@@ -97,6 +97,21 @@ Claude Code 也可以把本仓库作为插件市场安装：
 /plugin install tizhuang-question-bank@tizhuang-skills
 ```
 
+DeepSeek Harness 可以把本仓库作为原生 Bundle 安装到指定 profile：
+
+```bash
+dsh plugin --profile default add -w github:weishao2/tizhuang-agent-skills
+dsh --profile default --dump-config
+```
+
+随后用同一个 profile 启动 DeepSeek Harness。插件会把仓库中现有的 `question-bank` Skill 注册到 DSH 的技能目录，并保留 `scripts/` 与 `references/` 资源路径：
+
+```bash
+dsh --profile default web
+```
+
+不使用 Bundle 时，也可以把 `skills/question-bank` 复制到项目的 `.dsh/skills/question-bank` 或 `.agents/skills/question-bank`，由 DSH 文件系统技能提供方直接发现。
+
 仓库根目录同时提供开放的 Agent Plugin `plugin.json`，便于 Cursor 等兼容客户端直接识别和审核。
 
 Agent Skill Hub 安装：

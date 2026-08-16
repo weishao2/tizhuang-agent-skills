@@ -17,6 +17,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Compile adapter
         run: python -m py_compile skills/question-bank/scripts/question_bank.py
 
@@ -25,6 +29,12 @@ jobs:
 
       - name: Run adapter tests
         run: python -m unittest discover -s tests -v
+
+      - name: Test DeepSeek Harness bundle
+        run: node --test tests/test_dsh_plugin.mjs
+
+      - name: Inspect DeepSeek Harness package contents
+        run: npm pack --dry-run
 
       - name: Check required skill metadata
         shell: python

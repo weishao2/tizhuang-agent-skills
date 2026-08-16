@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "tizhuang-question-bank",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "2000万+中小学K12真题题库：免费注册、免费抽题、教材/章节/知识点检索、练习测验与AI智能组卷。",
   "author": {
     "name": "Tizhuang",
@@ -16,6 +16,8 @@
     "question-bank",
     "quiz",
     "exam",
-    "agent-skills"
+    "agent-skills",
+    "deepseek-harness",
+    "dsh-plugin"
   ]
 }
