@@ -1,10 +1,13 @@
-# 题庄 Question Bank Skill
+# 题庄中小学真题题库 Skill
 
 [![skills.sh](https://skills.sh/b/weishao2/tizhuang-agent-skills)](https://skills.sh/weishao2/tizhuang-agent-skills)
+[![K12 题库](https://img.shields.io/badge/K12%20题库-2000万%2B-C74632)](https://tizhuang.qcscience.cc/)
+[![免费使用](https://img.shields.io/badge/免费使用-注册后200题%2F日起-167A5A)](https://tizhuang.qcscience.cc/account?mode=register)
+[![License](https://img.shields.io/badge/Skill-MIT--0-222222)](LICENSE)
 
-> 面向中小学 K12 教育场景的真题检索、免费抽题、练习测验与智能组卷 Skill。
+> 把 **2000 万+ 中小学 K12 真题题库**接入 Codex、Claude Code、Cursor、DeepSeek Harness 等主流 Agent。免费抽题、精准找题、在线练习、测验与 AI 智能组卷，一句话即可开始。
 
-**题庄官网：[https://tizhuang.qcscience.cc/](https://tizhuang.qcscience.cc/)**
+**[进入题庄官网](https://tizhuang.qcscience.cc/)** · **[免费注册](https://tizhuang.qcscience.cc/account?mode=register)** · **[查看完整安装说明](https://tizhuang.qcscience.cc/api/agent-install.md)**
 
 **Agent Skill Hub：[公开详情页](https://agentskillhub.dev/u/weishao2/sk/question-bank)**
 
@@ -15,6 +18,22 @@
 适用于老师备课、学生练习、家长辅导、同步训练、章节测验、知识点巩固、单元测试、期中期末复习、历年真题训练和 AI 智能组卷等中小学教育场景。
 
 > 实际可检索题量、题目范围和筛选覆盖以题庄在线服务的实时返回为准。Skill 始终返回服务端真实题目，不虚构、不改写、不重排题干、选项、答案和解析。
+
+## 免费开始
+
+| 使用方式 | 免费额度 | 适合场景 |
+| --- | --- | --- |
+| 无需注册 | 24 小时内最多 100 题 | 先体验找题、抽题和临时练习 |
+| 免费注册 | 每日 200 题起 | 持续练习、保存试卷、分享与组卷 |
+| 临时练习页 | 创建后 7 天有效 | 在线答题、隐藏答案、A4 打印 |
+
+不要求先购买套餐，也不要求首次使用就注册。先让 Agent 帮你抽一组真实题目，觉得合适再免费注册继续使用。
+
+<p align="center">
+  <a href="https://tizhuang.qcscience.cc/">
+    <img src="assets/screenshots/homepage.png" alt="题庄官网首页：AI 时代的知识银行" width="100%" />
+  </a>
+</p>
 
 ## 核心能力
 
@@ -37,7 +56,7 @@
 
 ### 3. 练习、测验、在线答题
 
-- 一句话生成隐藏答案的临时练习页。
+- 一句话生成隐藏答案、7 天有效的临时练习页。
 - 支持章节练习、知识点练习、同步练习、专项训练和综合测验。
 - 支持单题问答、答题检查、标准答案和解析讲解。
 - 多题任务默认生成练习页，避免在聊天中重复堆放题目和答案。
@@ -56,6 +75,22 @@
 - 保留题目 ID、题干、选项、复合小题、图片、标准答案和解析。
 - 默认先隐藏答案，学生作答后再进行答案检查或讲解。
 - 请求失败时直接报告失败，不使用 AI 编造“看起来合理”的假题。
+
+## 官网与使用实景
+
+### 选择你的 Agent，一条命令接入
+
+<p align="center">
+  <img src="assets/screenshots/agent-install.png" alt="题庄官网 Agent Skill 安装区域" width="100%" />
+</p>
+
+### Agent 生成真实在线练习
+
+练习页保留题目原文、图片和公式，提交前隐藏答案；相比把整套题复制进聊天，在线答题和打印的显示效果更完整。
+
+<p align="center">
+  <img src="assets/screenshots/online-practice.png" alt="题庄真实在线练习页" width="100%" />
+</p>
 
 ## 支持的检索条件
 
@@ -149,6 +184,14 @@ openclaw skills install @weishao2/tizhuang-question-bank
 ```text
 Use $question-bank to create a five-question answer-hidden K12 physics quiz.
 ```
+
+## 联系与合作
+
+如果你需要 Skill 安装与使用帮助、国内外 Agent / Skill 平台接入，或学校、教师、教培、教育产品、题库 API 与智能组卷合作，欢迎微信扫码联系。添加时请备注 **“题庄 Skill”**，方便快速对接。
+
+<p align="left">
+  <img src="assets/wechat-contact.png" alt="题庄微信联系方式" width="280" />
+</p>
 
 ## 关键词
 
