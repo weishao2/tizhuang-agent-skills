@@ -213,3 +213,7 @@ URLs in `image_urls` instead of deriving paths from that HTML.
 - Builder handoff is intentionally credential-free and same-tab. It is not a
   signed cross-device handoff and must not carry personal or secret data. Its
   `handoff_id` prevents duplicate first creation but does not grant access.
+
+## Local name resolution
+
+`resolve`, `questions`, `practice-page`, and `builder` accept `--subject`, `--grade`, `--edition`, and `--knowledge`. Names are resolved against live public metadata. `resolve` never retrieves questions or creates a trial. `--knowledge-scope branch` includes descendants; `exact` selects the linked knowledge ID and is unavailable for Builder. Names must match exactly; partial names return candidates for selection. Conflicting name/ID pairs stop before metered calls. Edition validation requires subject and grade. Resolved labels are printed as JSON to stderr, leaving the ordinary response JSON on stdout unchanged. ID-only calls without an edition retain compatibility; preflight them with `resolve` to inspect their labels.

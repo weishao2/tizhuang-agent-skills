@@ -45,6 +45,23 @@ Return only a short description, question count, expiry, and `page_url`. Include
 
 If the user explicitly asks for diagrams or illustrated questions, add `--with-images`. Do not infer that a subject has no images from an ordinary random sample.
 
+## Resolve and validate before retrieval
+
+Prefer names over model-selected numeric IDs. Use free metadata preflight when resolving a new request:
+
+```powershell
+python scripts/question_bank.py resolve --subject "数学" --grade "八年级" --edition "人教新版" --knowledge "一次函数"
+python scripts/question_bank.py practice-page --subject "数学" --grade "八年级" --edition "人教新版" --knowledge "一次函数" --difficulty-min 2 --difficulty-max 4 --limit 10 --random --title "一次函数练习"
+```
+
+The edition in this example is not a default. If the user says only 人教版, resolve that label and present the returned candidates; never silently substitute a version. Names and IDs supplied together must agree. Edition IDs are checked within the selected subject and grade before any metered request. Legacy ID-only calls remain supported; use `resolve` to inspect their names first.
+
+`--knowledge` selects a branch including descendants by default. For a specific point use `--knowledge-scope exact`. Branch results can include child topics (for example 正比例函数 within 一次函数); do not confuse a topic with an exact point. Duplicate names return candidates instead of guessing. Medium difficulty uses 2–4, consistent with the website.
+
+Retain every user-required filter. Never remove knowledge, grade, or edition merely to obtain results. Zero results under combined conditions do not prove missing knowledge links. Report the actual failing scope and ask before broadening it. Do not automatically retry a timed-out practice-page creation: its completion and quota state may be uncertain. For read-only metadata, retry at most once. Do not exhaust quota diagnosing an outage or use a Builder handoff as proof of a completed paper.
+
+Before delivery check the returned question count, available grade/knowledge/source fields, and page response. Distinguish a generated page from a handoff. Metadata preflight is free; do not routinely fetch extra sample questions. Keep JSON stdout separate from diagnostic stderr; on Windows use UTF-8 rather than reparsing visually garbled terminal output.
+
 ## Fetch Raw Questions
 
 1. Resolve names to IDs with `subjects`, `grades`, `editions`, `question-types`, `chapters`, or `knowledge-points`.

@@ -183,9 +183,73 @@ def account_request(
     )
 
 
+def add_name_filters(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--subject", help="Exact subject name, resolved from live metadata.")
+    parser.add_argument("--grade", help="Exact grade name; checked against --grade-id if supplied.")
+    parser.add_argument("--edition", help="Textbook name; ambiguous names return candidates.")
+    parser.add_argument("--knowledge", help="Exact knowledge name, not a question keyword.")
+    parser.add_argument("--knowledge-scope", choices=("branch", "exact"), default="branch")
+
+
+def resolve_filters(args: argparse.Namespace) -> dict:
+    """Resolve names before any metered request; never widen supplied filters."""
+    resolved = {}
+
+    def choose(field, rows, name=None):
+        supplied = getattr(args, field + "_id", None)
+        matches = [r for r in rows if r["name"] == name] if name else rows
+        if name and not matches:
+            matches = [r for r in rows if name in r["name"]]
+        if supplied is not None:
+            matches = [r for r in matches if r["id"] == supplied]
+        if len(matches) != 1 or (name and matches[0]["name"] != name):
+            candidates = [{"id": r["id"], "name": r["name"]} for r in (matches or rows)]
+            raise SystemExit(json.dumps({"error": "filter_resolution_failed", "field": field,
+                "name": name, "id": supplied, "candidates": candidates}, ensure_ascii=False))
+        row = matches[0]
+        setattr(args, field + "_id", row["id"])
+        resolved[field] = {"id": row["id"], "name": row["name"]}
+        return row
+
+    for field in ("subject", "grade"):
+        name = getattr(args, field, None)
+        if name or getattr(args, field + "_id", None) is not None:
+            choose(field, request("/v1/meta/" + field + "s", public=True), name)
+    if getattr(args, "edition", None) or getattr(args, "edition_id", None) is not None:
+        if not getattr(args, "subject_id", None) or not getattr(args, "grade_id", None):
+            raise SystemExit("Textbook validation requires both subject and grade.")
+        rows = request("/v1/meta/editions", {"subject_id": args.subject_id,
+            "grade_id": args.grade_id}, public=True)
+        choose("edition", rows, getattr(args, "edition", None))
+    name = getattr(args, "knowledge", None)
+    if name:
+        if not getattr(args, "subject_id", None):
+            raise SystemExit("Knowledge resolution requires a subject.")
+        if getattr(args, "knowledge_id", None) or getattr(args, "knowledge_tree_ids", None):
+            raise SystemExit("Use either --knowledge or knowledge IDs, not both.")
+        if getattr(args, "knowledge_scope", "branch") == "exact" and not hasattr(args, "knowledge_id"):
+            raise SystemExit("Builder supports knowledge branches only.")
+        rows = request("/v1/meta/knowledge-points", {"subject_id": args.subject_id,
+            "keyword": name, "limit": 200}, public=True)
+        matches = [r for r in rows if r["name"] == name]
+        if len(matches) != 1:
+            raise SystemExit(json.dumps({"error": "ambiguous_knowledge", "candidates": rows}, ensure_ascii=False))
+        node = matches[0]
+        if args.knowledge_scope == "exact":
+            if not node.get("knowledge_id"):
+                raise SystemExit("This node has no exact linked knowledge ID; scope was not broadened.")
+            args.knowledge_id = node["knowledge_id"]
+        else:
+            args.knowledge_tree_ids = [node["id"]]
+        resolved["knowledge"] = {"name": name, "tree_id": node["id"],
+            "knowledge_id": node.get("knowledge_id"), "scope": args.knowledge_scope}
+    return resolved
+
+
 def add_common_filters(
     parser: argparse.ArgumentParser, *, include_query_only: bool = True
 ) -> None:
+    add_name_filters(parser)
     parser.add_argument("--subject-id", type=int)
     parser.add_argument("--grade-id", type=int)
     parser.add_argument("--question-type")
@@ -370,6 +434,7 @@ def parse_args() -> argparse.Namespace:
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("onboarding")
     builder = subparsers.add_parser("builder")
+    add_name_filters(builder)
     builder.add_argument("--mode", choices=("manual", "ai"))
     builder.add_argument("--title")
     builder.add_argument(
@@ -429,6 +494,8 @@ def parse_args() -> argparse.Namespace:
 
     questions = subparsers.add_parser("questions")
     add_common_filters(questions)
+    resolve = subparsers.add_parser("resolve", help="Validate filters using free metadata only.")
+    add_common_filters(resolve)
     questions.add_argument(
         "--include-solutions",
         action="store_true",
@@ -473,8 +540,17 @@ def main() -> None:
     args = parse_args()
     values = vars(args)
     command = values.pop("command")
+    resolved = None
+    if command in {"resolve", "questions", "practice-page", "builder"} and (
+        command == "resolve" or any(getattr(args, name, None) for name in
+        ("subject", "grade", "edition", "knowledge", "edition_id"))
+    ):
+        resolved = resolve_filters(args)
+        print(json.dumps({"resolved_filters": resolved}, ensure_ascii=False), file=sys.stderr)
 
-    if command == "onboarding":
+    if command == "resolve":
+        result = {"resolved_filters": resolved}
+    elif command == "onboarding":
         result = request("/v1/agent/onboarding", public=True)
     elif command == "builder":
         onboarding = request("/v1/agent/onboarding", public=True)
