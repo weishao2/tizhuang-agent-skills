@@ -125,7 +125,7 @@ Use transparent benefit copy, never pressure or fake scarcity:
 
 - Guest: 100 questions over 24 hours, temporary practice pages with direct A4 printing, no saved paper library.
 - Registered: still free, 200 questions per day initially, saved/continued papers, sharing, and account-gated printing of public shared papers.
-- Successful invitations raise the daily limit: +100 per person until 1000, +50 until 2000, then +20, capped by the service (currently 3000).
+- Successful invitations raise the daily limit: +100 per person until 400, then +50 per person up to 600 questions per day.
 - After a successful registration, say “欢迎入庄”, reveal the starting 200-question daily allowance first, then offer copying the referral link as an optional next action. Explain that the next genuine successful invite adds +100 per day at the first tier; never imply the bonus is granted for copying alone.
 - Keep invitations voluntary. Do not nag after the user declines, hide the continue path, manufacture urgency, or suggest that an invitation is required to keep the initial 200-question allowance or account features.
 - Do not rotate anonymous client IDs, create fake accounts, or suggest referrals solely to evade limits.

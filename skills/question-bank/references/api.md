@@ -12,8 +12,8 @@ Account registration is completed only on the website. The legacy
 `POST /v1/register` exchange is disabled; an Agent must never create standalone
 registered Keys by rotating anonymous identities. The free registered plan
 starts at 200 questions per day. Website accounts may increase this by successful referrals: +100 per
-invite until 1000, +50 until 2000, then +20 until the configured hard limit
-(currently 3000). After registration, the website presents the starting 200
+invite until 400, then +50 until the configured hard limit
+(currently 600). After registration, the website presents the starting 200
 questions as a “欢迎入庄” moment before offering referrals. Referrals are
 voluntary: skipping them does not reduce the 200-question allowance or remove
 account features. Copying or opening a link earns nothing; only a genuine new
