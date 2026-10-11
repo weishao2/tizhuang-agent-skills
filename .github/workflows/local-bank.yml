@@ -1,0 +1,38 @@
+name: Validate local teacher bank
+on:
+  push:
+    paths:
+      - 'skills/tizhuang-local-bank/**'
+      - 'tests/local-bank/**'
+      - 'plugins/obsidian/**'
+      - 'tools/build-local-bank-release.py'
+      - 'templates/local-bank-starter/**'
+      - '.github/workflows/local-bank.yml'
+  pull_request:
+    paths:
+      - 'skills/tizhuang-local-bank/**'
+      - 'tests/local-bank/**'
+      - 'plugins/obsidian/**'
+      - 'tools/build-local-bank-release.py'
+      - 'templates/local-bank-starter/**'
+      - '.github/workflows/local-bank.yml'
+permissions:
+  contents: read
+jobs:
+  local-bank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -r tests/local-bank/requirements.txt
+      - run: python -m unittest discover -s tests/local-bank -v
+      - run: npm ci
+        working-directory: plugins/obsidian
+      - run: npm test
+        working-directory: plugins/obsidian
+      - run: python tools/build-local-bank-release.py --output /tmp/tizhuang-local-bank-release

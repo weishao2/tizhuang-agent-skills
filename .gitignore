@@ -9,3 +9,6 @@ venv/
 .question-bank/
 dist/
 
+
+plugins/obsidian/node_modules/
+.runtime/

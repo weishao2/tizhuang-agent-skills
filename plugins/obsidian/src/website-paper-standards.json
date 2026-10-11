@@ -1,0 +1,148 @@
+{
+  "source": "question-service/site/app/builder/paperStandards.ts",
+  "sha256": "19562d607380bdecf7b2575f32e3707274f7967c45bf946d7f579a073d793046",
+  "defaults": {
+    "questionCount": 20,
+    "durationMinutes": 45
+  },
+  "standards": [
+    {
+      "phaseId": 1,
+      "subjectId": 1,
+      "questionCount": 20,
+      "durationMinutes": 40
+    },
+    {
+      "phaseId": 1,
+      "subjectId": 2,
+      "questionCount": 25,
+      "durationMinutes": 40
+    },
+    {
+      "phaseId": 1,
+      "subjectId": 3,
+      "questionCount": 25,
+      "durationMinutes": 40
+    },
+    {
+      "phaseId": 1,
+      "subjectId": 10,
+      "questionCount": 20,
+      "durationMinutes": 40
+    },
+    {
+      "phaseId": 1,
+      "subjectId": 11,
+      "questionCount": 20,
+      "durationMinutes": 40
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 1,
+      "questionCount": 20,
+      "durationMinutes": 60
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 2,
+      "questionCount": 20,
+      "durationMinutes": 60
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 3,
+      "questionCount": 25,
+      "durationMinutes": 60
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 4,
+      "questionCount": 25,
+      "durationMinutes": 45
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 5,
+      "questionCount": 25,
+      "durationMinutes": 45
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 7,
+      "questionCount": 25,
+      "durationMinutes": 45
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 8,
+      "questionCount": 20,
+      "durationMinutes": 60
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 9,
+      "questionCount": 20,
+      "durationMinutes": 60
+    },
+    {
+      "phaseId": 2,
+      "subjectId": 11,
+      "questionCount": 20,
+      "durationMinutes": 45
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 1,
+      "questionCount": 22,
+      "durationMinutes": 90
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 2,
+      "questionCount": 22,
+      "durationMinutes": 90
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 3,
+      "questionCount": 25,
+      "durationMinutes": 90
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 4,
+      "questionCount": 25,
+      "durationMinutes": 75
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 5,
+      "questionCount": 25,
+      "durationMinutes": 75
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 6,
+      "questionCount": 25,
+      "durationMinutes": 75
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 7,
+      "questionCount": 20,
+      "durationMinutes": 75
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 8,
+      "questionCount": 20,
+      "durationMinutes": 75
+    },
+    {
+      "phaseId": 3,
+      "subjectId": 9,
+      "questionCount": 20,
+      "durationMinutes": 75
+    }
+  ]
+}

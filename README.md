@@ -1,5 +1,17 @@
 # 题庄中小学真题题库 Skill
 
+## 题庄工具家族
+
+| 工具 | 用途 | 入口 |
+| --- | --- | --- |
+| 原 `question-bank` | 在线取题、在线练习与网站组卷 | 下方原有安装方式保持不变 |
+| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包](downloads/local-bank/v2.4.1/tizhuang-local-bank-starter-v2.4.1.zip) · [中文使用说明](docs/local-bank/README.md) |
+
+**同仓库维护，各自独立安装。** 新包包含空白题库、插件和新 skill；已有题库的人只更新需要的组件，空白库可忽略。不会替换原 `question-bank`，无需同时安装两个 skill。未来视频工具可通过题目文件包协作，当前尚未发布。
+
+---
+
+
 [![skills.sh](https://skills.sh/b/weishao2/tizhuang-agent-skills)](https://skills.sh/weishao2/tizhuang-agent-skills)
 [![K12 题库](https://img.shields.io/badge/K12%20题库-2000万%2B-C74632)](https://tizhuang.qcscience.cc/)
 [![免费使用](https://img.shields.io/badge/免费使用-注册后200题%2F日起-167A5A)](https://tizhuang.qcscience.cc/account?mode=register)

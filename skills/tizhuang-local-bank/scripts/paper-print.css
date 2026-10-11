@@ -1,0 +1,12 @@
+/* Adapted from Tizhuang Builder's paper-sheet, candidate meta and print rules.
+   Local renderer uses the same white sheet/header/score conventions without cloud dependencies. */
+*{box-sizing:border-box}body{margin:0;background:#eeece6;color:#1b2420;font:16px/1.75 "Microsoft YaHei","Songti SC",serif}
+.print-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:210mm;margin:18px auto;font:14px sans-serif;padding:0 12px;color:#666}
+.print-toolbar button{border:0;border-radius:7px;background:#6552be;color:#fff;padding:11px 18px;cursor:pointer}
+.paper-sheet{max-width:210mm;min-height:297mm;margin:0 auto 30px;padding:18mm 17mm;background:#fff;box-shadow:0 4px 24px #0000000b}
+.paper-sheet-head{text-align:center;padding-bottom:18px;border-bottom:1px solid rgba(27,36,32,.2);margin-bottom:24px}
+.paper-sheet-head small{color:#888;font:11px sans-serif;letter-spacing:.08em}.paper-sheet-head h1{font-size:25px;line-height:1.5;margin:12px 0}.paper-sheet-head p{font-size:13px;margin:8px 0}.paper-candidate-meta{padding-top:8px}
+.paper-item{margin:0 0 24px}.paper-item h3{font-size:16px;margin:0 0 7px;break-after:avoid}.paper-item h3 span{font-weight:400;font-size:13px}.question-content>p:first-child{margin-top:0}p{margin:8px 0}img{max-width:100%;height:auto;vertical-align:middle;filter:none}table{border-collapse:collapse;max-width:100%}td,th{border:1px solid #aaa;padding:5px}math{font-size:1.05em}h4{font-size:13px;margin:12px 0 4px}.paper-solution{border-top:1px dashed #ddd;margin-top:12px;padding-top:5px}.missing-answer{color:#777;font-size:13px}.answer-space{max-height:100mm}.question-content,.paper-solution{overflow-wrap:anywhere}
+@page{size:A4;margin:15mm 16mm}
+@media print{body{background:#fff;font-size:12pt}.print-toolbar{display:none!important}.paper-sheet{box-shadow:none;padding:0;margin:0;width:auto;max-width:none;min-height:0}.paper-sheet-head{break-after:avoid}.paper-item{break-inside:avoid-page}img{max-height:240mm;object-fit:contain}a{color:inherit;text-decoration:none}.paper-solution{break-inside:auto}}
+@media(max-width:700px){.paper-sheet{padding:22px 18px;min-height:0}.paper-sheet-head h1{font-size:22px}}

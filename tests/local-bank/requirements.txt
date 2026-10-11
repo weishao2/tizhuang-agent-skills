@@ -1,0 +1,3 @@
+-r ../../skills/tizhuang-local-bank/scripts/requirements.txt
+# Only used to generate original PDF fixtures for the test suite.
+reportlab>=4,<5

@@ -1,0 +1,19 @@
+{
+  "name": "tizhuang-obsidian-plugin",
+  "version": "0.13.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.7",
+    "turndown": "^7.2.0",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10",
+    "jsdom": "^26.1.0"
+  }
+}
