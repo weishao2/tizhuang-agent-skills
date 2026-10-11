@@ -1,36 +1,33 @@
-# 题庄本地题库 · 初始体验包
+# 题庄本地题库 · 起步包 2.4.2
 
-这是空白初始包，不含任何人的题目、PDF、知识树、账号和 API Key。新 skill 为 2.4.1，插件为 0.13.1。
+空白题库 + 插件 0.13.1 + 新 skill 2.4.2。没有任何人的题目、PDF、目录、账号或凭证。
 
-1. 解压后，在 Obsidian 中“打开文件夹作为仓库”，选择 **题庄本地题库**。
-2. 设置 → 第三方插件，允许插件并启用 **题庄本地题库**；打开“题库首页”。
-3. 网站取题需要自己的题庄凭证，在插件中设置。不要发送到聊天或公开仓库。
-4. PDF 导入、Word 组卷及 Agent 操作需要 Python 3.10+。Windows 用户运行 **安装本地环境.ps1**，它仅在本包目录建立独立环境，并配置此题库的 Python 路径。需要联网下载依赖。
-5. 把 `skills/tizhuang-local-bank` 安装到 Agent 的 skills 目录，或请 Agent 按其 SKILL.md 配置。Codex 可放到 `~/.codex/skills/tizhuang-local-bank`。旧 `question-bank` 无需卸载或覆盖。
+## 交给 Agent 即可
 
-如果双击脚本只打开编辑器，请在此文件夹的 PowerShell 中执行：
+把此文件或解压目录交给 Agent：
+
+> 请阅读此包的 skills/tizhuang-local-bank/references/install.md，帮我安装题庄本地题库。检查已有题库、插件和新 skill，缺少就安装，旧版就更新，同版或较新版本就跳过。保留我的题目和配置，旧 question-bank 不动。
+
+已有题库时附上路径。没有题库时 Agent 可在文档目录新建“题庄本地题库”。不要把临时解压目录当作你的长期题库。
+
+Agent 将完成版本检查、程序安装和独立 Python 环境配置。Obsidian 第一次使用需要在“设置 → 第三方插件”中允许并启用“题庄本地题库”；更新后重载插件，新 skill 则新开 Agent 会话。
+
+## 已有用户
+
+空白库可忽略。安装器只替换程序清单里的文件，保留原题、图片、试卷、索引、首页、凭证引用和配置；更新前备份，失败回退。相同完整版本或更高版本跳过，同版缺文件补齐，自定义程序修改会保留并提示。只要插件或只要新 skill 都可以。
+
+原 Python 路径有效就复用；缺少路径时配置独立环境；原路径无效时先报告，不擅自覆盖。安装器不修改旧 question-bank 或它的环境。
+
+## 手动入口（可选）
+
+有 Python 3.10+ 的 Windows 用户可在此文件夹的 PowerShell 中执行，替换下面的路径：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\安装本地环境.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\安装本地环境.ps1 -VaultPath 'D:\我的题库' -SkillDirectory '你的Agent技能目录\tizhuang-local-bank'
 ```
 
-安装后可以告诉 Agent：
+脚本按版本安装或更新，支持 `-Plan` 只检查。只装插件可用 `-SkipSkill`。Codex 用户可用 `-Agent codex` 代替 `-SkillDirectory`。其他系统使用相同的 Python 安装器即可。
 
-> 使用 tizhuang-local-bank，在“填入题庄本地题库文件夹的实际路径”中导入这份 PDF。逐页核对，提取文字、公式和独立配图；先分知识点，教材暂不选。
+网站取题需要用户自己的凭证和额度；本地保存、检索与组卷不扣题目额度。PDF 由 Agent 提取并核对文字、公式和独立配图，正式发卷前由老师核对。
 
-> 从我的本地题库选已核对题，生成无答案 Word 和教师答案 Word。
-
-PDF 由 Agent 识别和核对，插件不会自己调用一个内置视觉模型。原答案缺失不补造；正式组卷前由老师核对题干、答案和图片。本地检索、保存和组卷不扣题目额度，网站取题使用自己的额度。
-
-## 已经安装过：更新需要的部分，其余忽略
-
-- 已有题库：忽略包内空白题库，不要覆盖自己的题目、`.bank` 或其他 Obsidian 配置。
-- 更新插件：先关闭插件；把包内 `题庄本地题库/.obsidian/plugins/tizhuang-question-bank` 的程序文件复制到自己仓库的同名目录，保留原来的 `data.json`；再启用插件。
-- 更新新 skill：将 `skills/tizhuang-local-bank` 的文件复制到已安装的新 skill 目录，保留自己的 Python 虚拟环境。不要覆盖旧 `question-bank`。
-- 版本相同、暂时不需要某个组件：直接忽略。
-
-Windows 配置脚本默认只配置本包空白题库。已有题库可继续使用自己原来的 Python 路径；若需切换，在插件设置中指定新环境。移动整个解压目录后，重新运行配置脚本。
-
-macOS/Linux 可按 `skills/tizhuang-local-bank/SKILL.md` 建立独立 Python 环境，在插件设置中填写其 Python 路径。
-
-说明与更新：https://github.com/weishao2/tizhuang-agent-skills/tree/main/docs/local-bank
+使用与更新：https://github.com/weishao2/tizhuang-agent-skills/tree/main/docs/local-bank

@@ -5,7 +5,9 @@
 | 工具 | 用途 | 入口 |
 | --- | --- | --- |
 | 原 `question-bank` | 在线取题、在线练习与网站组卷 | 下方原有安装方式保持不变 |
-| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包](downloads/local-bank/v2.4.1/tizhuang-local-bank-starter-v2.4.1.zip) · [中文使用说明](docs/local-bank/README.md) |
+| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包](downloads/local-bank/v2.4.2/tizhuang-local-bank-starter-v2.4.2.zip) · [中文使用说明](docs/local-bank/README.md) |
+
+**[交给 Agent 自动安装 / 更新](docs/local-bank/INSTALL.md)**：检查版本，缺少就安装、旧版更新、同版或较新版本跳过，保留题目与配置。
 
 **同仓库维护，各自独立安装。** 新包包含空白题库、插件和新 skill；已有题库的人只更新需要的组件，空白库可忽略。不会替换原 `question-bank`，无需同时安装两个 skill。未来视频工具可通过题目文件包协作，当前尚未发布。
 

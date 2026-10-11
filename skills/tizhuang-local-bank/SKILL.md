@@ -9,7 +9,11 @@ An independent teacher tool. Obsidian is an optional editor; no plugin or websit
 
 ## Setup
 
+For installation, upgrades, repair, or “装过就更新/跳过”, read [Agent installation](references/install.md) and use the version-aware installer from the verified starter package. Check the current Agent and the user's vault, then install only missing/older components; preserve current/newer versions, user data, settings and the old question-bank skill. Ordinary bank operations do not trigger upgrades.
+
 Resolve `scripts/local_bank.py` relative to this SKILL.md as `<cli>`; never use a fixed developer machine path. Python 3.10+ is required. Create a dedicated virtual environment and install `scripts/requirements.txt` if needed. Run commands with its Python as `<python>`. Do not install into another skill's environment.
+
+If `.tizhuang-install.json` exists in this skill directory, prefer its verified `runtime.python`; otherwise use the existing dedicated environment. Missing setup can be completed with the installation workflow above.
 
 Obtain a user-selected vault path. If absent, propose a new `题庄本地题库` directory under the current workspace. Do not guess an existing vault or scan the entire disk. Initialize only that directory:
 

@@ -1,0 +1,7 @@
+{
+  "version": "2.4.2",
+  "plugin_version": "0.13.1",
+  "sha256": "b1b2b70c4953d409a678221618776a54a4e049b3d96839409f775f50e66163fc",
+  "url": "https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/local-bank-v2.4.2/downloads/local-bank/v2.4.2/tizhuang-local-bank-starter-v2.4.2.zip",
+  "agent_install": "https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/INSTALL.md"
+}
