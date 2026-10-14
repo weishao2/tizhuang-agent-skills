@@ -1,0 +1,63 @@
+{
+  "renderer": "Actual plugin 0.13.1 components; simulated Obsidian APIs and workflow state, not a native app screenshot",
+  "data": "Real question content from authorized Tizhuang API retrieval; redacted in-memory demo dataset, not distributed in the empty vault",
+  "questionIds": [
+    "26961452",
+    "26961448",
+    "24586756",
+    "24587992",
+    "5828469",
+    "6345429"
+  ],
+  "networkRequestsDuringCapture": 0,
+  "screenshots": [
+    {
+      "name": "01-home",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1006
+    },
+    {
+      "name": "03-knowledge",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1870
+    },
+    {
+      "name": "04-tags",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1164
+    },
+    {
+      "name": "05-classify",
+      "width": 760,
+      "scroll": 760,
+      "height": 900
+    },
+    {
+      "name": "07-basket",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 2181
+    },
+    {
+      "name": "08-word-output",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1219
+    },
+    {
+      "name": "06-pdf",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1062
+    },
+    {
+      "name": "02-website",
+      "width": 1100,
+      "scroll": 1100,
+      "height": 1712
+    }
+  ]
+}

@@ -9,6 +9,8 @@ An independent teacher tool. Obsidian is an optional editor; no plugin or websit
 
 ## Setup
 
+For teacher-facing onboarding or “怎么用”, share the [Chinese illustrated user guide](https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/USER_GUIDE.md). The starter package includes the same guide as the self-contained offline `先看这里.html`, with screenshots and copyable Agent prompts. Keep the user's actual vault path in examples you provide; setup and daily workflows are separate.
+
 For installation, upgrades, repair, or “装过就更新/跳过”, read [Agent installation](references/install.md) and use the version-aware installer from the verified starter package. Check the current Agent and the user's vault, then install only missing/older components; preserve current/newer versions, user data, settings and the old question-bank skill. Ordinary bank operations do not trigger upgrades.
 
 Resolve `scripts/local_bank.py` relative to this SKILL.md as `<cli>`; never use a fixed developer machine path. Python 3.10+ is required. Create a dedicated virtual environment and install `scripts/requirements.txt` if needed. Run commands with its Python as `<python>`. Do not install into another skill's environment.

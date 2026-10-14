@@ -6,6 +6,8 @@ on:
       - 'tests/local-bank/**'
       - 'plugins/obsidian/**'
       - 'tools/build-local-bank-release.py'
+      - 'tools/build_local_bank_guide.py'
+      - 'docs/local-bank/**'
       - 'templates/local-bank-starter/**'
       - '.github/workflows/local-bank.yml'
   pull_request:
@@ -14,6 +16,8 @@ on:
       - 'tests/local-bank/**'
       - 'plugins/obsidian/**'
       - 'tools/build-local-bank-release.py'
+      - 'tools/build_local_bank_guide.py'
+      - 'docs/local-bank/**'
       - 'templates/local-bank-starter/**'
       - '.github/workflows/local-bank.yml'
 permissions:

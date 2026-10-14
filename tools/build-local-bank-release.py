@@ -9,9 +9,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'skills/tizhuang-local-bank/scripts'))
 from install_local_bank import SKILL_FILES, PLUGIN_FILES, FOLDERS, SEED_FILES
+from build_local_bank_guide import build as build_guide, SCREENSHOTS
 VERSION = json.loads((ROOT/'skills/tizhuang-local-bank/version.json').read_text())['version']
 
 def build(output):
+    build_guide()
     skill=ROOT/'skills/tizhuang-local-bank'
     plugin=ROOT/'plugins/obsidian/dist/tizhuang-question-bank'
     manifest=json.loads((plugin/'manifest.json').read_text(encoding='utf-8-sig'))
@@ -27,8 +29,12 @@ def build(output):
         files[prefix+rel]=source.read_bytes()
         if rel.startswith('helper/'):
             assert files[prefix+rel]==(skill/'scripts'/Path(rel).name).read_bytes()
-    for name in ['README.md','安装本地环境.ps1']:
+    for name in ['README.md','安装本地环境.ps1','先看这里.html']:
         files[name]=(ROOT/'templates/local-bank-starter'/name).read_bytes()
+    guide=(ROOT/'docs/local-bank/USER_GUIDE.md').read_text(encoding='utf-8')
+    files['使用说明.md']=guide.replace('](screenshots/','](使用说明图片/').encode('utf-8')
+    for name in SCREENSHOTS:
+        files['使用说明图片/'+name]=(ROOT/'docs/local-bank/screenshots'/name).read_bytes()
     files['LICENSE']=(ROOT/'LICENSE').read_bytes()
     files['题庄本地题库/.bank/config.json']=json.dumps({'schema':'tizhuang.bank/v1','ui_layout':'teacher/v2'},ensure_ascii=False,indent=2).encode('utf-8')
     files['题庄本地题库/题库首页.md']=('''# 题库首页
@@ -73,6 +79,7 @@ def build(output):
     if output.resolve() == (ROOT/'downloads/local-bank'/f'v{VERSION}').resolve():
         latest={'version':VERSION,'plugin_version':manifest['version'],'sha256':sha,
             'url':f'https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/local-bank-v{VERSION}/downloads/local-bank/v{VERSION}/{archive.name}',
+            'user_guide':'https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/USER_GUIDE.md',
             'agent_install':'https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/INSTALL.md'}
         (output.parent/'latest.json').write_text(json.dumps(latest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({k:v for k,v in report.items() if k!='source_hashes'},ensure_ascii=False))
