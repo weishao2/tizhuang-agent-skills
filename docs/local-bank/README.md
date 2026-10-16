@@ -67,4 +67,6 @@
 - 图文源稿：`docs/local-bank/USER_GUIDE.md`；单独构建离线说明：`python tools/build_local_bank_guide.py`。
 - 截图来源：实际插件组件 + 经授权获取的网站真题；离线截图过程不连接网站或读取私人题库。脚本为 `tools/capture-local-bank-guide.mjs`，需 Playwright、marked 及可用浏览器；可用 `TZ_GUIDE_EXAMPLES` 提供脱敏的演示数据，不指定时使用自编占位数据。原始接口结果不随包分发，截图记录见 `screenshots/capture.json`。
 
-2.5.1 新增老师图文说明及离线入口；保留 2.4.2 的自动安装 / 更新流程。插件仍为已修复空作答框公式转换问题的 0.14.1。
+2.5.1 / 0.14.1 增加四步引导、环境检查和列表核对，修复可见知识目录缺失与标点标签分类。详见 [本次发布说明与验证范围](RELEASE-2.5.1.md)。
+
+官网也提供 [在线图文教程与下载](https://tizhuang.qcscience.cc/local-bank/guide.html)。
