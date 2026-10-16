@@ -27,8 +27,11 @@ jobs:
       - name: Check CLI entrypoint
         run: python skills/question-bank/scripts/question_bank.py --help
 
+      - name: Install test runner
+        run: python -m pip install pytest
+
       - name: Run adapter tests
-        run: python -m unittest discover -s tests -v
+        run: python -m pytest tests/test_question_bank.py tests/test_name_filters.py -v
 
       - name: Test DeepSeek Harness bundle
         run: node --test tests/test_dsh_plugin.mjs
