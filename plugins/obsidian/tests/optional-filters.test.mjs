@@ -60,8 +60,8 @@ test('定位按节点编号而非文件名，展开左侧并保留筛选，不�
  const before=h.calls.length,saved=JSON.stringify(v.scope);await p.openDirectory(v,'chapter');assert.deepEqual(opened,[file.path]);assert.deepEqual(revealed,[file.path]);assert.equal(JSON.stringify(v.scope),saved);assert.equal(h.calls.length,before);assert.equal(p.routingDirectory,false);h.dom.window.close();
 });
 test('未选节点打开对应学科目录，缺失节点落到本地目录，不创建空白文件',async()=>{
- const {h,p,v}=await setup();const folder='资料/知识目录/初中数学';h.files.set(folder,null);h.files.set(folder+'/函数.md','---\n知识节点编号: 1480\n学科编号: 2\n学段编号: 2\n---\n# 函数');h.files.set(folder+'/知识树.md','# 知识树');h.app.vault.getMarkdownFiles=()=>[...h.files.keys()].filter(p=>p.endsWith('.md')).map(path=>({path,extension:'md'}));
+ const {h,p,v}=await setup();const folder='资料/知识目录/初中 · 数学';h.files.set(folder,null);h.files.set(folder+'/函数.md','---\n知识节点编号: 1480\n学科编号: 2\n学段编号: 2\n---\n# 函数');h.files.set(folder+'/知识树.md','# 知识树');h.app.vault.getMarkdownFiles=()=>[...h.files.keys()].filter(p=>p.endsWith('.md')).map(path=>({path,extension:'md'}));
  const result=await findDirectoryTarget(p,v.scope,'knowledge');assert.equal(result.file.path,folder+'/知识树.md');
  const missing=await findDirectoryTarget(p,{...v.scope,knowledge_tree_id:999},'knowledge');assert.equal(missing.exact,false);assert.equal(missing.file.path,result.file.path);
- const before=h.files.size;await assert.rejects(findDirectoryTarget(p,v.scope,'chapter'),/尚未下载/);assert.equal(h.files.size,before);h.dom.window.close();
+ const before=h.files.size;await assert.rejects(findDirectoryTarget(p,{...v.scope,subject_id:99},'chapter'),/尚未下载/);assert.equal(h.files.size,before);h.dom.window.close();
 });

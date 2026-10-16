@@ -1,5 +1,6 @@
 """Publish only allowlisted teacher tools and a freshly created empty vault."""
 import argparse
+import re
 import hashlib
 import json
 from pathlib import Path
@@ -17,7 +18,8 @@ def build(output):
     skill=ROOT/'skills/tizhuang-local-bank'
     plugin=ROOT/'plugins/obsidian/dist/tizhuang-question-bank'
     manifest=json.loads((plugin/'manifest.json').read_text(encoding='utf-8-sig'))
-    assert manifest['version']=='0.13.1' and manifest['id']=='tizhuang-question-bank'
+    assert manifest['id']=='tizhuang-question-bank'
+    assert re.fullmatch(r'\d+\.\d+\.\d+',manifest['version'])
     output.mkdir(parents=True,exist_ok=True)
     archive=output/f'tizhuang-local-bank-starter-v{VERSION}.zip'
     files={}
@@ -60,7 +62,7 @@ def build(output):
         install['components'][kind]={'source':source,'version':ver,
             'files':{name:hashlib.sha256(files[source+'/'+name]).hexdigest() for name in rels}}
     files['installation.json']=(json.dumps(install,ensure_ascii=False,indent=2)+'\n').encode('utf-8')
-    with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
+    with zipfile.ZipFile(archive,'x',zipfile.ZIP_DEFLATED) as z:
         for folder in FOLDERS:
             z.writestr('题庄本地题库/'+folder+'/',b'')
         for name,data in sorted(files.items()):

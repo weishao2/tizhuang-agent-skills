@@ -1,7 +1,7 @@
 {
   "id": "tizhuang-question-bank",
   "name": "题庄本地题库",
-  "version": "0.13.1",
+  "version": "0.14.1",
   "minAppVersion": "1.5.0",
   "description": "按教材和章节获取题目，使用自己的题庄额度，保存为兼容本地题库 skill 的笔记。",
   "author": "题庄",

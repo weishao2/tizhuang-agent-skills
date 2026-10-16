@@ -4,7 +4,7 @@
 
 **[老师图文使用说明 · 从拿到包到生成 Word](USER_GUIDE.md)**
 
-8 张界面演示截图，按实际操作顺序讲安装、打开题库、网站取题、PDF 导入、知识点 / 标签分类和可视化组卷；另附可复制的 Agent 指令与常见问题。下载包内双击 **先看这里.html**，不用联网也能看，截图可放大。
+9 张界面演示截图，按实际操作顺序讲安装、打开题库、网站取题、PDF 导入、知识点 / 标签分类和可视化组卷；另附可复制的 Agent 指令与常见问题。下载包内双击 **先看这里.html**，不用联网也能看，截图可放大。
 
 ## 一句话安装
 
@@ -14,9 +14,9 @@
 
 已知题库路径时附上路径即可。Agent 会识别已有安装、检查版本、配置需要的独立 Python 环境。只有多个题库或原环境异常等不确定情况才需要选择。首次使用仍需在 Obsidian 中允许并启用插件；更新后重载插件，新 skill 安装后新开 Agent 会话。
 
-**[下载完整起步包 2.4.3](../../downloads/local-bank/v2.4.3/tizhuang-local-bank-starter-v2.4.3.zip)** · **[Agent 安装流程](INSTALL.md)**
+**[下载完整起步包 2.5.1](../../downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip)** · **[Agent 安装流程](INSTALL.md)**
 
-包内为：空白题库、插件 0.13.1、新 skill 2.4.3、安装器和离线图文说明。不包含用户题目、PDF、知识树、账号或凭证；说明截图展示网站实际获取的带图数学题，不会导入你的题库。[校验值](../../downloads/local-bank/v2.4.3/SHA256SUMS.txt)。
+包内为：空白题库、插件 0.14.1、新 skill 2.5.1、安装器和离线图文说明。不包含用户题目、PDF、知识树、账号或凭证；说明截图展示网站实际获取的带图数学题，不会导入你的题库。[校验值](../../downloads/local-bank/v2.5.1/SHA256SUMS.txt)。
 
 ## 已经安装过
 
@@ -63,8 +63,8 @@
 - 安装测试依赖：`python -m pip install -r tests/local-bank/requirements.txt`。
 - Python 测试：`python -m unittest discover -s tests/local-bank -v`。
 - 插件：在 `plugins/obsidian` 运行 `npm ci`、`npm test`。
-- 打包：构建插件后，在仓库根目录运行 `python tools/build-local-bank-release.py`，同时生成离线说明并校验 8 张配图。
+- 打包：构建插件后，在仓库根目录运行 `python tools/build-local-bank-release.py`，同时生成离线说明并校验 9 张配图。
 - 图文源稿：`docs/local-bank/USER_GUIDE.md`；单独构建离线说明：`python tools/build_local_bank_guide.py`。
 - 截图来源：实际插件组件 + 经授权获取的网站真题；离线截图过程不连接网站或读取私人题库。脚本为 `tools/capture-local-bank-guide.mjs`，需 Playwright、marked 及可用浏览器；可用 `TZ_GUIDE_EXAMPLES` 提供脱敏的演示数据，不指定时使用自编占位数据。原始接口结果不随包分发，截图记录见 `screenshots/capture.json`。
 
-2.4.3 新增老师图文说明及离线入口；保留 2.4.2 的自动安装 / 更新流程。插件仍为已修复空作答框公式转换问题的 0.13.1。
+2.5.1 新增老师图文说明及离线入口；保留 2.4.2 的自动安装 / 更新流程。插件仍为已修复空作答框公式转换问题的 0.14.1。

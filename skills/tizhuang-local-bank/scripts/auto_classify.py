@@ -9,9 +9,14 @@ import uuid
 
 def suggest(q, nodes):
     """Trust exact named teaching tags, never short keywords occurring in a stem."""
+    from ui_layout import native_tags
     names = {}
     for n in nodes.values():
-        names.setdefault(n['name'].strip(), []).append(n)
+        # Obsidian tags replace punctuation with underscores. Apply the same
+        # normalization to the catalog label, while retaining ambiguity checks.
+        aliases = {n['name'].strip(), *native_tags([n['name'].strip()])}
+        for alias in aliases:
+            names.setdefault(alias, []).append(n)
     tags = {str(t).split('/')[-1].strip() for t in q.get('tags', [])}
     # Imported website labels are handled by enrich(); here only teacher/Agent tags
     # are evidence. A mention of e.g. '圆' in a long word must not classify a question.

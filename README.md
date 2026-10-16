@@ -5,7 +5,7 @@
 | 工具 | 用途 | 入口 |
 | --- | --- | --- |
 | 原 `question-bank` | 在线取题、在线练习与网站组卷 | 下方原有安装方式保持不变 |
-| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包 2.4.3](downloads/local-bank/v2.4.3/tizhuang-local-bank-starter-v2.4.3.zip) · [老师图文使用说明（8 张截图）](docs/local-bank/USER_GUIDE.md) |
+| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包 2.5.1](downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip) · [老师图文使用说明（9 张截图）](docs/local-bank/USER_GUIDE.md) |
 
 **第一次拿到本地题库？[从这里开始](docs/local-bank/USER_GUIDE.md#install)**：安装 → 打开 Obsidian → 网站取题 / 导入 PDF → 分类 → 勾选组卷 → 编辑 Word。下载包内双击 `先看这里.html`，也能离线阅读。
 

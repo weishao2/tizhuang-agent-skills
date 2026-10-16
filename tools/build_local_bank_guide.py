@@ -7,7 +7,7 @@ import markdown
 ROOT = Path(__file__).resolve().parents[1]
 GUIDE = ROOT / 'docs/local-bank'
 SCREENSHOTS = ('01-home.png', '02-website.png', '03-knowledge.png', '04-tags.png',
-               '05-classify.png', '06-pdf.png', '07-basket.png', '08-word-output.png')
+               '05-classify.png', '06-pdf.png', '07-basket.png', '08-word-output.png', '09-start.png')
 
 CSS = '''
 :root{color-scheme:light;--ink:#272334;--muted:#6d657b;--accent:#704ac9;--line:#e7e2ef}

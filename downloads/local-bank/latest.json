@@ -1,8 +1,8 @@
 {
-  "version": "2.4.3",
-  "plugin_version": "0.13.1",
-  "sha256": "c9de6c08615c186eb9f0d7fc6482726651f8ddb22b7bf16590f21c8a26909a8d",
-  "url": "https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/local-bank-v2.4.3/downloads/local-bank/v2.4.3/tizhuang-local-bank-starter-v2.4.3.zip",
+  "version": "2.5.1",
+  "plugin_version": "0.14.1",
+  "sha256": "c1e81ef74b191c39c65011d8eeb695e79d159ecc0ea91daa38ecf805f351ae36",
+  "url": "https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/local-bank-v2.5.1/downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip",
   "user_guide": "https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/USER_GUIDE.md",
   "agent_install": "https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/INSTALL.md"
 }

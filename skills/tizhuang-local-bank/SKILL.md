@@ -1,112 +1,77 @@
 ---
 name: tizhuang-local-bank
-description: "Manage a teacher's independent local question bank compatible with Obsidian: browse knowledge trees and native tags, import PDF questions with diagrams and traceable page regions, organize a dashboard, use a persistent visual paper basket with ordered questions and per-paper scores, and assemble editable DOCX and printable papers. Use for 本地题库、Obsidian 题库、PDF 试卷入库、本地分类、标签检索、老师组卷、Word试卷、Agent组卷. Online-only retrieval belongs to the optional existing question-bank skill."
+description: "老师的本地题库（Obsidian 兼容，不需要账号或插件）：把 PDF 试卷还原成可编辑题目入库、下载题庄知识树并给题目分类、按教材/章节/考点/标签检索、核对后组卷并生成无答案 Word/打印稿与教师答案稿。用于“本地题库、Obsidian 题库、PDF 试卷入库、题目分类、找题、组卷、出 Word 试卷、导出题目包”。仅供教师备课打印，不做学生端。在线取题属于可选的旧 question-bank skill。Teacher-side local question bank: PDF import, knowledge-tree classification, search, paper assembly (DOCX/HTML)."
 ---
 
 # 题庄 · 我的本地题库（教师版）
 
-An independent teacher tool. Obsidian is an optional editor; no plugin or website account is required for local workflows. Do not create student accounts, learning clients, online answering, or assignments. Paper outputs serve teacher printing and preparation.
+教师自用的本地工具：Markdown 是唯一真源，SQLite 只是可重建索引。Obsidian 与插件都是可选的。不创建学生账号、在线作答或作业。
 
-## Setup
+## 先做这三件事（每次会话开头）
 
-For teacher-facing onboarding or “怎么用”, share the [Chinese illustrated user guide](https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/USER_GUIDE.md). The starter package includes the same guide as the self-contained offline `先看这里.html`, with screenshots and copyable Agent prompts. Keep the user's actual vault path in examples you provide; setup and daily workflows are separate.
+1. **定位工具**：以本 SKILL.md 所在目录的 `scripts/local_bank.py` 为 `<cli>`，用独立虚拟环境的 Python 为 `<python>`（Python 3.10+；优先读 `.tizhuang-install.json` 里的 `runtime.python`）。不要写死开发者的机器路径，不要把依赖装进别的 skill 环境。
+2. **定位题库**：只用老师指定的目录；没有就建议在当前工作区新建 `题庄本地题库`。不猜已有 vault，不扫整盘。
+3. **体检**（严格只读：`doctor.py`、`status`、`show`、`search` 都不写任何文件，不刷新索引；要刷新首页/索引用 `dashboard`）：
+   ```text
+   <python> <skill>/scripts/doctor.py --vault <vault>
+   ```
+   环境缺失时它只依赖标准库也能运行，并给出修复命令；环境正常则带出题量、待核对、待分类、知识树和**下一步建议**。需要安装/升级/修复时读 [安装](references/install.md)；安装完成后必须再体检一次，通过才算装好。老师自己也可在插件设置里点“检查环境”。
 
-For installation, upgrades, repair, or “装过就更新/跳过”, read [Agent installation](references/install.md) and use the version-aware installer from the verified starter package. Check the current Agent and the user's vault, then install only missing/older components; preserve current/newer versions, user data, settings and the old question-bank skill. Ordinary bank operations do not trigger upgrades.
+所有命令格式：`<python> <cli> --vault <vault> <命令> ...`，输出 JSON。`ok:false` 或退出码非 0 就是失败：读 `error` 与 `hint`，修好原因再继续，**不要静默放宽筛选条件，不要重复执行写入命令**。V1 是中文子串＋结构化检索，不要声称有向量/语义检索；单写入者，写操作要串行。
 
-Resolve `scripts/local_bank.py` relative to this SKILL.md as `<cli>`; never use a fixed developer machine path. Python 3.10+ is required. Create a dedicated virtual environment and install `scripts/requirements.txt` if needed. Run commands with its Python as `<python>`. Do not install into another skill's environment.
+## 怎么跟老师说话
 
-If `.tizhuang-install.json` exists in this skill directory, prefer its verified `runtime.python`; otherwise use the existing dedicated environment. Missing setup can be completed with the installation workflow above.
+- 用老师的话汇报：“已存入 12 道题，其中 3 道还没有答案”，而不是贴 JSON、ID 或命令。
+- 一次只问阻塞性的问题（学科学段、教材版本、题库位置）；能从 `status` 和已有数据判断的不要问。
+- 每次写入后回报三件事：做了什么、文件/题目在哪、还差什么（待核对？待分类？）。路径用老师的真实 vault 路径。
+- 不确定就如实说“不确定”，并把原因写进待核对，不要编。
+- 对话示例与常见问题话术见 [对话指南](references/conversation-guide.md)；给新老师做使用介绍时分享 [图文说明](https://github.com/weishao2/tizhuang-agent-skills/blob/main/docs/local-bank/USER_GUIDE.md)（起步包内有离线 `先看这里.html`）。
 
-Obtain a user-selected vault path. If absent, propose a new `题庄本地题库` directory under the current workspace. Do not guess an existing vault or scan the entire disk. Initialize only that directory:
+## 常见任务 → 怎么走
 
-```text
-<python> <cli> --vault <vault> init
-<python> <cli> --vault <vault> organize
-```
+| 老师想做的事 | 做法 |
+| --- | --- |
+| 初始化 / 整理旧题库 | `init`；已有中文题库 `organize`（自动完整备份）；`dashboard` 刷新首页；`repair-papers` 修复旧打印稿入口。英文旧目录先 `migrate-cn`。不要自己搬文件夹。→ [教师工作台](references/teacher-workspace.md) |
+| 下载知识树 / 教材章节 | `catalog` → `tree` / `editions` → `chapters`。知识树不是教材目录，版本必须是老师的真实版本。→ [知识树与教材](references/tree-and-textbook.md) |
+| PDF 试卷入库 | `pdf-prepare` → 逐页看原图 → 写 v2 分题清单 → `pdf-import`。→ [PDF 流程](references/pdf-import.md) |
+| 存入已有题目 | `import --file <questions.json 或 .zip>`。→ [题目协议](references/question-contract.md) |
+| 给题目分类 | 先 `auto-classify`（只做精确标签匹配），剩余的 `show --ids …` 读题 → 判断真实节点 → `classify --plan` → `classify` |
+| 找题 | `search`（`--subject --phase --edition --chapter --knowledge --tag --type --status --query --unused --limit`） |
+| 读题 / 核对 | `show --ids …` 看完整题干、答案、解析；老师明确确认后才 `review --confirm`（插件里对应列表中的“标记为已核对”） |
+| 组卷 | `search` → `paper … --plan` → 写 basket JSON → `paper --basket`。→ [组卷篮](references/paper-basket.md) |
+| 交给别的 Agent / 视频素材 | `export`（默认不含答案；含答案须老师授权 `--include-solutions`）。→ [家族关系](references/family.md) |
 
-Read JSON responses. Nonzero exit / `ok:false` means failure: fix the cause. Never silently discard requested filters. V1 is Unicode substring + structured search; do not claim vector/semantic search.
+## 不可违反的规则
 
-## Teacher workspace and PDF import
+| 规则 | 原因 |
+| --- | --- |
+| 导入的题一律 `draft`；**只有老师明确说“核对好了”才 `review --confirm` 或 `--confirm-reviewed`** | 答案/图片可能识别错，组卷发给学生会出事故 |
+| 不把 AI 生成的答案当作原答案；AI 内容标 `source.kind: ai` 且待核对 | 来源可追溯 |
+| 原卷没有答案就留空；识别不清写 `[待核对：位置]` 并列入 `uncertainties`，不猜字 | 诚实 |
+| 缺题/缺教材/缺知识节点要报错并说明，**不自动扩大范围或改教材** | 老师的范围不被悄悄改变 |
+| 教材版本、章节只来自老师或已确认目录；未知就保持未知；只要求知识点时不碰 `edition_id`/`chapter_ids` | 不同版本不等价 |
+| 分类只写真实 `knowledge_tree_ids`；标签不等于知识点；已有题不重新导入、不改正文 | 分类不能破坏原题 |
+| 不上传整个题库；不导入含 Key/Cookie/Token 的响应；不改动旧 `question-bank` | 隐私与凭证 |
+| 发给学生只给无答案 Word 或 `打印稿/` 子目录；父目录含教师答案和 manifest | 防止泄题 |
+| 本地存储不等于本地推理：如实说明哪些内容发给了当前 Agent/模型 | 诚实 |
 
-Read [teacher workspace](references/teacher-workspace.md) for directory cleanup, native tags, the dashboard, and classification changes. `organize` creates a full backup before migrating an existing Chinese vault; it preserves IDs, content blocks, teacher additions, and source records. Never implement ad hoc folder moves instead. A question has one physical note and may belong to multiple knowledge nodes and tags.
+## PDF 入库（要点）
 
-For any PDF import, read [PDF workflow](references/pdf-import.md). Prepare original pages and candidate regions with `pdf-prepare`; all papers require checked v2 editable Markdown/LaTeX and isolated figures before `pdf-import`. Inspect every original page; keep source regions for provenance, not question-body screenshots. Remove original paper question numbers from the body and figure captions; retain source numbers only in provenance and preserve logical subquestion/figure references. Use original answers only; flag uncertain recognition. Legacy image drafts need an explicit request and `--image-draft`; upgrading old drafts uses the backed-up `--upgrade-to-editable` path described in the PDF workflow. When a local subject/phase knowledge tree is available, also classify each question using actual tree IDs based on its assessed content; tags alone are not a knowledge-tree link. Preserve multiple relevant nodes for compound questions. Use `classify --file <checked-plan.json> --plan` then `classify --file <checked-plan.json>` for existing notes as documented in the teacher workspace; do not reimport or overwrite question bodies. Unknown textbook stays unknown, and a knowledge-only request must leave textbook/chapter fields unchanged. Do not label a batch successful just because the PDF was copied, and do not mark imported questions reviewed on the teacher's behalf.
+所有 PDF 一律走可编辑 v2 流程：逐页看原图，还原 Markdown/LaTeX 正文，配图独立裁切；原卷题号和“第几题图”不进正文（只留在来源记录）；只用原答案，没有就留空；有本地知识树时同时写真实 `knowledge_tree_ids`。旧图片草稿只在老师明确要求时用 `--image-draft`；升级旧草稿用带备份的 `--upgrade-to-editable`。“文件已复制”不等于入库成功，以题数、渲染检查和 `search` 验证为准。
 
-The plugin’s 自动分类 button runs conservative exact-tag matching with `auto-classify`, then produces an Agent handoff for unresolved questions. This is not embedded model inference; when receiving that handoff, read its listed questions and apply a checked `classify` plan. PDF commit attempts this matching automatically. See the teacher workspace reference for batch and paper-link repair commands.
+## 存题与核对（要点）
 
-The Obsidian plugin offers the same local dashboard, tree/tag filters, and PDF draft workflow. Its bundled helper is independent of installed skills. A teacher vault may already use `teacher/v2`; read `.bank/config.json` before referring to paths. In that layout, knowledge notes live in `资料/知识目录`, textbook notes in `资料/教材目录`, pictures in `资料/附件`, and personal notes in `教学笔记`. The legacy paths below apply before organization.
+读 [题目协议](references/question-contract.md) 构造 JSON；保留老师的内容、网站选项顺序和母子题。网站题用 `import --website --subject … --phase …`（可加 `--download-images`，未解决的图片会阻止核对与打印）。导入请求本身不是答案核对的证明。草稿仍可存储和检索。
 
-## Website knowledge tree
+## 检索与组卷（要点）
 
-Resolve website subject/phase IDs from public metadata (`https://tizhuang.qcscience.cc/api/v1/meta/subjects`, `/v1/meta/phases`) or explicit user-supplied IDs:
+- 树节点筛选包含子孙，需同时给 `--subject --phase`；章节筛选需 `--edition`。
+- 组卷前先 `--plan` 检查供题量；选定后写 basket（每卷分值独立，不改题库原分值），再生成。Agent 组卷用新的请求 JSON，不覆盖老师在插件里正在编辑的篮子。
+- 生成后**打开并检查**输出再说“可以打印”：复杂公式/版式可能需手工调整；图片公式和 PDF 裁图仍是图片，不能说“全部可编辑”；Word 里的修改不会回写题库，要新版请开始新请求。
+- 返回路径：`试卷/<名称>/试卷.md`、`打印稿/试卷.html|docx`（无答案）、`教师稿/试卷.html|docx`（含答案），并告诉老师哪个能发给学生。
 
-```text
-<python> <cli> --vault <vault> tree --subject 2 --phase 2
-<python> <cli> --vault <vault> tree-search --subject 2 --phase 2 --query 一次函数
-```
+## 其它约定
 
-Direct public metadata; no existing skill dependency or paid question query. Offline mode: `--file <tree.json>`. `知识库/标准知识点/<学段·学科>` is generated; teacher notes go in `知识库/我的教学笔记`, which refresh never edits. Download supplies hierarchy and IDs, not questions or complete teaching explanations. `knowledge_tree_ids` (tree nodes) and `knowledge_ids` (exact linked points) are distinct; never invent equivalence.
-
-## Textbook editions and chapters
-
-Knowledge trees are not textbook tables of contents. For textbook-specific work, first resolve the teacher's actual edition (including 2024/revision and 五四/六三 distinctions), grade and semester. Do not default to 人教版 or treat similarly named editions as equivalent:
-
-```text
-<python> <cli> --vault <vault> editions --subject 2 --phase 2
-<python> <cli> --vault <vault> chapters --subject 2 --phase 2 --edition <edition-id>
-<python> <cli> --vault <vault> chapter-search --subject 2 --phase 2 --edition <edition-id> --query 一次函数
-```
-
-Downloads all chapters for exactly that edition, preserves each node's source grade ID, writes `教材目录/<学段·学科·教材版本>` separately. Grade IDs may denote semester/book in source metadata; resolve names, never guess arithmetic conversions. Use `--file <chapters.json>` offline. In textbook-specific import, explicitly pass `--edition <id> --chapter <id1> <id2>` only when the teacher or original query establishes membership. Existing website response may not carry edition; do not infer it from a knowledge-point name. Unknown edition stays unknown and is excluded from edition-filtered results. Chapter filter requires subject+phase+edition and includes descendants.
-
-## Store questions
-
-Read [question contract](references/question-contract.md) when constructing JSON. Preserve teacher content, website options order and compound questions. Do not present AI-generated answers as original website answers. Label AI material `source.kind: ai`, draft pending review.
-
-```text
-<python> <cli> --vault <vault> import --file <questions.json>
-<python> <cli> --vault <vault> import --file <website-result.json> --website --subject 2 --phase 2 --download-images
-<python> <cli> --vault <vault> import --file <question-package.zip>
-```
-
-Website import adapts existing question-bank output without invoking it. Raw per-question JSON is preserved in provenance sidecars. Never import account responses, keys, cookies or tokens. HTTPS pictures download only with `--download-images`; unresolved pictures prevent review/printing. Obsidian edits retain YAML, ID and three section markers. Markdown is primary; SQLite rebuilds automatically.
-
-Default draft status. Mark reviewed only after the teacher explicitly confirms the content, answers and pictures:
-
-```text
-<python> <cli> --vault <vault> review --ids <id1> <id2> --confirm
-```
-
-An import request alone is not proof of answer review. Draft storage and search still work.
-
-## Search and assemble
-
-```text
-<python> <cli> --vault <vault> search --subject 2 --phase 2 --knowledge <tree-node-id> --query 一次函数
-<python> <cli> --vault <vault> paper --subject 2 --phase 2 --knowledge <tree-node-id> --count 10 --title 一次函数练习 --plan
-<python> <cli> --vault <vault> paper --ids <id1> <id2> --title 一次函数练习
-```
-
-Filters: `--subject --phase --grade --edition --chapter --type --tag --status --knowledge --query --unused`. Preserve selected textbook version during search/paper generation. Tree filter includes descendants, requires subject+phase. Selection is deterministic; explicit IDs give teacher ordering. Check supply with `--plan`; shortage fails without broadening. Formal papers accept reviewed records; the teacher may explicitly confirm pending questions in the plugin. For visual selection, ordering and paper-only scores, read [paper basket](references/paper-basket.md). `paper --basket <basket.json>` shares the plugin engine and generates separate question-only and teacher DOCX plus HTML copies without changing source scores. For Agent assembly, search and inspect actual local records, resolve the requested textbook/chapter, run a supply plan, then write an ordered basket JSON with explicit per-paper scores when required. Use a new request JSON under `.bank/paper-requests` or a user-chosen output path; never edit an existing frozen request or overwrite the visual basket while the plugin is generating. CLI selection without a basket keeps using the original question scores. Do not add `--confirm-reviewed` unless the teacher has explicitly confirmed those questions.
-
-Return paths to `试卷/<试卷名称>/试卷.md`, `打印稿/试卷.html` (no-answer print copy), `教师稿/试卷.html` (teacher reference). The print copy is a teacher deliverable; there is no student application. Share only the no-answer DOCX or print directory when delivering to students; parent contains teacher answers and manifest. Both HTML copies contain frozen content, local images and offline MathML for supported LaTeX. Inspect output before claiming print readiness. Complex formulas/layouts can need manual correction. Browser printing can produce PDF; DOCX is generated natively with editable text, ordinary tables and supported TeX converted to Word equations. Existing image formulas and PDF crops remain embedded images, not OCR text. Unsupported Word formulas or merged cells fail explicitly. Return the `student_docx` and `teacher_docx` paths. Never describe an image-based PDF import as fully editable. Word edits do not sync back to the question bank; use a new paper request for another version. Native PDF export remains browser printing.
-
-## Optional family handoffs
-
-Read [family relationships](references/family.md) when relevant. Recommend a family member only when useful; never require installation.
-
-```text
-<python> <cli> --vault <vault> export --ids <id1> --output <question-package.zip>
-<python> <cli> --vault <vault> export --ids <id1> --output <teacher-package.zip> --include-solutions
-```
-
-Default exports omit solutions and their unused assets. A video explanation generally needs teacher-authorized solutions export. Future video skill receives a package, not private index paths or another skill's Python module. Do not claim that future skill exists already.
-
-Local storage does not guarantee local model inference: honestly describe data sent to the agent. Never upload a whole vault automatically. Do not edit or install over existing question-bank. V1 single writer only: serialize mutations.
-
-
-## Chinese presentation and existing-vault migration
-
-Before the first tree/textbook download, run `catalog --subject <id> --phase <id>` to cache real subject, phase and edition names. Visible folders: `题目库`, `知识库/标准知识点`, `知识库/我的教学笔记`, `教材目录`, `附件`, `试卷`, `待整理`. Knowledge and chapter notes show names and at most two ancestor folder levels; IDs live in Chinese-labelled properties and hidden mappings. Question files show titles and can be renamed without changing their IDs.
-
-For an old English-directory vault, use `migrate-cn --catalog-labels <names.json>`. Obtain the label JSON from public subjects/phases/editions metadata with keys subjects/phases/editions, each mapping string IDs to real names. Migration creates a full ZIP backup beside the vault, preserves extra teacher note sections, updates links, and hides legacy machine directories. Do not independently rename folders or remove legacy copies. Local presentation does not change portable JSON keys or packet `Assets/` paths. Obsidian's application language is a separate user setting; do not imply that renaming vault files changes the application's own menu language.
+- 数据位置以 `.bank/config.json` 为准；`teacher/v2` 布局中：题目在 `题目库`，知识/教材目录与附件在 `资料`，个人笔记在 `教学笔记`。老师的笔记刷新时不会被覆盖。
+- 插件“自动分类”不是模型推理；收到它的 Agent 交接单后，要真正读题再 `classify`，不要把“已复制指令”说成“已分类”。
+- Obsidian 菜单语言是应用自己的设置，改文件夹名不会改它。

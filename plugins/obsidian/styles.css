@@ -202,3 +202,22 @@
 .tz-bank .tz-lib-tabs{position:sticky;top:0;z-index:10;background:var(--background-secondary);}
 .tz-classify-actions{display:flex;align-items:center;gap:12px;margin:0 0 14px;flex-wrap:wrap;}
 .tz-classify textarea{width:100%;margin:12px 0;}
+
+/* Onboarding card and empty states */
+.tz-library .tz-start {border:1px solid var(--background-modifier-border); border-radius:14px; padding:16px 18px; margin:16px 0 0; background:var(--background-primary);}
+.tz-library .tz-start h3 {margin:0 0 10px; font-size:14px;}
+.tz-library .tz-start-steps {list-style:none; margin:0; padding:0; display:grid; gap:8px;}
+.tz-library .tz-start-step {display:grid; grid-template-columns:28px minmax(0,1fr) auto; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; color:var(--text-muted);}
+.tz-library .tz-start-step.is-current {background:color-mix(in srgb,var(--interactive-accent) 9%,var(--background-primary)); color:var(--text-normal); outline:1px solid color-mix(in srgb,var(--interactive-accent) 35%,transparent);}
+.tz-library .tz-start-step.is-locked {opacity:.6;}
+.tz-library .tz-start-mark {display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; border:1px solid var(--background-modifier-border); font-size:12px; font-variant-numeric:tabular-nums;}
+.tz-library .tz-start-step.is-done .tz-start-mark {background:var(--interactive-accent); border-color:var(--interactive-accent); color:var(--text-on-accent);}
+.tz-library .tz-start-text {display:flex; flex-direction:column; gap:2px; min-width:0;}
+.tz-library .tz-start-text span {font-size:12px;}
+.tz-library .tz-local-empty {padding:28px 12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px;}
+.tz-library .tz-local-empty .tz-actions {justify-content:center;}
+@media (max-width:560px) {.tz-library .tz-start-step {grid-template-columns:28px minmax(0,1fr);} .tz-library .tz-start-step button {grid-column:2;}}
+.tz-library .tz-reviewed-badge {font-size:12px; color:var(--text-muted); padding:0 8px;}
+.tz-env-check {margin:6px 0 14px;}
+.tz-env-check [hidden] {display:none !important;}
+.tz-env-check .tz-env-fix {white-space:pre-wrap; user-select:all; padding:8px 10px; border-radius:8px; background:var(--background-secondary); font-size:12px;}

@@ -1,6 +1,18 @@
 import YAML from 'yaml';
 import {readNote} from './core.js';
 import {nativeTags,cleanTitle,hasImage,groupFolder} from './presentation.js';
+// Onboarding: derive "what should the teacher do next" from real local state, never from a stored flag.
+export function startSteps(catalog){
+ const rows=catalog.rows||[],reviewed=rows.filter(r=>r.q.status==='reviewed').length;
+ const steps=[
+  {id:'tree',title:'下载知识树',hint:'在“网站取题”选好学科和学段，目录会保存到本地；之后分类、按考点找题都靠它。',done:(catalog.trees||[]).some(t=>t.kind==='knowledge'),action:'website',cta:'去下载'},
+  {id:'import',title:'放入第一批题',hint:'导入一份 PDF 试卷，或从网站保存几道题。',done:rows.length>0,action:'pdf',cta:'导入 PDF'},
+  {id:'review',title:'核对题目',hint:'在“我的题目”展开题目，逐题查看题干、答案和配图，确认后点“标记为已核对”；正式组卷只用已核对的题。',done:reviewed>0,action:'review',cta:'去核对',locked:!rows.length},
+  {id:'paper',title:'组出第一张试卷',hint:'在“我的题目”勾选题目加入组卷篮，生成无答案 Word 和教师答案 Word。',done:(catalog.papers||[]).length>0,action:'basket',cta:'打开组卷篮',locked:!reviewed}
+ ];
+ const current=steps.find(s=>!s.done&&!s.locked)||null;
+ return {steps,current,complete:steps.every(s=>s.done)};
+}
 export class LocalCatalog{
  constructor(store){this.store=store;this.rows=[];this.errors=[];this.trees=[];this.names={};}
  async load(){

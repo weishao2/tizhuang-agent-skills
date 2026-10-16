@@ -20,9 +20,14 @@ import zipfile
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ui_layout as ui
 
-import markdown
-import yaml
-from latex2mathml.converter import convert as mathml
+try:
+    import markdown
+    import yaml
+    from latex2mathml.converter import convert as mathml
+except ImportError as _exc:  # missing dependencies must still produce machine-readable JSON
+    print(json.dumps({"ok": False, "kind": "missing_dependency", "error": "缺少运行依赖：" + str(_exc),
+                      "hint": "请使用本 skill 的独立 Python 环境，执行 pip install -r scripts/requirements.txt；或运行 doctor.py 查看缺少哪一项。"}))
+    sys.exit(1)
 
 SCHEMA = "tizhuang.question/v1"
 PACKAGE = "tizhuang.question-package/v1"
@@ -260,6 +265,7 @@ def read_note(path):
 class Bank:
     def __init__(self, root):
         self.root = Path(root).resolve()
+        self.readonly = False  # read-only commands must not rewrite the index or navigation notes
         if not (self.root / ".bank/config.json").is_file():
             raise ValueError("题库未初始化，请先运行 init")
         if (self.root / "Questions").exists():
@@ -279,6 +285,8 @@ class Bank:
             record = read_json(side) if side.exists() else {}
             q["assets"] = record.get("assets", [])
             result.append(q)
+        if self.readonly:
+            return result
         # Entirely disposable index: always rebuilt to reflect Obsidian edits.
         db = sqlite3.connect(self.root / ".bank/index.sqlite3")
         with db:
@@ -798,12 +806,70 @@ def filters(parser):
     parser.add_argument("--unused", action="store_true")
 
 
+def status(bank):
+    """One read-only health snapshot so an Agent can decide the next step without guessing."""
+    rows = bank.questions()
+    total = len(rows)
+    draft = sum(q["status"] != "reviewed" for q in rows)
+    unclassified = sum(not q["knowledge_tree_ids"] and not q["chapter_ids"] for q in rows)
+    no_answer = sum(not str(q.get("answer", "")).strip() for q in rows)
+    trees = sorted(p.stem for p in (bank.root / ".bank/taxonomy").glob("*.json")) if (bank.root / ".bank/taxonomy").is_dir() else []
+    papers = len([p for p in (bank.root / ui.PAPER_DIR).glob("*/manifest.json")]) if (bank.root / ui.PAPER_DIR).is_dir() else 0
+    steps = []
+    if not trees:
+        steps.append("还没有知识树：先 tree --subject <学科> --phase <学段> 下载，分类和按考点找题都依赖它。")
+    if not total:
+        steps.append("题库还是空的：导入 PDF（pdf-prepare）或存入题目 JSON（import）。")
+    if unclassified and trees:
+        steps.append(f"{unclassified} 道题尚未关联知识点：先 auto-classify，剩余的由 Agent 阅读后 classify。")
+    if draft:
+        steps.append(f"{draft} 道题待老师核对：核对后才能正式组卷。")
+    if total and not draft and not papers:
+        steps.append("题目都已核对，可以组卷。")
+    return {"vault": str(bank.root), "questions": total, "draft": draft, "reviewed": total - draft,
+            "unclassified": unclassified, "without_answer": no_answer, "knowledge_trees": trees,
+            "papers": papers, "python": sys.version.split()[0], "next_steps": steps}
+
+
+def show(bank, args):
+    """Full records (with the hash classify needs) for the requested IDs; read-only."""
+    rows = []
+    for q in get_ids(bank, args.ids):
+        rows.append({"id": q["id"], "title": q["title"], "type": q.get("type"), "status": q["status"], "score": q.get("score"),
+                     "subject_id": q.get("subject_id"), "phase_id": q.get("phase_id"), "edition_id": q.get("edition_id"),
+                     "chapter_ids": q["chapter_ids"], "knowledge_tree_ids": q["knowledge_tree_ids"], "tags": q["tags"],
+                     "path": bank.note_paths[q["id"]].relative_to(bank.root).as_posix(),
+                     "content": q["content"], "answer": q["answer"], "analysis": q["analysis"],
+                     "content_sha256": digest("\n".join(q[k] for k in ("content", "answer", "analysis")).encode("utf-8"))})
+    return rows
+
+
+HINTS = (
+    ("题库未初始化", "先运行 init，或确认 --vault 指向正确的题库目录。"),
+    ("旧版英文目录", "先运行 migrate-cn；原文件不会被覆盖。"),
+    ("知识节点不存在", "先用 tree 下载该学科学段知识树，再用 tree-search 找真实节点编号。"),
+    ("题目内容已改变", "用 show --ids 重新读取题目，取新的 content_sha256 并重新判断分类。"),
+    ("题目不存在", "用 search 或 status 确认题目 ID；ID 来自本地题库而不是网站题号。"),
+    ("缺题", "按 --plan 的提示放宽题量或补充题目；工具不会自动扩大范围。"),
+    ("尚未核对", "请老师逐题核对后再用 review --confirm；不要替老师确认。"),
+    ("HTTPS", "该操作需要联网；离线时可用 --file 提供本地 JSON。"),
+    ("timed out", "网络超时，稍后重试；已保存的内容不受影响。"),
+)
+
+
+def hint_for(message):
+    return next((hint for key, hint in HINTS if key in message), "")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="题庄独立本地题库：Markdown 真源，SQLite 可重建索引")
     parser.add_argument("--vault", required=True, help="Obsidian vault / 普通题库目录")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("init")
+    sub.add_parser("status", help="只读体检（不改任何文件）：题量、待核对、待分类、知识树与下一步建议")
+    show_cmd = sub.add_parser("show", help="读取题目完整内容及 classify 所需的 content_sha256")
+    show_cmd.add_argument("--ids", nargs="+", required=True)
     sub.add_parser('organize', help='备份后整理教师目录、标题与原生标签')
     sub.add_parser('dashboard', help='更新题库首页')
     classification = sub.add_parser('classify', help='按 Agent 核对的真实知识节点批量分类，保留正文和教材')
@@ -857,6 +923,7 @@ def main():
     imp.add_argument("--chapter", nargs="+", help="教师确认的教材章节关联；不按知识名称自动推断")
     search = sub.add_parser("search")
     filters(search)
+    search.add_argument("--limit", type=int, help="最多返回条数，题库很大时使用")
     review = sub.add_parser("review")
     review.add_argument("--ids", nargs="+", required=True)
     review.add_argument("--confirm", action="store_true", required=True, help="已人工核对题干、答案和图片")
@@ -881,6 +948,8 @@ def main():
         result = migrate_cn(args.vault, args.catalog_labels)
     else:
         bank = Bank(args.vault)
+        # status / show / search only read: leave the index and navigation notes untouched (use dashboard to refresh them).
+        bank.readonly = args.command in ("status", "show", "search")
         if args.command == 'organize':
             from teacher_library import organize
             result = organize(bank)
@@ -946,8 +1015,17 @@ def main():
                         result = [bank.save(q, image_base) for q in questions]
                 else:
                     result = [bank.save(q, path.parent) for q in questions]
+        elif args.command == "status":
+            result = status(bank)
+        elif args.command == "show":
+            result = show(bank, args)
         elif args.command == "search":
-            result = [{k: q.get(k) for k in ("id", "title", "type", "status", "subject_id", "phase_id", "grade_id", "edition_id", "chapter_ids", "knowledge_tree_ids", "tags")} for q in bank.select(args)]
+            found = bank.select(args)
+            if args.limit is not None:
+                if args.limit < 1:
+                    raise ValueError("--limit 必须是正整数")
+                found = found[:args.limit]
+            result = [{k: q.get(k) for k in ("id", "title", "type", "status", "subject_id", "phase_id", "grade_id", "edition_id", "chapter_ids", "knowledge_tree_ids", "tags")} for q in found]
         elif args.command == "review":
             result = []
             for q in get_ids(bank, args.ids):
@@ -972,5 +1050,10 @@ if __name__ == "__main__":
     try:
         main()
     except (ValueError, OSError, KeyError, TypeError, yaml.YAMLError, zipfile.BadZipFile) as exc:
-        print(json_text({"ok": False, "error": str(exc)}), end="")
+        message = str(exc) or exc.__class__.__name__
+        print(json_text({"ok": False, "error": message, "hint": hint_for(message)}), end="")
         sys.exit(1)
+    except Exception as exc:  # never leak a traceback to a teacher-facing agent
+        print(json_text({"ok": False, "kind": "unexpected", "error": f"{exc.__class__.__name__}: {exc}",
+                         "hint": "这是未预期的错误：不要重试写入操作，先 status 检查题库，并把本消息反馈给开发者。"}), end="")
+        sys.exit(2)

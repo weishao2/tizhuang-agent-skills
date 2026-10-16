@@ -1,4 +1,5 @@
 import YAML from 'yaml';
+import {materializeKnowledge} from './knowledge-notes.js';
 import {MetadataCache} from './metadata-cache.js';
 import {cleanTitle,nativeTags,enrichQuestion,groupFolder,hasImage} from './presentation.js';
 export const BASE='https://tizhuang.qcscience.cc/api';
@@ -170,8 +171,32 @@ export async function localize(q,transport,document){
   copy.assets=downloaded.map(({path,sha256})=>({path,sha256}));return {question:copy,downloaded};
 }
 export class Store{
-  constructor(io){this.io=io;this.busy=false;}
+  constructor(io){this.io=io;this.busy=false;this.directoryQueue=Promise.resolve();this.materializedTrees=new Set();}
   async mkdir(path){let p='';for(const part of path.split('/')){p=p?`${p}/${part}`:part;if(!await this.io.exists(p))await this.io.mkdir(p);}}
+  // Persist a downloaded knowledge tree so classification, filtering and the onboarding guide see it.
+  // An existing snapshot is teacher-owned (saved questions are validated against it): never overwrite it.
+  async saveTaxonomy(subject,phase,nodes){
+    await this.init();const path=`.bank/taxonomy/${subject}-${phase}.json`;
+    const exists=await this.io.exists(path);
+    if(!exists){validateKnowledge(nodes);await this.io.write(path,JSON.stringify({schema:'tizhuang.taxonomy/v1',subject_id:subject,phase_id:phase,downloaded_at:new Date().toISOString(),nodes},null,2));}
+    await this.syncKnowledgeDirectories();return !exists;
+  }
+  async syncKnowledgeDirectories(){
+    const task=this.directoryQueue.catch(()=>{}).then(async()=>{
+      for(const path of [...await this.files('.bank/taxonomy','.json'),...await this.files('.bank/textbooks','.json')]){
+        if(this.materializedTrees.has(path))continue;
+        const data=await this.json(path);if(path.startsWith('.bank/textbooks/'))validateChapters(data.nodes,data);else validateKnowledge(data.nodes);
+        if(!Number.isSafeInteger(data.subject_id)||data.subject_id<=0||!Number.isSafeInteger(data.phase_id)||data.phase_id<=0)throw Error('知识树学科学段无效。');
+        await materializeKnowledge(this,data);this.materializedTrees.add(path);
+      }
+    });this.directoryQueue=task;return task;
+  }
+  async saveTextbook(scope,nodes){
+    await this.init();validateChapters(nodes,scope);
+    const path=`.bank/textbooks/${scope.subject_id}-${scope.phase_id}-${scope.edition_id}.json`;
+    if(!await this.io.exists(path))await this.io.write(path,JSON.stringify({schema:'tizhuang.textbook/v1',subject_id:scope.subject_id,phase_id:scope.phase_id,edition_id:scope.edition_id,downloaded_at:new Date().toISOString(),nodes},null,2));
+    await this.syncKnowledgeDirectories();
+  }
   async init(){
     if(await this.io.exists('Questions'))throw Error('检测到旧版英文题库，请先使用本地 skill 迁移中文目录。');
     if(await this.io.exists('.bank/config.json')){const cfg=JSON.parse(await this.io.read('.bank/config.json'));if(cfg.schema!=='tizhuang.bank/v1')throw Error('本地题库格式不兼容。');}

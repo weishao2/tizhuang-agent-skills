@@ -31,6 +31,15 @@ class AutomaticTests(unittest.TestCase):
         self.save(tags=['反比例函数']);self.save(id='two',content='另一题',tags=['圆'])
         result=run(self.bank,SimpleNamespace(ids=['one']));self.assertEqual(result['classified'],1)
         self.assertFalse({q['id']:q for q in self.bank.questions()}['two']['knowledge_tree_ids'])
+    def test_punctuation_in_catalog_matches_native_tags_without_guessing_collisions(self):
+        lb.atomic(self.root/'.bank/taxonomy/2-2.json',lb.json_text({'nodes':[{'id':1,'parent_id':0,'name':'有理数的乘方（二）'}]}))
+        self.save(tags=['考点/有理数的乘方（二）'])
+        self.assertEqual(run(self.bank,SimpleNamespace())['classified'],1)
+        lb.atomic(self.root/'.bank/taxonomy/2-2.json',lb.json_text({'nodes':[{'id':1,'parent_id':0,'name':'乘方（二）'},{'id':2,'parent_id':0,'name':'乘方(二)'}]}))
+        self.save(id='two',content='另一题',tags=['考点/乘方（二）'])
+        result=run(self.bank,SimpleNamespace(ids=['two']))
+        self.assertEqual(result['classified'],0)
+        self.assertEqual(result['pending'],1)
     def test_repair_empty_notes_keeps_real_files_and_backup(self):
         folder=self.root/'试卷/demo';folder.mkdir(parents=True)
         lb.atomic(folder/'manifest.json',lb.json_text({'title':'练习'}))

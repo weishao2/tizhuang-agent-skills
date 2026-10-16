@@ -2,7 +2,7 @@ import {AutoClassifyModal} from './classification-view.js';
 import {renderNavigation} from './navigation.js';
 import {renderBrand} from './brand.js';
 import {ItemView,Modal,MarkdownRenderer,Notice} from 'obsidian';
-import {LocalCatalog} from './library-core.js';
+import {LocalCatalog,startSteps} from './library-core.js';
 import {cleanTitle,hasImage,nativeTags} from './presentation.js';
 import {hash} from './core.js';
 import {drawBasket,basketBar,updateBasketBar} from './paper-view.js';
@@ -29,15 +29,26 @@ export class LibraryView extends ItemView{
  getViewType(){return LIBRARY_VIEW;}getDisplayText(){return '题庄本地题库';}getIcon(){return 'library';}
  async onOpen(){await this.refresh();}
  async onClose(){this.closed=true;this.sequence++;clearTimeout(this.searchTimer);}
- async refresh(){if(this.pdfBusy||this.plugin.basket?.busy)return;const seq=++this.sequence;try{await this.plugin.basket.queue;await this.plugin.basket.load();await this.catalog.load();if(this.closed||seq!==this.sequence)return;this.draw();const cfg=await this.plugin.store.json('.bank/config.json');if(cfg.ui_layout==='teacher/v2')await this.catalog.writeHome();}catch(error){this.contentEl.replaceChildren();E(this.contentEl,'p',error.message,'tz-error');}}
+ async refresh(){if(this.pdfBusy||this.plugin.basket?.busy)return;const seq=++this.sequence;try{await this.plugin.basket.queue;await this.plugin.basket.load();await this.plugin.store.syncKnowledgeDirectories();await this.catalog.load();if(this.closed||seq!==this.sequence)return;this.draw();const cfg=await this.plugin.store.json('.bank/config.json');if(cfg.ui_layout==='teacher/v2')await this.catalog.writeHome();}catch(error){this.contentEl.replaceChildren();E(this.contentEl,'p',error.message,'tz-error');}}
  async remember(){this.plugin.settings.libraryTab=this.tab;this.plugin.settings.libraryFilter={...this.filter};this.plugin.settings.libraryDimension=this.dimension;await this.plugin.saveData(this.plugin.settings);}
- async show(tab,filter){this.tab=tab;if(filter)this.filter=filter;await this.remember();this.draw();}
+ async show(tab,filter){this.tab=tab;if(filter)this.filter=filter;await this.remember();if(tab==='home'&&!this.pdfBusy&&!this.plugin.basket?.busy)await this.refresh();else this.draw();}
  async fromContext(context){this.tab='questions';this.dimension=context.mode==='chapter'?'chapter':'knowledge';this.filter={kind:this.dimension,scope:[context.scope.subject_id,context.scope.phase_id,...(this.dimension==='chapter'?[context.scope.edition_id]:[])].join('-'),node:String(context.scope.chapter_id||context.scope.knowledge_tree_id)};await this.refresh();await this.remember();}
  draw(){
   const root=this.contentEl;root.replaceChildren();root.classList.add('tz-bank','tz-library');const shell=E(root,'div',null,'tz-shell');const head=E(shell,'header',null,'tz-header');renderBrand(head);const actions=E(head,'div',null,'tz-header-actions');B(actions,'刷新',()=>this.refresh());const website=B(actions,'',()=>window.open('https://tizhuang.qcscience.cc/','_blank','noopener,noreferrer'));website.classList.add('tz-icon-button');website.title='打开题庄官网';website.setAttribute('aria-label','打开题庄官网');website.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18"/></svg>';
   renderNavigation(shell,this,this.tab);
-  this.status=E(shell,'p',null,'tz-status');if(this.catalog.errors.length){E(shell,'p',`${this.catalog.errors.length} 个文件需要检查，其余题目可正常浏览。`,'tz-error');const details=E(shell,'details');E(details,'summary','查看异常文件');for(const item of this.catalog.errors)B(details,item.path+'：'+item.message,()=>this.openFile(item.path));}
+  this.status=E(shell,'p',null,'tz-status');this.status.setAttribute('role','status');this.status.setAttribute('aria-live','polite');if(this.catalog.errors.length){E(shell,'p',`${this.catalog.errors.length} 个文件需要检查，其余题目可正常浏览。`,'tz-error');const details=E(shell,'details');E(details,'summary','查看异常文件');for(const item of this.catalog.errors)B(details,item.path+'：'+item.message,()=>this.openFile(item.path));}
   this.body=E(shell,'div',null,'tz-lib-body');if(this.tab==='home')this.home();else if(this.tab==='pdf')this.pdf();else if(this.tab==='basket')drawBasket(this);else this.questions();
+ }
+ // Marking reviewed is the teacher's explicit act: it runs the same verified CLI path (image check + backup) as the paper basket.
+ async markReviewed(ids){
+  if(this.plugin.localTaskActive||this.plugin.store.busy){new Notice('正在写入题库，请稍候。');return false;}
+  try{await this.plugin.runLocal('review',['--ids',...ids,'--confirm']);new Notice(`已标记 ${ids.length} 题为已核对。`);await this.refresh();return true;}
+  catch(error){new Notice(error.message);return false;}
+ }
+ confirmReview(rows){
+  const view=this,modal=new Modal(this.app);
+  modal.onOpen=()=>{const root=modal.contentEl;E(root,'h2',`标记 ${rows.length} 道题为已核对`);E(root,'p','请确认你已经逐题看过题干、答案和配图。标记后这些题才能用于正式组卷。','tz-muted');const actions=E(root,'div',null,'tz-actions');B(actions,'取消',()=>modal.close());B(actions,'我已核对，标记',async()=>{modal.close();await view.markReviewed(rows.map(r=>r.q.id));},'tz-primary');};
+  modal.onClose=()=>modal.contentEl.replaceChildren();modal.open();
  }
  openFile(path){return this.app.workspace.openLinkText(path,'',false);}
  batchRow(parent,batch){
@@ -46,8 +57,19 @@ export class LibraryView extends ItemView{
   if(batch.status==='partial'&&batch.representation==='editable')B(actions,'继续导入',async()=>{if(this.pdfBusy)return;this.pdfBusy=true;try{await this.plugin.runLocal('pdf-import',['--batch',batch.id]);new Notice('已导入草稿并尝试关联知识点；请查看分类报告并核对题目。');}catch(error){new Notice(error.message);}finally{this.pdfBusy=false;await this.refresh();}});
   if(batch.status!=='imported'&&!(batch.status==='partial'&&batch.representation==='editable'))B(actions,'复制 Agent 指令',async()=>{const prompt=`使用 tizhuang-local-bank，在题库“${this.app.vault.adapter.getBasePath()}”中继续 PDF 导入批次 ${batch.id}。查看全部原页，将题干、选项、公式和表格还原为可编辑 Markdown/LaTeX，单独提取配图。去掉正文原题号和图片中的“第几题图”，原编号只留在来源记录，保留小问与图①等对应关系。核对原答案，根据考查内容关联到本地标准知识点树，综合题可关联多个知识点，不能只有标签；未指定教材不补章节。用 v2 分题清单导入待核对题目。`;try{await window.navigator.clipboard.writeText(prompt);new Notice('已复制。');}catch{const area=E(line,'textarea');area.value=prompt;area.readOnly=true;area.select();new Notice('请复制已选中的指令。');}});
  }
+ startCard(){
+  const plan=startSteps(this.catalog);if(plan.complete)return;
+  const card=E(this.body,'section',null,'tz-start');card.setAttribute('aria-label','新手引导');E(card,'h3','四步用起来');
+  const list=E(card,'ol',null,'tz-start-steps');
+  const go={website:()=>this.plugin.open(),pdf:()=>this.show('pdf'),review:()=>this.show('questions',{status:'draft'}),basket:()=>this.show('basket')};
+  for(const step of plan.steps){const item=E(list,'li',null,'tz-start-step');item.classList.toggle('is-done',step.done);item.classList.toggle('is-current',step===plan.current);item.classList.toggle('is-locked',Boolean(step.locked)&&!step.done);
+   const mark=E(item,'span',step.done?'✓':String(plan.steps.indexOf(step)+1),'tz-start-mark');mark.setAttribute('aria-hidden','true');
+   const text=E(item,'div',null,'tz-start-text');E(text,'strong',step.title+(step.done?'（已完成）':''));if(!step.done)E(text,'span',step.hint,'tz-muted');
+   if(step===plan.current)B(item,step.cta,go[step.action],'tz-primary');}
+ }
  home(){
   const hero=E(this.body,'section',null,'tz-lib-hero');E(hero,'div','我的教学资产','tz-eyebrow');E(hero,'h1','好题，都在这里。');E(hero,'p','按章节备课，按考点找题，把自己的试卷慢慢积累下来。');const actions=E(hero,'div',null,'tz-actions');B(actions,'浏览我的题目',()=>this.show('questions',{}),'tz-primary');B(actions,'导入一份 PDF',()=>this.show('pdf'));
+  this.startCard();
   const stats=E(this.body,'div',null,'tz-stats');for(const [title,count,fn]of [['全部题目',this.catalog.rows.length,()=>this.show('questions',{})],['待核对',this.catalog.rows.filter(r=>r.q.status!=='reviewed').length,()=>this.show('questions',{status:'draft'})],['待分类',this.catalog.rows.filter(r=>!r.q.knowledge_tree_ids.length&&!r.q.chapter_ids.length).length,()=>this.show('questions',{unclassified:true})],['已组试卷',this.catalog.papers.length,()=>this.body.querySelector('.tz-paper-list').scrollIntoView({block:'nearest'})]]){const b=B(stats,'',fn,'tz-stat');E(b,'strong',String(count));E(b,'span',title);}
   const columns=E(this.body,'div',null,'tz-home-columns'),recent=E(columns,'section',null,'tz-home-section');E(recent,'h3','最近保存');for(const row of [...this.catalog.rows].sort((a,b)=>String(b.q.created_at).localeCompare(String(a.q.created_at))).slice(0,6)){const b=B(recent,'',()=>this.openFile(row.path),'tz-recent-row');if(hasImage(row.q))E(b,'span','[图]','tz-image-label');E(b,'span',cleanTitle(row.q.title,row.q.type));E(b,'small',row.q.status==='reviewed'?'已核对':'待核对');}if(!this.catalog.rows.length)E(recent,'p','先导入 PDF，或从网站保存几道题。','tz-muted');
   const activity=E(columns,'section',null,'tz-home-section');E(activity,'h3','导入进度');for(const batch of this.catalog.imports.slice(0,5))this.batchRow(activity,batch);if(!this.catalog.imports.length)E(activity,'p','暂无导入任务。','tz-muted');
@@ -71,12 +93,13 @@ export class LibraryView extends ItemView{
  pick(scope){this.filter={query:this.filter.query,status:this.filter.status,type:this.filter.type,...scope};this.renderRows();this.remember();}
  async renderRows(){
   this.rowsArea.replaceChildren();const rows=this.catalog.select(this.filter);const title=E(this.rowsArea,'div',null,'tz-local-summary');let label=this.filter.tag||'';const tree=this.catalog.trees.find(t=>t.kind===this.filter.kind&&t.scope===this.filter.scope);if(tree)label=tree.nodes.find(n=>String(n.id)===this.filter.node)?.name||this.catalog.scopeTitle(tree);E(title,'strong',(this.filter.unclassified?'待分类':label||'全部题目')+` · ${rows.length} 题`);
-  B(title,'勾选当前结果（'+Math.min(rows.length,100)+'）',async()=>{try{await this.plugin.basket.add(rows.slice(0,100).map(r=>r.q));this.renderRows();updateBasketBar(this);}catch(error){new Notice(error.message);}});if(tree&&this.filter.node)B(title,'网站补题',()=>this.plugin.openFromContext({mode:tree.kind==='chapter'?'chapter':'knowledge',scope:{subject_id:tree.subject_id,phase_id:tree.phase_id,...(tree.kind==='chapter'?{edition_id:tree.edition_id,chapter_id:Number(this.filter.node)}:{knowledge_tree_id:Number(this.filter.node)})}}));
-  if(!rows.length){E(this.rowsArea,'p','当前分类没有匹配的本地题目。可调整筛选、导入资料或从网站补题。','tz-local-empty');return;}
+  B(title,'勾选当前结果（'+Math.min(rows.length,100)+'）',async()=>{try{await this.plugin.basket.add(rows.slice(0,100).map(r=>r.q));this.renderRows();updateBasketBar(this);}catch(error){new Notice(error.message);}});{const pending=rows.slice(0,100).filter(r=>r.q.status!=='reviewed');/* only rows actually on screen: never review what the teacher cannot see */if(pending.length)B(title,`核对本页显示的待核对题（${pending.length}）`,()=>this.confirmReview(pending));}if(tree&&this.filter.node)B(title,'网站补题',()=>this.plugin.openFromContext({mode:tree.kind==='chapter'?'chapter':'knowledge',scope:{subject_id:tree.subject_id,phase_id:tree.phase_id,...(tree.kind==='chapter'?{edition_id:tree.edition_id,chapter_id:Number(this.filter.node)}:{knowledge_tree_id:Number(this.filter.node)})}}));
+  if(!rows.length){const empty=E(this.rowsArea,'div',null,'tz-local-empty');if(!this.catalog.rows.length){E(empty,'strong','题库还是空的');E(empty,'p','导入一份 PDF 试卷，或从网站保存几道题，就能在这里浏览、分类和组卷。','tz-muted');const a=E(empty,'div',null,'tz-actions');B(a,'导入 PDF',()=>this.show('pdf'),'tz-primary');B(a,'网站取题',()=>this.plugin.open());}else{E(empty,'strong','当前条件下没有题目');E(empty,'p','可以放宽筛选、换一个分类，或把当前分类交给网站补题。','tz-muted');B(empty,'重置筛选',()=>this.show('questions',{}));}return;}
   const list=E(this.rowsArea,'div',null,'tz-question-list');for(const row of rows.slice(0,100)){const {q}=row,card=E(list,'article',null,'tz-question tz-local-card'),head=E(card,'div',null,'tz-question-head');const check=E(head,'input');check.type='checkbox';check.checked=this.plugin.basket.has(q.id);check.setAttribute('aria-label','加入组卷篮：'+cleanTitle(q.title));card.classList.toggle('is-selected',check.checked);check.onchange=async()=>{try{if(check.checked)await this.plugin.basket.add([q]);else await this.plugin.basket.remove(q.id);card.classList.toggle('is-selected',check.checked);updateBasketBar(this);}catch(error){check.checked=this.plugin.basket.has(q.id);new Notice(error.message);}};E(head,'span',q.type||'未分类','tz-type');if(typeof q.difficulty==='number')E(head,'span',q.difficulty<=2?'简单':q.difficulty>=4?'困难':'中等','tz-difficulty');E(head,'span',q.tags.join(' · '),'tz-knowledge');E(head,'span',q.status==='reviewed'?'已核对':'待核对','tz-local-status');
    const title=E(card,'div',null,'tz-local-title');if(hasImage(q))E(title,'span','[图]','tz-image-label');E(title,'span',cleanTitle(q.title,q.type));
    const actions=E(card,'div',null,'tz-local-card-actions');const detail=E(card,'div',null,'tz-question-details');detail.hidden=true;let rendered=false;
    B(actions,'展开题目',async event=>{detail.hidden=!detail.hidden;event.currentTarget.textContent=detail.hidden?'展开题目':'收起';if(!rendered){for(const [key,name]of [['content','题目'],['answer','答案'],['analysis','解析']]){if(!q[key])continue;const section=E(detail,'section',null,'tz-detail-section');E(section,'h4',name);const content=E(section,'div',null,'tz-preview');let text=q[key].replace(/Assets\/([a-f0-9]+\.[a-z0-9]+)/g,(_,file)=>{const path=this.plugin.store.assetDir+'/'+file;const target=this.app.vault.getAbstractFileByPath(path);return target?this.app.vault.getResourcePath(target):path;});await MarkdownRenderer.render(this.app,text,content,row.path,this);}E(detail,'footer',q.source.label||'本地题目','tz-source-line');rendered=true;}});
+   if(q.status!=='reviewed')B(actions,'标记为已核对',()=>this.confirmReview([row]),'tz-quiet tz-review-action');else E(actions,'span','已核对','tz-reviewed-badge');
    B(actions,'打开笔记',()=>this.openFile(row.path));B(actions,'分类 / 标签',()=>new ClassifyModal(this.app,this.catalog,row,()=>this.refresh()).open());
   }
   if(rows.length>100)E(this.rowsArea,'p',`显示前 100 题，共 ${rows.length} 题。请按章节或标签进一步筛选。`,'tz-muted');

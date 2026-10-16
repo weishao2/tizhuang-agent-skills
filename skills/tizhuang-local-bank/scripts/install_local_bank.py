@@ -17,14 +17,15 @@ SKILL_FILES = ('SKILL.md', 'version.json', 'agents/openai.yaml',
     'scripts/install_local_bank.py', 'scripts/auto_classify.py', 'scripts/paper_links.py',
     'scripts/local_bank.py', 'scripts/ui_layout.py', 'scripts/teacher_library.py',
     'scripts/pdf_import.py', 'scripts/paper_builder.py', 'scripts/docx_export.py',
-    'scripts/paper-print.css', 'scripts/requirements.txt', 'references/install.md',
+    'scripts/paper-print.css', 'scripts/requirements.txt', 'scripts/doctor.py', 'references/install.md',
     'references/family.md', 'references/question-contract.md', 'references/pdf-import.md',
-    'references/teacher-workspace.md', 'references/paper-basket.md')
+    'references/teacher-workspace.md', 'references/paper-basket.md',
+    'references/conversation-guide.md', 'references/tree-and-textbook.md')
 PLUGIN_FILES = ('main.js', 'manifest.json', 'styles.css', 'README.md',
     'third-party-licenses/dompurify.txt', 'third-party-licenses/turndown.txt',
     'third-party-licenses/yaml.txt') + tuple('helper/' + name for name in (
     'auto_classify.py', 'paper_links.py', 'local_bank.py', 'ui_layout.py',
-    'teacher_library.py', 'pdf_import.py', 'paper_builder.py', 'docx_export.py',
+    'teacher_library.py', 'pdf_import.py', 'paper_builder.py', 'docx_export.py', 'doctor.py',
     'paper-print.css', 'requirements.txt'))
 SEED_FILES = ('.bank/config.json', '题库首页.md')
 FOLDERS = ('题目库', '试卷', '待整理', '教学笔记', '资料/附件', '资料/原件',

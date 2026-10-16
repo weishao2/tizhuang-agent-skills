@@ -4,6 +4,9 @@ import {mkdtemp,readFile,writeFile,mkdir,readdir,stat,rm} from 'node:fs/promises
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
+// Cross-skill tests need the skill's dedicated Python; set TZ_PYTHON on non-Windows or custom setups.
+import {resolve as resolvePath} from 'node:path';
+const PYTHON=process.env.TZ_PYTHON||'python';
 import {Api,Store,requireScope,validateChapters,questionFrom,noteText,readNote,localize,hash,BASE} from '../src/core.js';
 import {MetadataCache} from '../src/metadata-cache.js';
 const s={subject_id:2,phase_id:2,edition_id:59,chapter_id:10,grade_id:201};
@@ -69,8 +72,8 @@ test('保存不覆盖教师文件、按内容去重、来源冲突拒绝，并�
   const result=await store.save(q,nodes,[]);assert.equal(result.action,'created');assert.equal((await store.save({...q,id:crypto.randomUUID()},nodes,[])).action,'duplicate');
   await assert.rejects(store.save({...q,id:crypto.randomUUID(),content:'新版本'},nodes,[]),/不会覆盖/);
   const existing=await io.read(result.path);await io.write(result.path,existing+'\n## 教师笔记\n手动添加\n');await store.save({...q,id:crypto.randomUUID()},nodes,[]);assert.ok((await io.read(result.path)).includes('手动添加'));
-  const python=(process.env.TIZHUANG_TEST_PYTHON || 'python');
-  const check=spawnSync(python,['tests/cross_skill.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);assert.match(check.stdout,/cross-skill-ok/);
+
+  const check=spawnSync(PYTHON,['tests/cross_skill.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);assert.match(check.stdout,/cross-skill-ok/);
  }finally{await rm(root,{recursive:true,force:true});}
 });
 test('不兼容和旧英文仓库不能自动覆盖',async()=>{
@@ -80,7 +83,7 @@ test('知识点左树保存格式也可被独立 skill 按父节点检索并组�
  const root=await mkdtemp(resolve('.test-vault-'));try{
   const io=adapter(root),store=new Store(io);const scope={subject_id:2,phase_id:2,knowledge_tree_id:11};const tree=[{id:10,name:'函数',parent_id:0},{id:11,name:'一次函数',parent_id:10}];
   const q=questionFrom(raw,scope,true,convert);const result=await store.save(q,tree,[]);assert.equal(result.action,'created');assert.equal(q.edition_id,null);assert.deepEqual(q.chapter_ids,[]);
-  const check=spawnSync((process.env.TIZHUANG_TEST_PYTHON || 'python'),['tests/cross_skill.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);
+  const check=spawnSync(PYTHON,['tests/cross_skill.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);
  }finally{await rm(root,{recursive:true,force:true});}
 });
 
@@ -88,6 +91,6 @@ test('保存双重分类的题目仍与独立 skill 检索互通',async()=>{
  const root=await mkdtemp(resolve('.test-vault-'));try{
   const store=new Store(adapter(root)),scope={...s,knowledge_tree_id:11},tree=[{id:9,name:'函数',parent_id:0},{id:11,name:'一次函数',parent_id:9}];
   const q=questionFrom(raw,scope,true,convert);await store.save(q,{chapters:nodes,knowledge:tree},[]);
-  const check=spawnSync((process.env.TIZHUANG_TEST_PYTHON || 'python'),['tests/cross_skill_combined.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);
+  const check=spawnSync(PYTHON,['tests/cross_skill_combined.py',root],{encoding:'utf8'});assert.equal(check.status,0,check.stderr||check.stdout);
  }finally{await rm(root,{recursive:true,force:true});}
 });
