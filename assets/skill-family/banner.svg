@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="480" viewBox="0 0 1600 480" role="img" aria-labelledby="title desc">
+<title id="title">题庄 · 好题，从找到到用好。</title>
+<desc id="desc">在线题库帮你找到真题，本地题库把好题留在自己电脑。两个独立技能，各自安装，按需使用。</desc>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#263d33" stroke-opacity=".055"/></pattern>
+<linearGradient id="paper"><stop stop-color="#f4edd9"/><stop offset="1" stop-color="#edf1e8"/></linearGradient>
+</defs>
+<rect width="1600" height="480" rx="20" fill="url(#paper)"/><rect width="1600" height="480" rx="20" fill="url(#grid)"/>
+<path d="M1120 0v480M1480 0v480" stroke="#253d33" stroke-opacity=".08"/>
+<circle cx="1410" cy="250" r="206" fill="none" stroke="#285647" stroke-opacity=".1"/>
+<circle cx="1410" cy="250" r="150" fill="none" stroke="#285647" stroke-opacity=".08"/>
+<g font-family="Noto Serif CJK SC, SimSun, serif" font-weight="700">
+<text x="78" y="102" font-size="55" fill="#1a3029">题</text><text x="115" y="119" font-size="55" fill="#ac4433">庄</text>
+<text x="78" y="244" font-size="76" fill="#192e27">好题，从找到到用好。</text>
+</g>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, sans-serif">
+<text x="211" y="104" font-size="20" fill="#52665b" letter-spacing="5">AGENT SKILLS</text>
+<text x="82" y="306" font-size="28" fill="#4c6055">让 Agent 找真题，让好题留在自己的电脑。</text>
+<path d="M82 354h790" stroke="#263d33" stroke-opacity=".2"/>
+<text x="82" y="402" font-size="21" fill="#285647">两个独立技能</text><text x="300" y="402" font-size="21" fill="#52665b">按需安装</text><text x="478" y="402" font-size="21" fill="#52665b">普通用户免费开始</text>
+<rect x="1080" y="106" width="410" height="115" rx="6" fill="#204a3c"/>
+<text x="1110" y="146" font-size="15" fill="#c5d6c9" letter-spacing="3">01 / ONLINE</text><text x="1110" y="190" font-size="29" fill="#fffbee">在线题库 · 找到合适的题</text>
+<rect x="1112" y="252" width="410" height="115" rx="6" fill="#fffdf5" stroke="#bac6b8"/>
+<text x="1142" y="292" font-size="15" fill="#a34433" letter-spacing="3">02 / LOCAL</text><text x="1142" y="336" font-size="29" fill="#253d33">本地题库 · 积累自己的题</text>
+</g></svg>
