@@ -36,12 +36,12 @@ test('勾选和全选联动保存数量，已保存题目不可再次保存，�
  view.setDisabled(true);assert.equal(view.saveButton.disabled,true);assert.equal(view.selectAll.disabled,true);view.lock=false;view.setDisabled(false);assert.equal(view.saveButton.disabled,false);
  assert.deepEqual([...view.results.querySelectorAll('.tz-type')].map(e=>e.textContent),['选择题','判断题','未分类']);assert.ok(!view.results.textContent.includes('网站题号'));assert.ok(!view.results.textContent.includes('选择此题'));assert.equal(h.calls.filter(c=>c.url.includes('/questions')).length,0);h.dom.window.close();
 });
-test('真实面板代码：中文菜单、级联清空、收费确认、可重试保存，无二次取题',async()=>{
+test('真实面板代码：中文菜单、级联清空、直接获取、防重复点击、可重试保存，无二次取题',async()=>{
  const h=harness(),plugin=new h.default();await plugin.onload();const view=new h.BankView({app:h.app},plugin);await view.onOpen();assert.equal(view.getDisplayText(),'题庄本地题库');assert.equal(plugin.commands[0].name,'打开本地题库');
  choose(h,view,'subject_id',2);choose(h,view,'phase_id',2);await settled(view);choose(h,view,'edition_id',59);await settled(view);choose(h,view,'chapter_id',10);
  choose(h,view,'edition_id',142);await settled(view);assert.equal(view.scope.chapter_id,null);assert.equal(view.inputs.chapter_id.value,'');choose(h,view,'edition_id',59);await settled(view);choose(h,view,'chapter_id',10);view.count.value='1';
  await view.run(()=>view.fetch());assert.match(view.status.textContent,/自己的/);assert.equal(h.calls.filter(c=>c.url.includes('/questions')).length,0);
- await plugin.setKey('fixture-own-key',false);const fetching=view.run(()=>view.fetch());await Promise.resolve();const modal=h.doc.querySelector('.test-modal');assert.ok(modal.textContent.includes('确认获取并扣减额度'));[...modal.querySelectorAll('button')].find(b=>b.textContent==='确认获取并扣减额度').click();await fetching;
+ await plugin.setKey('fixture-own-key',false);view.fetchButton.click();assert.equal(view.fetchButton.disabled,true);view.fetchButton.click();await settled(view);assert.equal(h.doc.querySelector('.test-modal'),null);assert.equal(h.calls.filter(c=>c.url.includes('/questions')).length,1);
  assert.equal(view.batch.items.length,1);assert.ok(view.results.textContent.includes('B. 第二项'));assert.ok(!view.results.textContent.includes('steal'));assert.ok(view.batch.items[0].raw.title_html.includes('script'));
  const realSave=plugin.store.save.bind(plugin.store);plugin.store.save=async()=>{throw Error('模拟磁盘故障');};await view.run(()=>view.saveBatch());assert.ok(!view.batch.items[0].saved);assert.match(view.status.textContent,/无需重新取题/);
  plugin.store.save=realSave;await view.run(()=>view.saveBatch());assert.ok(view.batch.items[0].saved);assert.equal(h.calls.filter(c=>c.url.includes('/questions')).length,1);
@@ -68,14 +68,14 @@ test('左树章节/知识点带入同一面板，记住范围和开关，点击�
 });
 test('知识点取题不会夹带旧教材和章节，保存后有知识树快照',async()=>{
  const h=harness(),plugin=new h.default();await plugin.onload();const view=new h.BankView({app:h.app},plugin);await view.onOpen();await view.applyContext({mode:'knowledge',scope:{subject_id:2,phase_id:2,knowledge_tree_id:1489}});await plugin.setKey('own-fixture',false);
- view.count.value='1';const p=view.run(()=>view.fetch());for(let i=0;i<10&&!h.doc.querySelector('.test-modal');i++)await Promise.resolve();const modal=h.doc.querySelector('.test-modal');[...modal.querySelectorAll('button')].find(b=>b.textContent==='确认获取并扣减额度').click();await p;await view.run(()=>view.saveBatch());
+ view.count.value='1';await view.run(()=>view.fetch());assert.equal(h.doc.querySelector('.test-modal'),null);await view.run(()=>view.saveBatch());
  const url=new URL(h.calls.find(c=>c.url.includes('/questions')).url);assert.equal(url.searchParams.get('knowledge_tree_id'),'1489');assert.equal(url.searchParams.has('edition_id'),false);assert.equal(url.searchParams.has('chapter_id'),false);
  assert.ok(h.files.get('.bank/taxonomy/2-2.json').includes('tizhuang.taxonomy/v1'));const note=[...h.files].find(([k])=>k.startsWith('题目库/')&&k.endsWith('.md'))[1];assert.ok(note.includes('知识节点编号:'));assert.ok(note.includes('教材版本编号: null'));h.dom.window.close();
 });
 test('取题 HTTP 500 明确显示状态并核对额度，收费请求只发一次',async()=>{
  const h=harness(),plugin=new h.default();await plugin.onload();const view=new h.BankView({app:h.app},plugin);await view.onOpen();await view.applyContext({mode:'chapter',scope:{subject_id:2,phase_id:2,edition_id:59,chapter_id:10,grade_id:201}});await plugin.setKey('own-fixture',false);
  const original=plugin.api.transport;let requests=0;plugin.api.transport=async p=>{if(p.url.includes('/questions')){requests++;return{status:500,json:{detail:'Internal Server Error'}};}return original(p);};
- view.count.value='1';const p=view.run(()=>view.fetch());for(let i=0;i<10&&!h.doc.querySelector('.test-modal');i++)await Promise.resolve();const modal=h.doc.querySelector('.test-modal');[...modal.querySelectorAll('button')].find(b=>b.textContent==='确认获取并扣减额度').click();await p;
+ view.count.value='1';await view.run(()=>view.fetch());assert.equal(h.doc.querySelector('.test-modal'),null);
  assert.equal(requests,1);assert.match(view.status.textContent,/HTTP 500/);assert.match(view.status.textContent,/0 → 0/);assert.match(view.quota.textContent,/剩余 10 题/);assert.match(view.quota.getAttribute('aria-label'),/剩余题目额度：10/);assert.equal(view.batch,null);h.dom.window.close();
 });
 test('加载目录时仍可切换版本，迟到的旧目录不能覆盖新选择',async()=>{

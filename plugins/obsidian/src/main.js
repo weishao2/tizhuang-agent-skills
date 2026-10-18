@@ -2,7 +2,7 @@ import {renderNavigation} from './navigation.js';
 import {openDirectory} from './directory-navigation.js';
 import {renderBrand} from './brand.js';
 import {PaperBasket} from './paper-basket.js';
-import {Plugin, ItemView, PluginSettingTab, Setting, Modal, Notice, requestUrl, MarkdownRenderer} from 'obsidian';
+import {Plugin, ItemView, PluginSettingTab, Setting, Notice, requestUrl, MarkdownRenderer} from 'obsidian';
 import DOMPurify from 'dompurify';
 import TurndownService from 'turndown';
 import {Api, Store, BASE, validateChapters, validateKnowledge, requireScope, questionFrom, localize, redacted, contextFromProperties, cursorKey, directoryNodes, queryFilters} from './core.js';
@@ -30,11 +30,6 @@ const button=(parent,text,run,kind='secondary')=>{const b=node(parent,'button',t
 const label=(parent,text)=>node(parent,'label',text,'tz-label');
 const iconButton=(parent,title,run,icon)=>{const b=button(parent,'',run,'quiet');b.classList.add('tz-icon-button');b.title=title;b.setAttribute('aria-label',title);const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',icon);svg.append(path);b.append(svg);return b;};
 const icons={website:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18',key:'M7 10a5 5 0 1 0 0 10 5 5 0 0 0 0-10M10.5 11.5 21 1M18 4l3 3M15 7l3 3',refresh:'M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 3M5 15a8 8 0 0 0 13 3',node:'M4 4h16v16H4zM8 9h8M8 13h5',clear:'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5m4-5v5',open:'M14 4h6v6M20 4 10 14M10 4H4v16h16v-6'};
-class SpendModal extends Modal{
-  constructor(app,summary,resolve){super(app);this.summary=summary;this.resolve=resolve;this.accepted=false;}
-  onOpen(){node(this.contentEl,'h2','确认获取题目');node(this.contentEl,'p',this.summary);node(this.contentEl,'p','按网站实际返回的题数扣减今日额度。再次获取也会扣额，本地重复题不会退额。');const actions=node(this.contentEl,'div',null,'tz-actions');button(actions,'取消',()=>this.close());button(actions,'确认获取并扣减额度',()=>{this.accepted=true;this.close();},'primary');}
-  onClose(){this.resolve(this.accepted);this.contentEl.replaceChildren();}
-}
 class CredentialsTab extends PluginSettingTab{
   constructor(app,plugin){super(app,plugin);this.plugin=plugin;}
   display(){
@@ -166,8 +161,7 @@ export class BankView extends ItemView{
     queryFilters(this.scope,this.directory());const count=Number(this.count.value);if(!Number.isInteger(count)||count<1||count>20)throw Error('每次获取题数须为 1 到 20。');
     if(!this.plugin.getKey())throw Error('请先在插件设置中填写自己的题庄 API Key。');
     if(this.batch?.items.some(i=>!i.saved))throw Error('上批题目尚未全部保存，请先保存或点击「清空结果」再获取，避免重复扣额。');
-    const s={...this.scope};const title=this.scopeText()+(!s.chapter_id&&!s.knowledge_tree_id?'（当前学段知识树范围）':'');
-    const yes=await new Promise(resolve=>new SpendModal(this.app,`${title}：最多获取 ${count} 题，使用自己的额度。`,resolve).open());if(!yes){this.say('已取消获取，未发送取题请求。');return;}
+    const s={...this.scope};
     // Check local format/writability before spending the user's quota.
     await this.plugin.store.init();await this.plugin.store.mkdir('.bank/pending');
     this.say('正在获取题目，请勿重复点击……');

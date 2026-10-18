@@ -9,7 +9,7 @@ const directory={chapters:[{id:10,name:'第一章',parent_id:0,subject_id:2,phas
 const choose=(h,v,key,value)=>{v.inputs[key].value=String(value);v.inputs[key].dispatchEvent(new h.dom.window.Event('change'));};
 async function settled(v){for(let i=0;i<150;i++){await new Promise(r=>setTimeout(r,1));if(!v.lock&&!v.loading)return;}throw Error('界面未结束加载');}
 async function setup(){const h=harness(),p=new h.default();await p.onload();const v=new h.BankView({app:h.app},p);await v.onOpen();choose(h,v,'subject_id',2);choose(h,v,'phase_id',2);await settled(v);return{h,p,v};}
-async function fetch(h,p,v){await p.setKey('local-test-key',false);v.count.value='1';const job=v.run(()=>v.fetch());for(let i=0;i<20&&!h.doc.querySelector('.test-modal');i++)await Promise.resolve();const modal=h.doc.querySelector('.test-modal');assert.ok(modal,v.status.textContent);[...modal.querySelectorAll('button')].find(b=>b.textContent==='确认获取并扣减额度').click();await job;}
+async function fetch(h,p,v){await p.setKey('local-test-key',false);v.count.value='1';await v.run(()=>v.fetch());assert.equal(h.doc.querySelector('.test-modal'),null);}
 
 test('章节和知识点二选一，留空时仍限定学段，数组为重复参数',async()=>{
  assert.deepEqual(queryFilters(scope,directory),{subject_id:2,edition_id:59,grade_id:201,knowledge_tree_ids:[1480,1500]});

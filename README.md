@@ -35,8 +35,8 @@
 <li><strong>按树和标签找题</strong>：知识点分类、检索、核对与复用。</li>
 <li><strong>可视化组卷</strong>：调整题序与分值，导出学生卷和教师答案 Word。</li>
 </ul>
-<p><strong>Skill 1.0.0 · 插件 1.0.0</strong> · 更新于 2026-10-18</p>
-<p><a href="docs/local-bank/README.md"><strong>介绍与安装 →</strong></a> · <a href="docs/local-bank/USER_GUIDE.md">图文教程</a> · <a href="downloads/local-bank/v1.0.0/tizhuang-local-bank-starter-v1.0.0.zip">下载起步包</a></p>
+<p><strong>Skill 1.0.1 · 插件 1.0.1</strong> · 更新于 2026-10-18</p>
+<p><a href="docs/local-bank/README.md"><strong>介绍与安装 →</strong></a> · <a href="docs/local-bank/USER_GUIDE.md">图文教程</a> · <a href="downloads/local-bank/v1.0.1/tizhuang-local-bank-starter-v1.0.1.zip">下载起步包</a></p>
 </td>
 </tr>
 </table>
@@ -67,7 +67,7 @@ npx skills add weishao2/tizhuang-agent-skills --skill question-bank
 
 > 请按 https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/main/docs/local-bank/INSTALL.md 帮我安装题庄本地题库。检查环境，安装 Skill 和 Obsidian 插件，创建空白题库；保留已有题目与配置，不改在线题库 Skill。安装后运行环境体检。
 
-[直接下载空白题库＋插件＋Skill](downloads/local-bank/v1.0.0/tizhuang-local-bank-starter-v1.0.0.zip) · [详细安装步骤](docs/local-bank/INSTALL.md)
+[直接下载空白题库＋插件＋Skill](downloads/local-bank/v1.0.1/tizhuang-local-bank-starter-v1.0.1.zip) · [详细安装步骤](docs/local-bank/INSTALL.md)
 
 普通用户可免费开始，网站取题按账户额度计算；本地保存和组卷不重复扣取题额度。PDF 识别需要具备文件与图像处理能力的 Agent，正式使用前由老师核对；第三方 Agent 或模型可能另行收费。
 

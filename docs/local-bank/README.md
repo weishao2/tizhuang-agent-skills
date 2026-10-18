@@ -40,7 +40,7 @@ Agent 查看原页、识别题干和答案，分别保存文字、公式与真�
 
 首次启用 Obsidian 第三方插件需本人确认。更新保留已有题目、图片、试卷和配置。
 
-- [完整起步包 1.0.0：空白题库＋插件＋Skill](../../downloads/local-bank/v1.0.0/tizhuang-local-bank-starter-v1.0.0.zip)
+- [完整起步包 1.0.1：空白题库＋插件＋Skill](../../downloads/local-bank/v1.0.1/tizhuang-local-bank-starter-v1.0.1.zip)
 - [安装与更新细节](INSTALL.md)
 - [老师图文使用教程](USER_GUIDE.md)
 
@@ -58,4 +58,4 @@ npx skills add weishao2/tizhuang-agent-skills --skill tizhuang-local-bank
 
 本地题库不要求安装在线题库 Skill。插件和 Skill 共用题目格式，既可在界面操作，也可由 Agent 操作。PDF 识别需要具备文件与图像处理能力的 Agent，结果由老师核对。离线存题、分类和组卷不重复消耗网站取题额度；第三方模型等费用按其自身规则。
 
-当前版本：Skill **1.0.0** / Obsidian 插件 **1.0.0** · 更新于 **2026-10-18** · [更新记录](CHANGELOG.md)。
+当前版本：Skill **1.0.1** / Obsidian 插件 **1.0.1** · 更新于 **2026-10-18** · [更新记录](CHANGELOG.md)。
