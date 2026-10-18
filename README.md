@@ -1,218 +1,37 @@
-# 题庄中小学真题题库 Skill
+# 题庄技能
 
-## 题庄工具家族
+题庄的两个免费 Agent 技能，各自独立安装、独立更新。本仓库只是目录，详细介绍、安装和教程在各技能的文档里。
 
-| 工具 | 用途 | 入口 |
-| --- | --- | --- |
-| 原 `question-bank` | 在线取题、在线练习与网站组卷 | 下方原有安装方式保持不变 |
-| 新 `tizhuang-local-bank` + Obsidian 插件 | 老师本地存题、PDF 导入、分类与 Word 组卷 | [完整起步包 2.5.1](downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip) · [老师图文使用说明（9 张截图）](docs/local-bank/USER_GUIDE.md) |
+[官网](https://tizhuang.qcscience.cc/) · [在线组卷](https://tizhuang.qcscience.cc/builder) · [价格与合作](https://tizhuang.qcscience.cc/pricing)
 
-**第一次拿到本地题库？[从这里开始](docs/local-bank/USER_GUIDE.md#install)**：安装 → 打开 Obsidian → 网站取题 / 导入 PDF → 分类 → 勾选组卷 → 编辑 Word。下载包内双击 `先看这里.html`，也能离线阅读。
-
-**[交给 Agent 自动安装 / 更新](docs/local-bank/INSTALL.md)**：检查版本，缺少就安装、旧版更新、同版或较新版本跳过，保留题目与配置。
-
-**同仓库维护，各自独立安装。** 新包包含空白题库、插件和新 skill；已有题库的人只更新需要的组件，空白库可忽略。不会替换原 `question-bank`，无需同时安装两个 skill。未来视频工具可通过题目文件包协作，当前尚未发布。
-
----
-
-
-[![skills.sh](https://skills.sh/b/weishao2/tizhuang-agent-skills)](https://skills.sh/weishao2/tizhuang-agent-skills)
-[![K12 题库](https://img.shields.io/badge/K12%20题库-2000万%2B-C74632)](https://tizhuang.qcscience.cc/)
-[![免费使用](https://img.shields.io/badge/免费使用-注册后200题%2F日起-167A5A)](https://tizhuang.qcscience.cc/account?mode=register)
-[![License](https://img.shields.io/badge/Skill-MIT--0-222222)](LICENSE)
-
-> 把 **2000 万+ 中小学 K12 真题题库**接入 Codex、Claude Code、Cursor、DeepSeek Harness 等主流 Agent。免费抽题、精准找题、在线练习、测验与 AI 智能组卷，一句话即可开始。
-
-**[进入题庄官网](https://tizhuang.qcscience.cc/)** · **[免费注册](https://tizhuang.qcscience.cc/account?mode=register)** · **[查看完整安装说明](https://tizhuang.qcscience.cc/api/agent-install.md)**
-
-**Agent Skill Hub：[公开详情页](https://agentskillhub.dev/u/weishao2/sk/question-bank)**
-
-**ClawHub：[题庄中小学真题题库](https://clawhub.ai/weishao2/tizhuang-question-bank)**
-
-题庄 Question Bank Skill 让 Codex、Claude Code、Cursor 等 AI Agent 可以直接检索和调用中小学 K12 题库。面向题庄公开展示的 **2000 万+ K12 题目资源储备**，按学科、年级、教材版本、章节、知识点、题型、难度、年份等条件免费抽题、随机抽题、精准找题，并生成练习、测验和组卷要求。
-
-适用于老师备课、学生练习、家长辅导、同步训练、章节测验、知识点巩固、单元测试、期中期末复习、历年真题训练和 AI 智能组卷等中小学教育场景。
-
-> 实际可检索题量、题目范围和筛选覆盖以题庄在线服务的实时返回为准。Skill 始终返回服务端真实题目，不虚构、不改写、不重排题干、选项、答案和解析。
-
-## 免费开始
-
-| 使用方式 | 免费额度 | 适合场景 |
-| --- | --- | --- |
-| 无需注册 | 24 小时内最多 100 题 | 先体验找题、抽题和临时练习 |
-| 免费注册 | 每日 200 题起 | 持续练习、保存试卷、分享与组卷 |
-| 临时练习页 | 创建后 7 天有效 | 在线答题、隐藏答案、A4 打印 |
-
-不要求先购买套餐，也不要求首次使用就注册。先让 Agent 帮你抽一组真实题目，觉得合适再免费注册继续使用。
-
-<p align="center">
-  <a href="https://tizhuang.qcscience.cc/">
-    <img src="assets/screenshots/homepage.png" alt="题庄官网首页：AI 时代的知识银行" width="100%" />
-  </a>
-</p>
-
-## 核心能力
-
-### 1. 免费抽题、随机抽题
-
-- 不注册即可开始免费抽题。
-- 游客可获得 24 小时、最多 100 题的匿名免费试用。
-- **免费注册即可获得每天 200 题起的免费额度，继续找题、抽题、测验和组卷。**
-- 支持随机抽题、指定数量抽题、按条件抽题和带图题抽取。
-- 适合临时练习、课堂提问、每日一练、随堂测验和快速出题。
-
-### 2. 中小学 K12 真题检索
-
-- 覆盖语文、数学、英语、物理、化学、生物、历史、地理、政治、科学、道德与法治、历史与社会等学科。
-- 支持小学、初中、高中 K12 题目检索。
-- 支持按年级、学段、教材版本、册次、章节和知识点精准找题。
-- 支持按选择题、填空题、判断题、简答题等题型筛选。
-- 支持按难度、年份、关键词、是否带图等条件组合检索。
-- 支持教材、章节、知识点、知识树多条件交叉检索。
-
-### 3. 练习、测验、在线答题
-
-- 一句话生成隐藏答案、7 天有效的临时练习页。
-- 支持章节练习、知识点练习、同步练习、专项训练和综合测验。
-- 支持单题问答、答题检查、标准答案和解析讲解。
-- 多题任务默认生成练习页，避免在聊天中重复堆放题目和答案。
-- 支持在线练习与试卷式查看，适合课堂、家庭作业和自测。
-
-### 4. AI 智能组卷
-
-- 将自然语言组卷要求解析为学科、年级、教材、章节、知识点、题型、难度和题量等结构化条件。
-- 支持将明确的组卷要求衔接到 AI 组卷流程，减少重复筛题和整理工作。
-- 支持练习卷、测试卷、单元卷、专题卷、期中卷、期末卷和复习卷等组卷场景。
-- 保留原始组卷条件，避免静默扩大教材、章节或知识点范围。
-
-### 5. 真实题目与答案解析
-
-- 后端题库是唯一事实来源。
-- 保留题目 ID、题干、选项、复合小题、图片、标准答案和解析。
-- 默认先隐藏答案，学生作答后再进行答案检查或讲解。
-- 请求失败时直接报告失败，不使用 AI 编造“看起来合理”的假题。
-
-## 官网与使用实景
-
-### 选择你的 Agent，一条命令接入
-
-<p align="center">
-  <img src="assets/screenshots/agent-install.png" alt="题庄官网 Agent Skill 安装区域" width="100%" />
-</p>
-
-### Agent 生成真实在线练习
-
-练习页保留题目原文、图片和公式，提交前隐藏答案；相比把整套题复制进聊天，在线答题和打印的显示效果更完整。
-
-<p align="center">
-  <img src="assets/screenshots/online-practice.png" alt="题庄真实在线练习页" width="100%" />
-</p>
-
-## 支持的检索条件
-
-| 维度 | 示例 |
-| --- | --- |
-| 学科 | 语文、数学、英语、物理、化学、生物、历史、地理 |
-| 学段与年级 | 小学、初中、高中；一年级至高三 |
-| 教材 | 人教版、部编版及服务端当前提供的教材版本 |
-| 范围 | 册次、章节、单元、知识点、知识树分支 |
-| 题型 | 单选、多选、填空、判断、简答、复合题等 |
-| 难度 | 基础、中等、提高或难度区间 |
-| 其他 | 年份、关键词、题量、随机顺序、是否带图 |
+| 技能 | 一句话 | 版本 | 更新时间 | 文档 |
+| --- | --- | --- | --- | --- |
+| **题庄在线题库**<br />`question-bank` | 说出教材、章节和难度，让 Agent 从题庄真题库里找题。 | 1.0.3 | 2026-10-18 | [介绍与安装](docs/question-bank/README.md) · [官网](https://tizhuang.qcscience.cc/skills/question-bank) |
+| **题庄本地题库**<br />`tizhuang-local-bank` | 把网站好题和自己的 PDF 存进本地题库，组卷导出 Word。 | 2.5.1<br /><sub>插件 0.14.1</sub> | 2026-10-17 | [介绍与安装](docs/local-bank/README.md) · [官网](https://tizhuang.qcscience.cc/skills/tizhuang-local-bank) |
 
 ## 安装
 
-使用开放的 Agent Skills CLI 安装：
+**在线题库**
 
 ```bash
 npx skills add weishao2/tizhuang-agent-skills --skill question-bank
 ```
 
-指定安装到 Codex：
+**本地题库**：把下面这句话发给能读写本地文件的 Agent。
 
-```bash
-npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent codex
-```
+> 请按 https://tizhuang.qcscience.cc/local-bank/INSTALL.md 帮我安装题庄本地题库。先检查已有题库、插件和新 skill；没装就安装，旧版就更新，同版或更新版本就跳过。保留我的题目、图片、试卷和全部原配置，旧 question-bank skill 不动。安装后运行环境体检。
 
-安装到 Claude Code 或 Cursor：
-
-```bash
-npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent claude-code
-npx skills add weishao2/tizhuang-agent-skills --skill question-bank --agent cursor
-```
-
-Claude Code 也可以把本仓库作为插件市场安装：
+## 目录
 
 ```text
-/plugin marketplace add weishao2/tizhuang-agent-skills
-/plugin install tizhuang-question-bank@tizhuang-skills
+skills/question-bank/          在线题库 Skill
+skills/tizhuang-local-bank/    本地题库 Skill
+plugins/obsidian/              本地题库的 Obsidian 插件
+docs/question-bank/            在线题库文档
+docs/local-bank/               本地题库文档与更新记录
+downloads/local-bank/          本地题库起步包
 ```
-
-DeepSeek Harness 可以把本仓库作为原生 Bundle 安装到指定 profile：
-
-```bash
-dsh plugin --profile default add -w github:weishao2/tizhuang-agent-skills
-dsh --profile default --dump-config
-```
-
-随后用同一个 profile 启动 DeepSeek Harness。插件会把仓库中现有的 `question-bank` Skill 注册到 DSH 的技能目录，并保留 `scripts/` 与 `references/` 资源路径：
-
-```bash
-dsh --profile default web
-```
-
-不使用 Bundle 时，也可以把 `skills/question-bank` 复制到项目的 `.dsh/skills/question-bank` 或 `.agents/skills/question-bank`，由 DSH 文件系统技能提供方直接发现。
-
-仓库根目录同时提供开放的 Agent Plugin `plugin.json`，便于 Cursor 等兼容客户端直接识别和审核。
-
-Agent Skill Hub 安装：
-
-```bash
-npx skhub add weishao2/question-bank
-```
-
-OpenClaw / ClawHub 安装：
-
-```bash
-openclaw skills install @weishao2/tizhuang-question-bank
-```
-
-国内技能平台的全中文名称、简介、详情、关键词和版本说明见 [`marketplace/china-listing.md`](marketplace/china-listing.md)。
-
-## 使用示例
-
-```text
-用 $question-bank 随机抽 5 道八年级物理题，生成隐藏答案的练习页。
-```
-
-```text
-用 $question-bank 找人教版八年级一次函数知识点的 10 道中等难度真题。
-```
-
-```text
-用 $question-bank 生成一份小学六年级数学章节测验，20 道题，基础和中等难度为主。
-```
-
-```text
-用 $question-bank 按教材、章节、知识点和题量整理一份期末复习组卷要求。
-```
-
-```text
-Use $question-bank to create a five-question answer-hidden K12 physics quiz.
-```
-
-## 联系与合作
-
-如果你需要 Skill 安装与使用帮助、国内外 Agent / Skill 平台接入，或学校、教师、教培、教育产品、题库 API 与智能组卷合作，欢迎微信扫码联系。添加时请备注 **“题庄 Skill”**，方便快速对接。
-
-<p align="left">
-  <img src="assets/wechat-contact.png" alt="题庄微信联系方式" width="280" />
-</p>
-
-## 关键词
-
-K12 题库、中小学题库、中小学真题、小学题库、初中题库、高中题库、海量题库、2000 万题库、真题检索、题目检索、按条件找题、免费抽题、免费注册、随机抽题、智能抽题、在线抽题、章节找题、知识点找题、教材同步题、历年真题、同步练习、章节练习、知识点练习、专项训练、每日一练、随堂测验、在线测验、在线答题、练习题、练习卷、测试卷、单元测试、期中测试、期末测试、答案解析、AI 组卷、智能组卷、自动组卷、教师备课、学生练习、家庭作业、教育 Agent、题库 Skill、question bank、K12 questions、exam questions、quiz generator、practice generator、test generator、AI paper builder。
 
 ## License
 
-Skill 适配器源码使用 MIT License；ClawHub 上架版本按该平台要求以 MIT-0 发布。题庄题库内容及在线服务适用其各自的服务规则。
+Skill 适配器源码使用 MIT License；ClawHub 上架版本按该平台要求以 MIT-0 发布。题库内容及在线服务适用各自的服务规则。

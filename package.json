@@ -1,6 +1,6 @@
 {
   "name": "dsh-tizhuang-question-bank",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "题庄中小学 K12 真题检索、免费抽题、练习测验与智能组卷 DeepSeek Harness 插件。",
   "type": "module",
   "main": "./dsh-plugin.js",

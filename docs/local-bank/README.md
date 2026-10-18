@@ -1,72 +1,61 @@
-# 题庄本地题库 · 教师版
+# 题庄本地题库
 
-把自己的题目留在本地，用 Agent 存题、分类、检索和组卷；也可以在 Obsidian 中点击操作。
+**用过的好题，下次还找得到。**
 
-**[老师图文使用说明 · 从拿到包到生成 Word](USER_GUIDE.md)**
+把网站题目与自己的 PDF 试卷整理到本地，按知识点树和标签找题，勾选组卷，输出可继续编辑的 Word。
 
-9 张界面演示截图，按实际操作顺序讲安装、打开题库、网站取题、PDF 导入、知识点 / 标签分类和可视化组卷；另附可复制的 Agent 指令与常见问题。下载包内双击 **先看这里.html**，不用联网也能看，截图可放大。
+[返回题庄技能目录](../../README.md) · [官网详情](https://tizhuang.qcscience.cc/skills/tizhuang-local-bank) · [完整图文教程](USER_GUIDE.md)
 
-## 一句话安装
+## 看看实际效果
 
-把下面这句话发给你的 Agent：
+![原生 Obsidian 本地题库首页](../../assets/skill-family/local-home.png)
 
-> 请按 https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/main/docs/local-bank/INSTALL.md 帮我安装题庄本地题库。先检查已有题库、插件和新 skill；没装就安装，旧版就更新，相同或更新版本就跳过。保留我的题目和配置，旧 question-bank skill 不动。
+*原生 Obsidian 实录。画面是已有演示题库，空白起步包不预装这些题目。*
 
-已知题库路径时附上路径即可。Agent 会识别已有安装、检查版本、配置需要的独立 Python 环境。只有多个题库或原环境异常等不确定情况才需要选择。首次使用仍需在 Obsidian 中允许并启用插件；更新后重载插件，新 skill 安装后新开 Agent 会话。
+### PDF 变成可以编辑的题目
 
-**[下载完整起步包 2.5.1](../../downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip)** · **[Agent 安装流程](INSTALL.md)**
+Agent 查看原页、识别题干和答案，分别保存文字、公式与真实配图。导入后保持待核对，再由老师确认。
 
-包内为：空白题库、插件 0.14.1、新 skill 2.5.1、安装器和离线图文说明。不包含用户题目、PDF、知识树、账号或凭证；说明截图展示网站实际获取的带图数学题，不会导入你的题库。[校验值](../../downloads/local-bank/v2.5.1/SHA256SUMS.txt)。
+![原生 Obsidian 已整理的 PDF 图文题](../../assets/skill-family/local-pdf.png)
 
-## 已经安装过
+*已完成整理的真实示例，不表示点一次“导入”就自动完成所有识别和核对。*
 
-- 版本较旧：先备份，再更新程序文件。
-- 同版完整或已是更新版本：跳过，不降级。
-- 同版缺文件：补齐；有自定义程序修改时保留并提示。
-- 已有题库：忽略空白模板，保留题目、图片、试卷、首页、索引和配置。
-- 只需要某个组件：可以只装插件或只装新 skill。
+### 从选题到 Word
 
-安装器复用有效的原 Python 路径；没有路径时补入独立环境路径，其他设置原值保留。无效的原路径会报告需要处理，不擅自替换。旧 `question-bank` 的代码和环境不在安装范围。写入失败会回退替换的程序文件，备份路径随安装结果提供。
+本地勾选题目，调整顺序与分值，分别生成无答案试卷和教师答案版。
 
-## 可以做什么
+![原生 Obsidian 组卷篮](../../assets/skill-family/local-basket.png)
 
-- **网站取题**：按章节或知识点选题，使用自己的题庄凭证和题目额度，预览后存本地。
-- **分类浏览**：知识点树、教材章节、原生标签，一题一份正文，可关联多个考点。
-- **PDF 导入**：准备原页后，由 Agent 提取可编辑文字、LaTeX、独立配图和原答案，导入后待核对。
-- **自动分类**：明确考点标签匹配到唯一节点；不确定的交给 Agent，未知教材不猜章节。
-- **组卷**：勾题、调序、设置分值，生成无答案 Word、教师答案 Word 和 HTML 打印稿。
+![Microsoft Word 中继续编辑生成的试卷](../../assets/skill-family/local-word.png)
 
-本地保存、检索和组卷不扣网站题目额度。网站取题按网站规则扣额；新插件目录按账号“学段 × 学科”范围计数，默认 5 个，同范围重复使用不重复开通，管理员可增加。旧公开目录接口目前仍保留。
+*上述图片来自 2026-10-14 原生 Obsidian 与 Microsoft Word 录屏；当前包版本见下方。*
 
-## 给 Agent 的日常指令
+## 三步开始
 
-> 使用 tizhuang-local-bank，把这份 PDF 导入“我的题库路径”。逐页核对，保留文字、公式、独立配图与原答案；只分知识点，教材暂不选。
+1. 准备电脑、Obsidian 和能访问本地文件的 Agent。
+2. 把下面这段话交给 Agent，自动判断安装、更新或跳过，并检查环境。
+3. 打开自己的题库，从下载知识树、放入几道题、核对、组卷开始。
 
-> 从本地找 10 道已核对的一次函数题，基础题在前，每题 5 分，生成无答案 Word 和教师答案版。
+> 请按 https://tizhuang.qcscience.cc/local-bank/INSTALL.md 帮我安装题庄本地题库。先检查已有题库、插件和新 skill；没装就安装，旧版就更新，同版或更新版本就跳过。保留我的题目、图片、试卷和全部原配置，旧 question-bank skill 不动。安装后运行环境体检。
 
-原答案缺失时保持缺失；正式发卷前老师核对题干、答案和图片。Word 的修改不自动回写题库。避免 Agent 与插件同时写同一题库。
+首次启用 Obsidian 第三方插件需本人确认。更新保留已有题目、图片、试卷和配置。
 
-## 同仓库，独立工具
+- [完整起步包 2.5.1：空白题库＋插件＋Skill](../../downloads/local-bank/v2.5.1/tizhuang-local-bank-starter-v2.5.1.zip)
+- [安装与更新细节](INSTALL.md)
+- [老师图文使用教程](USER_GUIDE.md)
 
-| 工具 | 负责什么 | 安装关系 |
-| --- | --- | --- |
-| 原 `question-bank` | 网站真题检索、练习、网站组卷 | 独立安装，原文件不改 |
-| 新 `tizhuang-local-bank` | 本地存题、PDF、分类、检索、Word 组卷 | 不依赖旧 skill |
-| Obsidian 插件 | 本地题库可视化入口，直接从网站取题 | 不依赖任何已安装 skill |
-| 未来视频 skill | 将选定题目制成讲解视频 | 尚未实现；可通过题目包协作 |
+只想使用 Agent，可单独安装 Skill（不含 Obsidian 插件）：
 
-共用仓库便于统一入口和维护，不要求一起安装。各自独立目录、版本和更新规则；本地题不够不会自动触发扣额取题。详细约定见 [家族关系](../../skills/tizhuang-local-bank/references/family.md)。
+```bash
+npx skills add weishao2/tizhuang-agent-skills --skill tizhuang-local-bank
+```
 
-## 开发与验证
+## 装好后试着这样说
 
-- 新 skill 源码：`skills/tizhuang-local-bank`；安装器只依赖 Python 标准库。
-- 安装测试依赖：`python -m pip install -r tests/local-bank/requirements.txt`。
-- Python 测试：`python -m unittest discover -s tests/local-bank -v`。
-- 插件：在 `plugins/obsidian` 运行 `npm ci`、`npm test`。
-- 打包：构建插件后，在仓库根目录运行 `python tools/build-local-bank-release.py`，同时生成离线说明并校验 9 张配图。
-- 图文源稿：`docs/local-bank/USER_GUIDE.md`；单独构建离线说明：`python tools/build_local_bank_guide.py`。
-- 截图来源：实际插件组件 + 经授权获取的网站真题；离线截图过程不连接网站或读取私人题库。脚本为 `tools/capture-local-bank-guide.mjs`，需 Playwright、marked 及可用浏览器；可用 `TZ_GUIDE_EXAMPLES` 提供脱敏的演示数据，不指定时使用自编占位数据。原始接口结果不随包分发，截图记录见 `screenshots/capture.json`。
+```text
+用 tizhuang-local-bank 从我的本地题库找 8 道已核对的一次函数题，基础和中等难度为主，生成无答案试卷和教师答案 Word。
+```
 
-2.5.1 / 0.14.1 增加四步引导、环境检查和列表核对，修复可见知识目录缺失与标点标签分类。详见 [本次发布说明与验证范围](RELEASE-2.5.1.md)。
+本地题库不要求安装在线题库 Skill。插件和 Skill 共用题目格式，既可在界面操作，也可由 Agent 操作。PDF 识别需要具备文件与图像处理能力的 Agent，结果由老师核对。离线存题、分类和组卷不重复消耗网站取题额度；第三方模型等费用按其自身规则。
 
-官网也提供 [在线图文教程与下载](https://tizhuang.qcscience.cc/local-bank/guide.html)。
+当前版本：Skill **2.5.1** / Obsidian 插件 **0.14.1**。
