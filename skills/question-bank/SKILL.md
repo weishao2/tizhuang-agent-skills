@@ -41,7 +41,7 @@ Create a guest practice page with:
 python scripts/question_bank.py practice-page --subject-id 8 --limit 5 --random --title "物理小练习"
 ```
 
-Return only a short description, question count, expiry, and `page_url`. Include `paper_url` when the user asks for a printable or paper-style link. Recipients can switch between online practice and paper view on the same share page; both modes preserve source content and images, hide answers until submission, and expire together after 24 hours. Do not repeat questions or answers in chat.
+Return only a short description, question count, expiry, and `page_url`. Include `paper_url` when the user asks for a printable or paper-style link. Recipients can switch between online practice and paper view on the same share page; both modes preserve source content and images, hide answers until submission, and expire together after 7 days. Do not repeat questions or answers in chat.
 
 If the user explicitly asks for diagrams or illustrated questions, add `--with-images`. Do not infer that a subject has no images from an ordinary random sample.
 

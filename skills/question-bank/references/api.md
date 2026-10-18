@@ -33,7 +33,7 @@ Prefer `POST /v1/trial/practice-pages` for an anonymous learner and
 `POST /v1/practice-pages` for a configured License. Both accept the usual
 subject, grade, type, difficulty, year, textbook edition, chapter, knowledge,
 keyword, and limit
-filters in a JSON body. The response contains a 24-hour `page_url` for online
+filters in a JSON body. The response contains a 7-day `page_url` for online
 answering and a `paper_url` for paper-style viewing and printing. Recipients can
 switch between both views without creating another practice page.
 Set `has_images: true` when the learner explicitly requests illustrated questions.
