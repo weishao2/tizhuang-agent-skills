@@ -1,0 +1,12 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const src=fs.readFileSync(path.join(__dirname,'../assets/web/papers.js'),'utf8');
+const ctx=vm.createContext({});vm.runInContext(src.slice(src.indexOf('function paperTopics('),src.indexOf('const paperIcons=')),ctx);
+const catalogs=[{kind:'knowledge',subject_id:2,phase_id:2,nodes:[{id:8,name:'平行线'}]},{kind:'knowledge',subject_id:2,phase_id:3,nodes:[{id:8,name:'高中同号节点'}]},{kind:'chapter',subject_id:2,phase_id:2,edition_id:4,nodes:[{id:9,name:'第二章'}]},{kind:'chapter',subject_id:2,phase_id:2,edition_id:5,nodes:[{id:9,name:'其他教材'}]}];
+test('paper topics resolve snapshot scope and edition, with deduplication',()=>{const q={subject_id:2,phase_id:2,edition_id:4,knowledge_tree_ids:['8'],chapter_ids:['9']};const rows=ctx.paperTopics({classifications:[q,q]},catalogs);assert.deepEqual(JSON.parse(JSON.stringify(rows)),[{name:'平行线',kind:'知识点'},{name:'第二章',kind:'章节'}]);});
+test('old snapshots use source knowledge labels without inventing chapters',()=>{const rows=ctx.paperTopics({classifications:[{subject_id:2,phase_id:2,knowledge:'倒数、倒数',chapter_ids:[]}]},catalogs);assert.equal(rows.length,1);assert.equal(rows[0].name,'倒数');});
+test('unknown snapshot classifications remain empty',()=>assert.equal(ctx.paperTopics({},catalogs).length,0));
+const papers=[{id:'a',title:'旧名',display_title:'期中卷',created_at:'2026-11-01',tags:['复习'],scopes:[{phase_id:2,subject_id:2}],classifications:[{phase_id:2,subject_id:2,knowledge_tree_ids:[8]}]},{id:'b',title:'高中卷',created_at:'2026-11-03',tags:[],scopes:[{phase_id:3,subject_id:2}]}];
+const labels=p=>p.id==='a'?['初中数学']:['高中数学'];
+test('paper search matches renamed title, scope and knowledge',()=>{for(const query of ['期中','初中数学','平行线','复习'])assert.equal(ctx.filterPapers(papers,{query},catalogs,labels)[0].id,'a');assert.equal(ctx.filterPapers(papers,{query:'旧名'},catalogs,labels).length,0);});
+test('paper filters combine scope and tag and return empty results',()=>{assert.equal(ctx.filterPapers(papers,{scope:'2:2',tag:'复习'},catalogs,labels).length,1);assert.equal(ctx.filterPapers(papers,{scope:'3:2',tag:'复习'},catalogs,labels).length,0);});
+test('paper sorting does not reorder original snapshots',()=>{assert.equal(ctx.filterPapers(papers,{},catalogs,labels)[0].id,'b');assert.equal(ctx.filterPapers(papers,{order:'oldest'},catalogs,labels)[0].id,'a');assert.equal(papers[0].id,'a');});

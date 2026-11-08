@@ -1,0 +1,11 @@
+{
+  "skill": "tizhuang-studio",
+  "version": "1.0.0",
+  "updated": "2026-11-08",
+  "download_url": "https://tizhuang.qcscience.cc/studio/tizhuang-studio-v1.0.0.zip",
+  "sha256": "17f1bd62f99d27181b81bd87f583414554025378294c92dca465d27590493269",
+  "size": 637001,
+  "install_url": "https://tizhuang.qcscience.cc/studio/INSTALL.md",
+  "guide_url": "https://tizhuang.qcscience.cc/skills/tizhuang-studio#guide",
+  "minimum_python": "3.10"
+}

@@ -1,0 +1,226 @@
+[
+  {
+    "title": "反比例函数系数与矩形面积",
+    "content": "如图，点\\(Q(m\\text{,}n)(m\\text{ &gt; }1)\\)是反比例函数\\(y\\text{=}\\dfrac{1}{x}\\)上的动点，过\\(Q\\)分别作\\(x\\)轴，\\(y\\)轴的垂线，垂足分别为\\(A\\)，\\(B\\text{.}\\)随着\\(m\\)的增大，四边形\\(OAQB\\)的面积\\((\\quad)\\)<br><img src=\"Assets/1c9532d0e9028ac7940592005e62ac69d93264ba2ff355b405f2776dde26dbe3.png\" w=\"110px\" h=\"105px\" loading=\"lazy\" class=\"imgClass\"><br><p>A. 增大                        </p><p>B. 减小                        </p><p>C. 不确定                   </p><p>D. 不变</p>",
+    "answer": "<br>解：\\(BQ=m\\)，\\(AQ=n\\)，<br>则\\(S_{四边形OAQB}=BQ\\boldsymbol{⋅}AQ=mn.\\)<br>\\(∵Q(m,n)\\)在函数\\(y=\\dfrac{1}{x}(x&gt;0)\\)的图象上，<br>\\(∴mn=1.\\)<br>\\(∴S_{四边形OAQB}=BQ\\boldsymbol{⋅}AQ=1\\)，<br>\\(∴\\)随着\\(m\\)的增大，四边形\\(OAQB\\)的面积不变，都是\\(1.\\)<br>故选：\\(D.\\)<br></div>",
+    "analysis": "<div>【分析】<br>本题考查了反比例函数的性质以及矩形的面积的计算，利用\\(m\\)、\\(n\\)表示出四边形\\(OAQB\\)的面积是解题的关键．<br>首先利用\\(m\\)和\\(n\\)表示出\\(BQ\\)和\\(AQ\\)的长，则四边形\\(OAQB\\)的面积即可利用\\(m\\)、\\(n\\)表示，然后根据函数的性质判断．<br>",
+    "content_format": "html",
+    "type": "选择题",
+    "subject_id": 2,
+    "difficulty": 2.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "26961452",
+      "label": "作业9"
+    },
+    "id": "guide-26961452",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1507",
+      "1513",
+      "1510"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/1c9532d0e9028ac7940592005e62ac69d93264ba2ff355b405f2776dde26dbe3.png",
+        "sha256": "1c9532d0e9028ac7940592005e62ac69d93264ba2ff355b405f2776dde26dbe3"
+      }
+    ]
+  },
+  {
+    "title": "反比例函数图象的性质判断",
+    "content": "<img src=\"Assets/8d81daca3ae6bd89c8734cbd0d03a369f126646ab90322b30dda62a27faf493e.png\" w=\"126px\" h=\"141px\" loading=\"lazy\" style=\"vertical-align:middle;float:right\">反比例函数\\(y=-\\dfrac{m}{x}(m≠0)\\)的图象如图，以下结论：<br>①\\(m&lt; 0\\)；<br>②函数值\\(y\\)随\\(x\\)的增大而增大；<br>③若点\\(A(-3,a)\\)，\\(B(1,b)\\)在图象上，则\\(a&lt; b\\)；<br>④若点\\(P(x,y)\\)在图象上，则点\\(P&#x27;(-x,-y)\\)也在图象上．<br>其中正确的个数是\\((\\quad)\\)<p>A. \\(1\\)个</p><p>B. \\(2\\)个</p><p>C. \\(3\\)个</p><p>D. \\(4\\)个</p>",
+    "answer": "B",
+    "analysis": "<div>解：①函数图象经过第二、四象限，则\\(-m&lt; 0\\)，即\\(m&gt;0\\)，故错误；<img src=\"Assets/8d81daca3ae6bd89c8734cbd0d03a369f126646ab90322b30dda62a27faf493e.png\" w=\"126px\" h=\"141px\" loading=\"lazy\" style=\"vertical-align:middle;float:right\"><br>②如图所示，在每个分支上\\(y\\)随\\(x\\)的增大而增大，故错误；<br>③如图所示，若点\\(A(-3,a)\\)，点\\(B(1,b)\\)在图象上，则\\(a&gt;b\\)，故正确；<br>④因为函数图象关于原点对称，所以若点\\(P(x,y)\\)在图象上，则点\\(P&#x27;(-x,-y)\\)也在图象上，故正确．<br>综上所述，正确的结论有：③④\\(2\\)个．<br>故选：\\(B.\\)<br>根据函数图象所在的象限判定\\(k\\)的符号和函数图象的增碱性．<br>本题考查了反比例函数的性质．结合函数图象的增碱性和对称性来解题即可．</div>",
+    "content_format": "html",
+    "type": "选择题",
+    "subject_id": 2,
+    "difficulty": 2.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "26961448",
+      "label": "作业9"
+    },
+    "id": "guide-26961448",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1507",
+      "1509",
+      "1510"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/8d81daca3ae6bd89c8734cbd0d03a369f126646ab90322b30dda62a27faf493e.png",
+        "sha256": "8d81daca3ae6bd89c8734cbd0d03a369f126646ab90322b30dda62a27faf493e"
+      }
+    ]
+  },
+  {
+    "title": "二次函数图象与不等式",
+    "content": "<img src=\"Assets/7ba43b3ba13948da8439b85f62bcd08715949917a77727f93c2462955397ff83.png\" w=\"159px\" h=\"147px\" loading=\"lazy\" style=\"vertical-align:middle;float:right\">如图，抛物线\\(y=ax ^{2} +c\\)与直线\\(y=mx+n\\)交于两点\\(A(-2 , p)\\)，\\(B(5 , q)\\)，则不等式\\(ax ^{2} +mx+c\\leqslant n\\)的解集是______．",
+    "answer": "<div>\\(-5\\leqslant x\\leqslant 2\\)</div>",
+    "analysis": "<div>解：\\(∵\\)抛物线\\(y=ax ^{2} +c\\)与直线\\(y=mx+n\\)交于\\(A(-2 , p)\\)，\\(B(5 , q)\\)两点，<br>\\(∴-2m+n=p\\)，\\(5m+n=q\\)，<br>\\(∴\\)抛物线\\(y=ax ^{2} +c\\)与直线\\(y=-mx+n\\)交于\\(P(2 , p)\\)，\\(Q(-5 , q)\\)两点，<br><img src=\"Assets/17a2db6ac6a5302f94e0925c5d0a286a4ae9ff78c636cc1b7dd02bdd0fc4bb63.png\" w=\"159px\" h=\"147px\" loading=\"lazy\" style=\"vertical-align:middle\"><br>观察函数图象可知：当\\(-5\\leqslant x\\leqslant 2\\)时，<br>直线\\(y=-mx+n\\)在抛物线\\(y=ax ^{2} +c\\)的上方，<br>\\(∴\\)不等式\\(ax ^{2} +mx+c\\leqslant n\\)的解集是\\(-5\\leqslant x\\leqslant 2\\)．<br>故答案为\\(-5\\leqslant x\\leqslant 2\\)．<br>根据二次函数和一次函数的图象和性质即可求解．<br>本题考查了二次函数和不等式、二次函数与一次函数的交点，解决本题的关键是利用图象解决问题．</div>",
+    "content_format": "html",
+    "type": "填空题",
+    "subject_id": 2,
+    "difficulty": 4.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "24586756",
+      "label": "2020年浙江省金华市东阳市中考数学模拟试卷（5月份）"
+    },
+    "id": "guide-24586756",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1519",
+      "1531"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/17a2db6ac6a5302f94e0925c5d0a286a4ae9ff78c636cc1b7dd02bdd0fc4bb63.png",
+        "sha256": "17a2db6ac6a5302f94e0925c5d0a286a4ae9ff78c636cc1b7dd02bdd0fc4bb63"
+      },
+      {
+        "path": "Assets/7ba43b3ba13948da8439b85f62bcd08715949917a77727f93c2462955397ff83.png",
+        "sha256": "7ba43b3ba13948da8439b85f62bcd08715949917a77727f93c2462955397ff83"
+      }
+    ]
+  },
+  {
+    "title": "利用抛物线判断取值范围",
+    "content": "<img src=\"Assets/f58aa879bd5dafb2339ad1ee482ab1aded177c3d47d5f47dbe9591e35eb68290.png\" w=\"132px\" h=\"133px\" loading=\"lazy\" style=\"vertical-align:middle;float:right\">如图是二次函数\\(y=ax ^{2} +bx+c\\)的部分图象，由图象可知\\(ax ^{2} +bx+c &gt; 0\\)时\\(x\\)的取值范围是______．",
+    "answer": "<div>\\(-1 &lt; x &lt; 5\\)</div>",
+    "analysis": "<div>解：由图可知，二次函数图象为直线\\(x=2\\)， <br>所以，函数图象与\\(x\\)轴的另一交点为\\((-1 , 0)\\)， <br>所以，\\(ax ^{2} +bx+c &gt; 0\\)时\\(x\\)的取值范围是\\(-1 &lt; x &lt; 5\\)．<br>故答案为：\\(-1 &lt; x &lt; 5\\)．<br>根据二次函数的对称性求出函数图象与\\(x\\)轴的另一交点，再写出函数图象在\\(x\\)轴上方部分的\\(x\\)的取值范围即可．<br>本题考查了二次函数与不等式，此类题目一般都利用数形结合的思想求解，本题求出函数图象与\\(x\\)轴的另一个交点是解题的关键．</div>",
+    "content_format": "html",
+    "type": "填空题",
+    "subject_id": 2,
+    "difficulty": 1.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "24587992",
+      "label": "2020年江苏省扬州市邗江区梅岭中学中考数学一模试卷"
+    },
+    "id": "guide-24587992",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1519",
+      "1531"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/f58aa879bd5dafb2339ad1ee482ab1aded177c3d47d5f47dbe9591e35eb68290.png",
+        "sha256": "f58aa879bd5dafb2339ad1ee482ab1aded177c3d47d5f47dbe9591e35eb68290"
+      }
+    ]
+  },
+  {
+    "title": "圆与切线的几何证明",
+    "content": "<p>如图，AB为⊙O的直径，弦CD⊥AB，垂足为点E，CF⊥AF，且CF=CE．</p>\r\r<p><img src=\"Assets/68782ad3fa03d7aafa18017c4e900c2466d9572cd8d3f8cef388734788aa1a82.png\" width=\"158\" height=\"162\" loading=\"lazy\"></p>\r\r<p>（1）求证：CF是⊙O的切线；</p>\r\r<p>（2）若<img src=\"Assets/44f09186f861cd2ee228c9567c563cc71a22152b1117cdd6aaa7dc0c95f9dca7.png\" width=\"96\" height=\"42\" loading=\"lazy\">，求<img src=\"Assets/3dbf1fe736cda846045917d009eb8839de8ba1ef21fd1f8005deb569b859e2a4.png\" width=\"43\" height=\"46\" loading=\"lazy\">的值</p>\r\r<p> </p>",
+    "answer": "【答案】\r\r\r\r\r\r<p>(1)证明见解析；（2）<img src=\"Assets/8ec3c382d8c3a1e6df18e001a0bb465af01e7c3d0c33a3c85a143a7a6b523e85.png\" width=\"22\" height=\"42\" loading=\"lazy\">.</p>\r\r<p></p>",
+    "analysis": "<p></p>\r\r<p>试题分析：（1）首先连接OC，由CD⊥AB，CF⊥AF，CF=CE，即可判定AC平分∠BAF，由圆周角定理即可得∠BOC=2∠BAC，则可证得∠BOC=∠BAF，即可判定OC∥AF，即可证得CF是⊙O的切线；</p>\r\r<p>（2）由垂径定理可得CE=DE，即可得S<sub>△</sub><sub>CBD</sub>=2S<sub>△</sub><sub>CEB</sub>，由△ABC∽△CBE，根据相似三角形的面积比等于相似比的平方，易求得△CBE与△ABC的面积比，继而可求得<img src=\"Assets/8daa88ffe9e09b68993783c3854d985dc112442d037a91524a7a1bec5fbbd737.png\" width=\"37\" height=\"46\" loading=\"lazy\">的值．</p>\r\r<p>试题解析：（1）证明：连接OC．</p>\r\r<p><img src=\"Assets/f194e477fcac0b4bab1482e89b21bfa930fee6f7f8214299d5d34ffffe2dfe33.png\" width=\"158\" height=\"162\" loading=\"lazy\"></p>\r\r<p>∵CE⊥AB，CF⊥AF，CE=CF，</p>\r\r<p>∴AC平分∠BAF，即∠BAF=2∠BAC．</p>\r\r<p>∵∠BOC=2∠BAC，</p>\r\r<p>∴∠BOC=∠BAF．</p>\r\r<p>∴OC∥AF．</p>\r\r<p>∴CF⊥OC．</p>\r\r<p>∴CF是⊙O的切线．</p>\r\r<p>（2）【解析】<br>∵AB是⊙O的直径，CD⊥AB，</p>\r\r<p>∴CE=ED，∠ACB=∠BEC=90°．</p>\r\r<p>∴S<sub>△</sub><sub>CBD</sub>=2S<sub>△</sub><sub>CEB</sub>，∠BAC=∠BCE，</p>\r\r<p>∴△ABC∽△CBE．</p>\r\r<p>∴<img src=\"Assets/8daa88ffe9e09b68993783c3854d985dc112442d037a91524a7a1bec5fbbd737.png\" width=\"37\" height=\"46\" loading=\"lazy\">=<img src=\"Assets/7f5ba4b6db0eeaac43923e80b9398a225630d402368fbef769878d1b73c316c6.png\" width=\"46\" height=\"42\" loading=\"lazy\">=（sin∠BAC）<sup>2</sup>=<img src=\"Assets/16b6401ac6c2db839818e0aef5597476a7eb85d21538217287493493df51b015.png\" width=\"32\" height=\"42\" loading=\"lazy\">=<img src=\"Assets/d608e5d0a4b6a993130ee113dbb5729e4793ff18000c264089a4b8502ea1577f.png\" width=\"22\" height=\"42\" loading=\"lazy\">．</p>\r\r<p>∴<img src=\"Assets/8daa88ffe9e09b68993783c3854d985dc112442d037a91524a7a1bec5fbbd737.png\" width=\"37\" height=\"46\" loading=\"lazy\">=<img src=\"Assets/8ec3c382d8c3a1e6df18e001a0bb465af01e7c3d0c33a3c85a143a7a6b523e85.png\" width=\"22\" height=\"42\" loading=\"lazy\">．</p>\r\r<p>考点: 1.切线的判定；2.圆周角定理；3.相似三角形的判定与性质.</p>\r\r<p> </p>",
+    "content_format": "html",
+    "type": "解答题",
+    "subject_id": 2,
+    "difficulty": 1.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "5828469",
+      "label": "2013-2014学年广东省九年级上学期期末考试数学试卷（解析版）"
+    },
+    "id": "guide-5828469",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1612"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/7f5ba4b6db0eeaac43923e80b9398a225630d402368fbef769878d1b73c316c6.png",
+        "sha256": "7f5ba4b6db0eeaac43923e80b9398a225630d402368fbef769878d1b73c316c6"
+      },
+      {
+        "path": "Assets/3dbf1fe736cda846045917d009eb8839de8ba1ef21fd1f8005deb569b859e2a4.png",
+        "sha256": "3dbf1fe736cda846045917d009eb8839de8ba1ef21fd1f8005deb569b859e2a4"
+      },
+      {
+        "path": "Assets/d608e5d0a4b6a993130ee113dbb5729e4793ff18000c264089a4b8502ea1577f.png",
+        "sha256": "d608e5d0a4b6a993130ee113dbb5729e4793ff18000c264089a4b8502ea1577f"
+      },
+      {
+        "path": "Assets/8daa88ffe9e09b68993783c3854d985dc112442d037a91524a7a1bec5fbbd737.png",
+        "sha256": "8daa88ffe9e09b68993783c3854d985dc112442d037a91524a7a1bec5fbbd737"
+      },
+      {
+        "path": "Assets/16b6401ac6c2db839818e0aef5597476a7eb85d21538217287493493df51b015.png",
+        "sha256": "16b6401ac6c2db839818e0aef5597476a7eb85d21538217287493493df51b015"
+      },
+      {
+        "path": "Assets/8ec3c382d8c3a1e6df18e001a0bb465af01e7c3d0c33a3c85a143a7a6b523e85.png",
+        "sha256": "8ec3c382d8c3a1e6df18e001a0bb465af01e7c3d0c33a3c85a143a7a6b523e85"
+      },
+      {
+        "path": "Assets/44f09186f861cd2ee228c9567c563cc71a22152b1117cdd6aaa7dc0c95f9dca7.png",
+        "sha256": "44f09186f861cd2ee228c9567c563cc71a22152b1117cdd6aaa7dc0c95f9dca7"
+      },
+      {
+        "path": "Assets/68782ad3fa03d7aafa18017c4e900c2466d9572cd8d3f8cef388734788aa1a82.png",
+        "sha256": "68782ad3fa03d7aafa18017c4e900c2466d9572cd8d3f8cef388734788aa1a82"
+      },
+      {
+        "path": "Assets/f194e477fcac0b4bab1482e89b21bfa930fee6f7f8214299d5d34ffffe2dfe33.png",
+        "sha256": "f194e477fcac0b4bab1482e89b21bfa930fee6f7f8214299d5d34ffffe2dfe33"
+      }
+    ]
+  },
+  {
+    "title": "圆的综合计算与证明",
+    "content": "如图，BC是⊙O的直径，A是弦BD延长线上一点，切线DE平分AC于E．<br>（1）求证：AC是⊙O的切线；<br>（2）若AD：DB=3：2，AC=15，求⊙O的直径．<br><br><img src=\"Assets/d6a12082d9c85db5fc72fa735b03e4466813ce41618c395389c9e2abf8f7cb3a.png\" loading=\"lazy\">",
+    "answer": "【答案】（1）要证AC是⊙O的切线，只要证∠BCA=90°即可；<br>（2）切割线定理得出关于AD，AB的比例式，求出AB的长，再用勾股定理求出求⊙O的直径．<br><img src=\"Assets/08ccf9e326ff555f9a4a9530aaeb9035ee7e72644de0510330ed3a2eff51ea7a.png\" loading=\"lazy\">（1）证明：连接OD，CD；<br>∵切线DE平分AC于E，<br>∴∠ODE=90°，<br>∵BC是⊙O的直径，<br>∴在Rt△ADC中DE=CE；<br>∵OE=OE，OD=OC，<br>∴△ODE≌△OCE，<br>∴∠ACB=90°，<br>∴AC是⊙O的切线．<br><br>（2）</p>",
+    "analysis": "<p><br>∵AC是⊙O的切线；<br>∴AC•AC=AD•AB=AD•（AD+BD）AD：DB=3：2，<br>∴AD=3<img src=\"Assets/0bcba9ccd465327f66ceecd29d501f622fd2e94cf3934ffcddf91d972626e67c.png\" loading=\"lazy\">，AB=5<img src=\"Assets/0bcba9ccd465327f66ceecd29d501f622fd2e94cf3934ffcddf91d972626e67c.png\" loading=\"lazy\">，<br>∴BC=5<img src=\"Assets/c7243ec53bdc9c8c95e4c17559f4bd901107f182a9025d3f9386dcdf240f72b7.png\" loading=\"lazy\">．<br>",
+    "content_format": "html",
+    "type": "解答题",
+    "subject_id": 2,
+    "difficulty": 3.0,
+    "source": {
+      "kind": "website",
+      "provider": "tizhuang",
+      "external_id": "6345429",
+      "label": "《第24章 圆》2010年五三中学自主学习达标检测（B）（解析版）"
+    },
+    "id": "guide-6345429",
+    "phase_id": 2,
+    "knowledge_tree_ids": [
+      "1612",
+      "1625",
+      "1637"
+    ],
+    "demo": true,
+    "assets": [
+      {
+        "path": "Assets/c7243ec53bdc9c8c95e4c17559f4bd901107f182a9025d3f9386dcdf240f72b7.png",
+        "sha256": "c7243ec53bdc9c8c95e4c17559f4bd901107f182a9025d3f9386dcdf240f72b7"
+      },
+      {
+        "path": "Assets/0bcba9ccd465327f66ceecd29d501f622fd2e94cf3934ffcddf91d972626e67c.png",
+        "sha256": "0bcba9ccd465327f66ceecd29d501f622fd2e94cf3934ffcddf91d972626e67c"
+      },
+      {
+        "path": "Assets/08ccf9e326ff555f9a4a9530aaeb9035ee7e72644de0510330ed3a2eff51ea7a.png",
+        "sha256": "08ccf9e326ff555f9a4a9530aaeb9035ee7e72644de0510330ed3a2eff51ea7a"
+      },
+      {
+        "path": "Assets/d6a12082d9c85db5fc72fa735b03e4466813ce41618c395389c9e2abf8f7cb3a.png",
+        "sha256": "d6a12082d9c85db5fc72fa735b03e4466813ce41618c395389c9e2abf8f7cb3a"
+      }
+    ]
+  }
+]

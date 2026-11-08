@@ -1,87 +1,60 @@
 <p align="center"><img src="assets/skill-family/banner.svg" alt="题庄 · 好题，从找到到用好" width="100%" /></p>
 
-<p align="center">
-  <a href="https://tizhuang.qcscience.cc/">题庄官网</a> ·
-  <a href="https://tizhuang.qcscience.cc/builder">在线组卷</a> ·
-  <a href="https://tizhuang.qcscience.cc/pricing">免费额度与合作</a>
-</p>
+<p align="center"><a href="https://tizhuang.qcscience.cc/">题庄官网</a> · <a href="https://tizhuang.qcscience.cc/builder">在线组卷</a> · <a href="https://tizhuang.qcscience.cc/pricing">免费额度与合作</a></p>
 
-## 你需要哪一个？
+**缺合适的题，用在线题库；想把好题积累下来，用题库工作台。** 两个技能独立安装。这里是统一目录，各自的安装和教程都在下面。
 
-**缺合适的题，用在线题库；想把好题积累下来，用本地题库。** 两个 Skill 独立安装，不需要先装另一个。这个仓库是统一入口，详细教程放在各自文档中。
-
-<table>
-<tr>
-<td width="50%" valign="top">
-<h3>01 · 题庄在线题库</h3>
-<p><strong>说出备课要求，让 Agent 帮你找真题。</strong></p>
-<a href="docs/question-bank/README.md"><img src="assets/skill-family/online-questions.png" alt="在线题库真实截图：数学题干、公式与练习页面" width="100%" /></a>
-<p>适合备课找题、单元复习、专题训练和课堂测验。</p>
-<ul>
-<li><strong>按条件找题</strong>：学科、教材、章节、知识点、题型和难度。</li>
-<li><strong>保留原题</strong>：题干、公式、配图、答案与解析。</li>
-<li><strong>接着组卷</strong>：生成练习，在网站继续编辑、分享与打印。</li>
-</ul>
-<p><strong>1.0.3</strong> · 更新于 2026-10-18</p>
-<p><a href="docs/question-bank/README.md"><strong>介绍与安装 →</strong></a> · <a href="docs/question-bank/客户端安装.md">客户端安装方式</a> · <a href="docs/question-bank/CHANGELOG.md">更新记录</a></p>
-</td>
-<td width="50%" valign="top">
-<h3>02 · 题庄本地题库</h3>
-<p><strong>用过的好题，下次还找得到。</strong></p>
-<a href="docs/local-bank/README.md"><img src="assets/skill-family/local-home.png" alt="Obsidian 本地题库真实截图：首页、题目与导入进度" width="100%" /></a>
-<p>适合老师整理 PDF 试卷、沉淀教学题库和反复组卷。</p>
-<ul>
-<li><strong>题目留在本地</strong>：网站取题或由 Agent 整理 PDF 入库。</li>
-<li><strong>按树和标签找题</strong>：知识点分类、检索、核对与复用。</li>
-<li><strong>可视化组卷</strong>：调整题序与分值，导出学生卷和教师答案 Word。</li>
-</ul>
-<p><strong>Skill 1.0.1 · 插件 1.0.1</strong> · 更新于 2026-10-18</p>
-<p><a href="docs/local-bank/README.md"><strong>介绍与安装 →</strong></a> · <a href="docs/local-bank/USER_GUIDE.md">图文教程</a> · <a href="downloads/local-bank/v1.0.1/tizhuang-local-bank-starter-v1.0.1.zip">下载起步包</a></p>
-</td>
-</tr>
-</table>
-
-> 截图来自实际网站与 Obsidian 演示题库，空白起步包不预装这些题目。[截图来源与版本说明](assets/skill-family/截图来源.md)
-
-## 从找到一道题，到留下一份好试卷
-
-| 在线找题 | 本地积累 | 再次使用 |
-| :--- | :--- | :--- |
-| 告诉 Agent 教材、章节与要求，返回真实题目。 | 保存网站好题，或把自己的 PDF 整理成可编辑题目。 | 按知识点检索，核对后组卷，导出可编辑 Word。 |
-
-<details>
-<summary><strong>看看本地组卷与 Word 的实际效果</strong></summary>
-<p><img src="assets/skill-family/local-basket.png" alt="组卷篮：题序、分值和学生卷教师卷导出" width="100%" /></p>
-<p><img src="assets/skill-family/local-word.png" alt="在 Microsoft Word 中继续编辑导出的试卷" width="100%" /></p>
-</details>
+<table><tr><td width="50%" valign="top">
+<h3>01 · 在线题库</h3>
+<p><strong>说出要求，让 Agent 找真题。</strong></p>
+<a href="docs/question-bank/README.md"><img src="assets/skill-family/online-questions.png" alt="题庄网站真实题目页面" width="100%" /></a>
+<ul><li>按学段、学科、知识点或教材章节找题。</li><li>保留题干、公式、配图、原答案与解析。</li><li>接着在网站组卷、分享与打印。</li></ul>
+<p><code>question-bank</code> · <strong>1.0.3</strong> · 2026-10-18</p>
+<p><a href="docs/question-bank/README.md">介绍与安装 →</a> · <a href="https://tizhuang.qcscience.cc/skills/question-bank">官网详情</a></p>
+</td><td width="50%" valign="top">
+<h3>02 · 题库工作台</h3>
+<p><strong>好题留下来，备课接着用。</strong></p>
+<a href="skills/tizhuang-studio/README.md"><img src="assets/skill-family/studio-library.png" alt="工作台真实界面：知识点树、标签与本机保存的题目" width="100%" /></a>
+<ul><li>网站取题、PDF 导入、自编题，保存到自己的电脑。</li><li>知识点树、教材章节、标签和搜索，题目反复复用。</li><li>Agent 与页面共用组卷篮，调序改分，导出 Word 双版。</li></ul>
+<p><code>tizhuang-studio</code> · <strong>1.0.0</strong> · 2026-11-08 · 无需 Obsidian</p>
+<p><a href="docs/studio/INSTALL.md">介绍与安装 →</a> · <a href="docs/studio/USER_GUIDE.md">使用教程</a> · <a href="https://tizhuang.qcscience.cc/skills/tizhuang-studio">官网详情</a></p>
+</td></tr></table>
 
 ## 开始使用
 
-**在线题库** · 在支持 Skill 的客户端安装：
+**在线题库**，在支持 Skill 的客户端安装：
 
 ```bash
 npx skills add weishao2/tizhuang-agent-skills --skill question-bank
 ```
 
-**本地题库** · 把下面这句话交给能读写本地文件的 Agent：
+**题库工作台**，复制给能操作本机文件的 Agent：
 
-> 请按 https://raw.githubusercontent.com/weishao2/tizhuang-agent-skills/main/docs/local-bank/INSTALL.md 帮我安装题庄本地题库。检查环境，安装 Skill 和 Obsidian 插件，创建空白题库；保留已有题目与配置，不改在线题库 Skill。安装后运行环境体检。
+> 请按 https://tizhuang.qcscience.cc/studio/INSTALL.md 安装题庄题库工作台。没装就安装，旧版备份后更新，同版跳过，保留我的题目和配置。创建独立环境并体检，成功后打开工作台；两个旧 Skill 和 Obsidian 题库不要动。
 
-[直接下载空白题库＋插件＋Skill](downloads/local-bank/v1.0.1/tizhuang-local-bank-starter-v1.0.1.zip) · [详细安装步骤](docs/local-bank/INSTALL.md)
+[下载工作台完整程序包 v1.0.0](downloads/studio/v1.0.0/tizhuang-studio-v1.0.0.zip) · [安装与更新](docs/studio/INSTALL.md) · [更新记录](skills/tizhuang-studio/CHANGELOG.md)
 
-普通用户可免费开始，网站取题按账户额度计算；本地保存和组卷不重复扣取题额度。PDF 识别需要具备文件与图像处理能力的 Agent，正式使用前由老师核对；第三方 Agent 或模型可能另行收费。
+程序包不附用户题库、Key 或演示题。初次启动创建空白工作区，Key 在页面连接。PDF 需具备图像能力的 Agent 识别，正式出卷前由老师核对。基础功能免费，网站取题按账户额度；第三方 Agent 或模型可能收费。
 
-<details>
-<summary>开发者：源码与目录</summary>
+## 页面与 Agent，一份组卷篮
+
+![工作台真实组卷界面](assets/skill-family/studio-basket.png)
+
+我的题目 → 组卷 → 我的试卷。页面选题，Agent 调整题序与分值；核对后导出学生卷、教师答案 Word 和打印稿。题目保存在本机，关闭浏览器后仍在；更换电脑可通过完整备份迁移。本版没有自动云同步。
+
+截图来自真实网页与 2026-11-08 独立录像工作台；自编演示题明确标注来源，待核对截图不代表老师已确认。
+
+## 历史版本
+
+[Obsidian 题库 tizhuang-local-bank](docs/local-bank/README.md) 已停止功能更新，原安装包、插件源码与使用说明保留。工作台独立安装，不自动覆盖旧 Skill 或旧题库；支持导入旧版导出的 v1 题目包。
 
 ```text
-skills/question-bank/          在线题库 Skill
-skills/tizhuang-local-bank/    本地题库 Skill
-plugins/obsidian/              本地题库的 Obsidian 插件
-docs/                        各技能介绍、安装与教程
-downloads/local-bank/        空白起步包
+skills/question-bank/       在线题库
+skills/tizhuang-studio/     题库工作台（主推本地技能）
+skills/tizhuang-local-bank/ Obsidian 历史版
+plugins/obsidian/           历史插件源码
+docs/                      各技能安装与教程
+downloads/                 已校验的版本包
 ```
 
-</details>
-
-Skill 适配器源码使用 [MIT License](LICENSE)；ClawHub 上架版本按该平台要求以 MIT-0 发布。题库内容及在线服务适用各自的服务规则。
+Skill 适配器源码使用 [MIT License](LICENSE)；题库内容及在线服务适用各自的服务规则。
