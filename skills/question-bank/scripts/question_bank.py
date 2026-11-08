@@ -429,7 +429,7 @@ def _builder_handoff_url(builder_url: str, payload: dict) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Call the question-bank API with a License or a 100-question trial."
+        description="Call the question-bank API with a License or an anonymous trial."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("onboarding")

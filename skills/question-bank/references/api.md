@@ -2,7 +2,7 @@
 
 ## Authentication and metering
 
-Send the License as `X-API-Key`, or an anonymous token as `X-Trial-Token` to the `/v1/trial/*` routes. Create an anonymous token with `POST /v1/trials`; it lasts 24 hours and serves at most 100 questions. Never put credentials in query parameters. Question list calls consume the number of parent questions returned; question detail consumes one. Metadata and quota calls are free.
+Send the License as `X-API-Key`, or an anonymous token as `X-Trial-Token` to the `/v1/trial/*` routes. Create an anonymous token with `POST /v1/trials`; it lasts 24 hours and serves at most 50 questions. Never put credentials in query parameters. Question list calls consume the number of parent questions returned; question detail consumes one. Metadata and quota calls are free.
 
 Cloud agents should generate one stable URL-safe identifier and send it as
 `X-Anonymous-Client-ID` when creating a trial. Cache and reuse both that ID and
@@ -11,11 +11,10 @@ the returned trial token. Do not rotate IDs to evade limits.
 Account registration is completed only on the website. The legacy
 `POST /v1/register` exchange is disabled; an Agent must never create standalone
 registered Keys by rotating anonymous identities. The free registered plan
-starts at 200 questions per day. Website accounts may increase this by successful referrals: +100 per
-invite until 400, then +50 until the configured hard limit
-(currently 600). After registration, the website presents the starting 200
+starts at 150 questions per day. The first six successful referrals add +25, +25, +10, +10, +10, +10 per day,
+up to the current hard limit of 240 per day. After registration, the website presents the starting 150
 questions as a “欢迎入庄” moment before offering referrals. Referrals are
-voluntary: skipping them does not reduce the 200-question allowance or remove
+voluntary: skipping them does not reduce the 150-question allowance or remove
 account features. Copying or opening a link earns nothing; only a genuine new
 account completing registration can add quota. Never describe the free plan as
 unlimited or an invitation as required.
@@ -148,7 +147,7 @@ back to the same-page sign-in or registration dialog. The public payload's
 registration URL includes `mode=register`, a safe `next` path back to the shared
 paper, and the owner's signed referral code.
 
-Registration reveals “欢迎入庄 / 200 题已到账” before the user continues to the
+Registration reveals “欢迎入庄 / 150 题已到账” before the user continues to the
 browser print dialog, so the page does not need to navigate away. It then offers
 an optional action to copy the new account's own invitation link. Signed-in
 accounts obtain that URL from `GET /v1/account/referral` in its `invite_url`

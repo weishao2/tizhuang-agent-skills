@@ -12,16 +12,16 @@ Use the backend as the only source of truth. Never invent, rewrite, reorder, or 
 Configure the service URL:
 
 - `QUESTION_SERVICE_URL`: optional API base URL. It defaults to `https://tizhuang.qcscience.cc/api`.
-- `QUESTION_SERVICE_LICENSE`: optional License/API Key. When omitted, the adapter automatically creates and locally caches a 24-hour anonymous trial for up to 100 questions.
+- `QUESTION_SERVICE_LICENSE`: optional License/API Key. When omitted, the adapter automatically creates and locally caches a 24-hour anonymous trial for up to 50 questions.
 - `QUESTION_SERVICE_ACCOUNT_TOKEN`: optional website session for listing and sharing saved papers. Store it locally only. Never put any credential in a URL, prompt, output, or log.
 
 Use any available Python 3 interpreter for the bundled script. On a repository checkout where `python` is not on `PATH`, prefer that checkout's `.venv\Scripts\python.exe` on Windows (or `.venv/bin/python` on macOS/Linux) instead of stopping the workflow.
 
-Do not ask a first-time user to register. Complete a useful action with the guest allowance first. Offer registration only when the guest allowance is exhausted or when the user asks to save, continue editing, share, or print a persistent/shared paper. State the tradeoff plainly: registration is still free, starts at 200 questions per day, and unlocks persistent papers. A temporary guest practice page can already be printed directly; do not use that print action as a registration gate. Never call the registered plan unlimited.
+Do not ask a first-time user to register. Complete a useful action with the guest allowance first. Offer registration only when the guest allowance is exhausted or when the user asks to save, continue editing, share, or print a persistent/shared paper. State the tradeoff plainly: registration is still free, starts at 150 questions per day, and unlocks persistent papers. A temporary guest practice page can already be printed directly; do not use that print action as a registration gate. Never call the registered plan unlimited.
 
-When registration succeeds, lead with the earned benefit: say “欢迎入庄”, confirm that the free account is active, and reveal the starting 200-question daily allowance before mentioning referrals. Offer inviting friends only as an optional next step. Give the user an equally clear path to continue without inviting anyone, and never imply that registration, the 200-question allowance, saving, sharing, or printing depends on sending an invitation.
+When registration succeeds, lead with the earned benefit: say “欢迎入庄”, confirm that the free account is active, and reveal the starting 150-question daily allowance before mentioning referrals. Offer inviting friends only as an optional next step. Give the user an equally clear path to continue without inviting anyone, and never imply that registration, the 150-question allowance, saving, sharing, or printing depends on sending an invitation.
 
-The website login session and the local adapter credential are separate. If registration reveals a first API Key and the user wants this local Skill to use the registered 200-question daily allowance, tell them to store that Key locally as `QUESTION_SERVICE_LICENSE`. Never ask them to paste the Key into chat. Without that local configuration, the adapter remains on its cached guest trial even if the same person is signed in on the website.
+The website login session and the local adapter credential are separate. If registration reveals a first API Key and the user wants this local Skill to use the registered 150-question daily allowance, tell them to store that Key locally as `QUESTION_SERVICE_LICENSE`. Never ask them to paste the Key into chat. Without that local configuration, the adapter remains on its cached guest trial even if the same person is signed in on the website.
 
 Run `scripts/question_bank.py onboarding` when the current guest/account benefits or website URLs are needed. Read `references/api.md` only for field meanings, filter behavior, or account-route details.
 
@@ -100,7 +100,7 @@ The returned URL carries a bounded, credential-free handoff in its URL fragment.
 
 Each newly generated handoff carries a fresh 32-character lowercase hexadecimal `handoff_id`. Treat it as a retry key, not a credential. If acceptance may have reached the server but its response was lost, retry the same URL and unchanged request: for the same account, the service returns the already-created paper and the Builder reloads its current fields and questions instead of creating or clearing another paper. Do not generate a new builder URL for that retry, because a new URL intentionally has a new ID and creates a new paper. Reusing one ID with changed creation fields is rejected with `409`; surface the conflict and ask the user to create a fresh handoff rather than silently altering or repeatedly retrying it.
 
-Explain that the website saves the accepted paper to the free account. After the user finishes, the website can create a public, immutable snapshot. The safe default is questions only with a visible watermark. For a newly created link, the owner may explicitly choose to include standard answers (including compound subquestion answers) and/or remove the watermark; analyses and explanations always remain private. These choices belong to that immutable link, so changing them creates a new share instead of silently changing an existing URL. Empty paper sections are omitted when a new snapshot is created and filtered again when an older snapshot is delivered, so they do not render as blank question groups. Anyone with the link can view the selected content. A guest who chooses print sees an on-page sign-in/free-registration dialog instead of being sent away; successful registration first reveals “欢迎入庄 / 200 题已到账”, then lets the user continue to the print dialog on the same page. A shared paper's registration context carries the owner's referral code and a return path to that paper. Credit is earned only after a genuine new account finishes registration, not when the link is opened or copied.
+Explain that the website saves the accepted paper to the free account. After the user finishes, the website can create a public, immutable snapshot. The safe default is questions only with a visible watermark. For a newly created link, the owner may explicitly choose to include standard answers (including compound subquestion answers) and/or remove the watermark; analyses and explanations always remain private. These choices belong to that immutable link, so changing them creates a new share instead of silently changing an existing URL. Empty paper sections are omitted when a new snapshot is created and filtered again when an older snapshot is delivered, so they do not render as blank question groups. Anyone with the link can view the selected content. A guest who chooses print sees an on-page sign-in/free-registration dialog instead of being sent away; successful registration first reveals “欢迎入庄 / 150 题已到账”, then lets the user continue to the print dialog on the same page. A shared paper's registration context carries the owner's referral code and a return path to that paper. Credit is earned only after a genuine new account finishes registration, not when the link is opened or copied.
 
 When a local account session is already configured, the Skill may list and share saved papers:
 
@@ -123,11 +123,11 @@ Before rotating or revoking, run `paper-shares` and match both the paper ID and 
 
 Use transparent benefit copy, never pressure or fake scarcity:
 
-- Guest: 100 questions over 24 hours, temporary practice pages with direct A4 printing, no saved paper library.
-- Registered: still free, 200 questions per day initially, saved/continued papers, sharing, and account-gated printing of public shared papers.
-- Successful invitations raise the daily limit: +100 per person until 400, then +50 per person up to 600 questions per day.
-- After a successful registration, say “欢迎入庄”, reveal the starting 200-question daily allowance first, then offer copying the referral link as an optional next action. Explain that the next genuine successful invite adds +100 per day at the first tier; never imply the bonus is granted for copying alone.
-- Keep invitations voluntary. Do not nag after the user declines, hide the continue path, manufacture urgency, or suggest that an invitation is required to keep the initial 200-question allowance or account features.
+- Guest: 50 questions over 24 hours, temporary practice pages with direct A4 printing, no saved paper library.
+- Registered: still free, 150 questions per day initially, saved/continued papers, sharing, and account-gated printing of public shared papers.
+- The first six successful invitations add +25, +25, +10, +10, +10, +10 questions per day, up to 240 questions per day.
+- After a successful registration, say “欢迎入庄”, reveal the starting 150-question daily allowance first, then offer copying the referral link as an optional next action. Explain that the next genuine successful invite adds +25 per day at the first tier; never imply the bonus is granted for copying alone.
+- Keep invitations voluntary. Do not nag after the user declines, hide the continue path, manufacture urgency, or suggest that an invitation is required to keep the initial 150-question allowance or account features.
 - Do not rotate anonymous client IDs, create fake accounts, or suggest referrals solely to evade limits.
 
 ## Handle Access
@@ -136,7 +136,7 @@ Use transparent benefit copy, never pressure or fake scarcity:
 - On `401` from an account or shared-paper print route, treat the website session as expired and offer same-page sign-in or free registration. Do not tell the user to configure a License for an account-session failure.
 - On a public share `404`, report that the link is unavailable, revoked, or its owner is inactive. On `410`, report that it expired. Do not retry either automatically.
 - On a Builder handoff `409`, the retry ID was reused with different creation content. Stop retrying that link and create a fresh handoff only after the user confirms the changed paper request.
-- On anonymous `429`, explain that the 100-question guest allowance is complete, registration remains free, and list the concrete added benefits before returning the registration URL.
+- On anonymous `429`, explain that the 50-question guest allowance is complete, registration remains free, and list the concrete added benefits before returning the registration URL.
 - On licensed `429`, report the remaining daily limit state and stop fetching more questions.
 - Use `quota` before a large request when quota pressure is likely.
 - Do not retry authorization or quota failures automatically.
@@ -157,3 +157,14 @@ Use transparent benefit copy, never pressure or fake scarcity:
 - Do not claim that textbook/knowledge handoff, referral return, share management, or any other local feature is publicly released until the corresponding public route is verified.
 - Describe an unaccepted Builder handoff as same-tab context retention, not account authorization. After explicit acceptance, the validated context belongs to the saved account paper and survives reload; do not imply that an unopened or unaccepted URL itself is synchronized across devices.
 - If a public command or page is unavailable, report that release gap. Do not substitute a simulated paper, referral award, share, or print authorization.
+
+
+## 团队版接入
+
+先通过团队管理员分享的邀请链接注册或登录并确认加入（成员链接默认 7 天有效、可多人使用）。在账户「Key 与接入」创建自己的 API Key，保存到本地 `QUESTION_SERVICE_LICENSE`；不要向聊天发送 Key。网站登录状态不会自动配置本地 Skill。未配置 Key 时仍是游客体验，不代表团队身份。
+
+网站、API、MCP、在线 Skill 使用同一团队共享日额度，并同时受个人日上限限制；查询 `/v1/quota` 时实际可取量为 `remaining` 与非空 `member_remaining` 的较小值。没有个人上限则使用团队剩余。成员上限跨 Key 聚合，额度不足不退回游客或个人免费额度、不自动重试。
+
+管理员在 `/account/team` 管理邀请和成员日上限；服务到期由平台 `/admin` 管理。被移除后原 Key 撤销，旧邀请不能自行恢复身份，需管理员允许重新加入；重入保留原个人上限。团队管理操作在网站完成，不属于 MCP 的取题工具。团队公共题库/协作试卷尚不提供。
+
+目录口径：公开 `/v1/meta/...` 用于兼容元数据查询；本地题库受保护的 `/v1/local-bank/meta/...` 下载范围按学段×学科共享开通，同范围重复使用不占新名额。本地存题、PDF 整理、分类和 Word 导出不消耗团队取题额度。
