@@ -54,7 +54,7 @@ def render(root,manifest,teacher=False):
     for group in groups(manifest):
         sections.append('<h2>'+html.escape(group['title'])+'</h2>')
         for item in group['items']:
-            q=item['question'];stem=body(root,q,q['content'],f'{item["number"]}. （{item["score"]:g} 分）')
+            q=item['question'];stem=body(root,q,content.stem_layout(root,q,paper=True),f'{item["number"]}. （{item["score"]:g} 分）')
             text='<section class="question"><div class="stem">'+stem+'</div>'
             if teacher:
                 answer=body(root,q,q.get('answer','')) or '<p>原题未提供答案</p>'

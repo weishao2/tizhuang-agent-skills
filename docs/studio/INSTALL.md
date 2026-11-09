@@ -1,9 +1,9 @@
-# 题庄题库工作台 1.0.0 · 官方安装入口
+# 题庄题库工作台 1.0.1 · 官方安装入口
 
-更新时间：2026-11-08。官方主页：https://tizhuang.qcscience.cc/skills/tizhuang-studio
+更新时间：2026-11-09。官方主页：https://tizhuang.qcscience.cc/skills/tizhuang-studio
 
-完整包：https://tizhuang.qcscience.cc/studio/tizhuang-studio-v1.0.0.zip
-SHA-256：`17f1bd62f99d27181b81bd87f583414554025378294c92dca465d27590493269`
+完整包：https://tizhuang.qcscience.cc/studio/tizhuang-studio-v1.0.1.zip
+SHA-256：`31b3601e32ec3b721ce4096d9d44eefd1ffb5362fc0ff6fb346ba1817fd8aa21`
 版本清单：https://tizhuang.qcscience.cc/studio/latest.json
 
 下载完整 ZIP，核对 SHA-256，再解压到临时程序目录。包根目录是 `tizhuang-studio/`，请先读其中 `SKILL.md`。不要执行来历不明的同名包。

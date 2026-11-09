@@ -11,7 +11,7 @@ import content, library, papers
 
 ROOT=Path(__file__).resolve().parents[1]
 API='https://tizhuang.qcscience.cc/api'
-VERSION='1.0.0'
+VERSION='1.0.1'
 
 class StudioError(Exception):
     def __init__(self,message,status=400):

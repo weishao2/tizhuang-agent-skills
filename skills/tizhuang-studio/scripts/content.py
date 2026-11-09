@@ -1,9 +1,12 @@
 """HTML/MathML renderer adapted from the existing plugin skill; independent copy."""
-import html,re,uuid,hashlib
+import html,re,uuid,hashlib,json
 from html.parser import HTMLParser
 import markdown
 from latex2mathml.converter import convert as mathml
 from pathlib import Path
+from lxml import etree, html as dom
+
+RIGHT_FIGURE = 'studio-figure-right'
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 
@@ -28,6 +31,13 @@ class SafeHTML(HTMLParser):
         if self.block or tag not in self.tags:
             return
         clean = []
+        attrs_by_key = dict(attrs)
+        if tag == 'img' and (
+            attrs_by_key.get('class') == RIGHT_FIGURE
+            or re.search(r'(?:^|;)\s*float\s*:\s*right\s*(?:;|$)', attrs_by_key.get('style') or '', re.I)
+        ):
+            # Preserve a known layout hint without accepting arbitrary source CSS.
+            clean.append(('class', RIGHT_FIGURE))
         for key, val in attrs:
             if key in {"alt", "title", "colspan", "rowspan"}:
                 clean.append((key, val or ""))
@@ -75,4 +85,51 @@ def render(text, fmt="markdown"):
     parser = SafeHTML()
     parser.feed(raw)
     return "".join(parser.out)
+
+
+def stem_layout(root, question, *, paper=False):
+    """Present source-marked figures without modifying the stored question."""
+    value = question.get('content', '')
+    if '<img' not in value or question.get('content_format', 'html') != 'html':
+        return value
+    if RIGHT_FIGURE not in value:
+        # Old versions stripped the hint. Recover it only when the local raw
+        # source reconstructs the same stem with the same local attachments.
+        ident = str(question.get('id', ''))
+        if not question.get('source', {}).get('external_id') or not re.fullmatch(r'\d{1,20}', ident):
+            return value
+        if not re.match(r'\s*(?:<(?:div|p)>\s*)*<img\b', value):
+            return value
+        try:
+            raw = json.loads((Path(root) / 'raw' / (ident + '.json')).read_text(encoding='utf-8'))
+            if not isinstance(raw, dict) or not isinstance(raw.get('content'), str):
+                return value
+            original = dom.fragment_fromstring(raw['content'], create_parent='div')
+            saved = dom.fragment_fromstring(value, create_parent='div')
+            original_images, saved_images = original.xpath('.//img'), saved.xpath('.//img')
+            if len(original_images) != len(saved_images):
+                return value
+            for old, local in zip(original_images, saved_images):
+                old.set('src', local.get('src', ''))
+            candidate = render(dom.tostring(original, encoding='unicode'), 'html')
+            if candidate.replace(f' class="{RIGHT_FIGURE}"', '') != value:
+                return value
+            value = candidate
+        except (OSError, ValueError, etree.LxmlError):
+            return value
+    if not paper or RIGHT_FIGURE not in value:
+        return value
+    body = dom.fragment_fromstring(value, create_parent='div')
+    for img in body.xpath(f'.//img[@class="{RIGHT_FIGURE}"]'):
+        parent = img.getparent()
+        # A source float at the start is an independent figure. A middle
+        # image can be meaningful in sequence, so only handle leading floats.
+        if img.getprevious() is not None or (parent.text or '').strip():
+            continue
+        if not parent.text_content().strip():
+            continue
+        parent.text = (parent.text or '') + (img.tail or '')
+        img.tail = None
+        parent.append(img)
+    return dom.tostring(body, encoding='unicode')
 

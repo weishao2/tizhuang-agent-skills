@@ -127,8 +127,8 @@ let initialTheme='light';try{initialTheme=localStorage.getItem('tizhuang:studio-
 setTheme(initialTheme);
 $('#theme-toggle').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 $('#skill-update').onclick=()=>{
-  showDialog('更新题库工作台',`<p>当前版本：<strong>1.0.0</strong></p><p>更新时仅替换工作台程序，保留整个题库目录、题目和组卷篮。</p><p>请让 Agent 按官方安装说明检查版本；同版跳过，旧版备份后更新。</p><button id="update-agent" class="primary">复制给 Agent 的更新指令</button><a href="https://github.com/weishao2/tizhuang-agent-skills" target="_blank" rel="noopener">查看题庄技能发布目录 ↗</a>`);
-  $('#update-agent').onclick=()=>{$('#library-dialog').close();promptAgent('检查 tizhuang-studio 的官方版本与更新说明。请读取 https://tizhuang.qcscience.cc/studio/INSTALL.md；当前为 1.0.0，如有新版本，仅更新这个工作台的程序文件，保留本工作区的全部题目、组卷篮、目录和配置，不修改 question-bank 与 tizhuang-local-bank。没有可验证的新版本时说明情况，不安装其他技能替代。');};
+  showDialog('更新题库工作台',`<p>当前版本：<strong>1.0.1</strong></p><p>更新时仅替换工作台程序，保留整个题库目录、题目和组卷篮。</p><p>请让 Agent 按官方安装说明检查版本；同版跳过，旧版备份后更新。</p><button id="update-agent" class="primary">复制给 Agent 的更新指令</button><a href="https://github.com/weishao2/tizhuang-agent-skills" target="_blank" rel="noopener">查看题庄技能发布目录 ↗</a>`);
+  $('#update-agent').onclick=()=>{$('#library-dialog').close();promptAgent('检查 tizhuang-studio 的官方版本与更新说明。请读取 https://tizhuang.qcscience.cc/studio/INSTALL.md；当前为 1.0.1，如有新版本，仅更新这个工作台的程序文件，保留本工作区的全部题目、组卷篮、目录和配置，不修改 question-bank 与 tizhuang-local-bank。没有可验证的新版本时说明情况，不安装其他技能替代。');};
 };
 // The first state request can finish before this final deferred script loads.
 if(state)render();

@@ -1,12 +1,15 @@
-import copy,sys,tempfile,unittest
+import copy,json,sys,tempfile,unittest
+from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
 from lxml import html
 from docx import Document
+from PIL import Image
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from paper_layout import groups,grouped_manifest
 from paper_html import render
 from word_export import export_docx
+from content import digest, stem_layout
 
 class PaperLayoutTests(unittest.TestCase):
     def manifest(self):
@@ -38,5 +41,31 @@ class PaperLayoutTests(unittest.TestCase):
         doc=html.fromstring(render(Path('.'),m,False))
         self.assertEqual(len(doc.xpath('//*[@class="options cols-4"]/div')),4)
         self.assertEqual(len(doc.xpath('//mfrac')),1)
+
+    def test_legacy_source_float_recovers_layout_without_rewriting_stem(self):
+        m=self.manifest();m['items']=m['items'][:1]
+        q=m['items'][0]['question']
+        image=BytesIO();Image.new('RGB',(180,100)).save(image,format='PNG')
+        data=image.getvalue();sha=digest(data);src=f'Assets/{sha}.png'
+        q.update(content=f'<div><img src="{src}">根据图象回答。</div>',
+                 source={'external_id':'1'},assets=[{'path':src,'sha256':sha}])
+        before=copy.deepcopy(q)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for name in ('Assets','raw'):(root/name).mkdir()
+            (root/src).write_bytes(data)
+            (root/'raw/1.json').write_text(json.dumps({
+                'content':'<img src="https://example.test/a.png" style="float:right">根据图象回答。'
+            }),encoding='utf-8')
+            self.assertIn('class="studio-figure-right"',stem_layout(root,q))
+            page=html.fromstring(render(root,m))
+            picture=page.xpath('//section//img')[0]
+            self.assertIn('根据图象回答。',picture.xpath('preceding::text()'))
+            file=root/'out.docx';export_docx(SimpleNamespace(root=root),m,file)
+            body=Document(file).element.body.xml
+            self.assertLess(body.index('根据图象回答。'),body.index('<w:drawing'))
+            edited={**q,'content':q['content'].replace('图象','坐标')}
+            self.assertEqual(stem_layout(root,edited),edited['content'])
+        self.assertEqual(q,before)
 
 if __name__=='__main__':unittest.main()

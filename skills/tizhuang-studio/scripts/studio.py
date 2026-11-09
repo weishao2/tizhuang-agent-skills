@@ -53,7 +53,14 @@ def serve(root,port):
                 parsed=urlparse(self.path); path=parsed.path
                 self.check(path!='/')
                 if path=='/': return self.send((ROOT/'assets/web/index.html').read_bytes(),mime='text/html; charset=utf-8',cookie=True)
-                if path=='/api/state': return self.send(workspace.state())
+                if path=='/api/state':
+                    state=workspace.state()
+                    if parse_qs(parsed.query).get('view')==['web']:
+                        from content import stem_layout
+                        for question in state['questions']:
+                            display=stem_layout(workspace.root,question)
+                            if display!=question.get('content',''):question['display_content']=display
+                    return self.send(state)
                 if path=='/api/backups':
                     return self.send([{'id':p.stem,'size':p.stat().st_size,'url':'/backups/'+p.name} for p in sorted((workspace.root/'backups').glob('*.zip'),reverse=True) if re.fullmatch(r'\d{8}-\d{6}-[a-f0-9]{8}',p.stem)])
                 if path=='/api/quota': return self.send(workspace.service.quota())

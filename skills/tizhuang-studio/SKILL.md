@@ -2,7 +2,7 @@
 name: tizhuang-studio
 description: 题庄题库工作台。在 Agent 中找真实题目、保存本地题库、按知识点和章节分类、导入 PDF、核对编辑、组卷导出 Word、备份迁移；Agent 与网页共用题库和组卷篮，不依赖 Obsidian。用户指定题庄 2.0、工作台或在 Agent 中保存组卷时使用；两个既有技能仍独立使用。
 metadata:
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # 题庄 · 题库工作台

@@ -3,6 +3,7 @@ from io import BytesIO
 from pathlib import Path
 import re
 from paper_layout import groups, needs_space
+from content import stem_layout
 
 from docx import Document
 from docx.shared import Mm, Pt, RGBColor
@@ -270,7 +271,7 @@ def export_docx(bank, manifest, destination, teacher=False, answer_space_mm=25):
             label.paragraph_format.keep_with_next = True
             writer = ContentWriter(document, bank, q)
             body_start = len(document.paragraphs)
-            writer.write(q['content'], q['content_format'], f'第 {item["number"]} 题 · 题干')
+            writer.write(stem_layout(bank.root, q, paper=True), q['content_format'], f'第 {item["number"]} 题 · 题干')
             # Keep a normal-sized stem and its figure/options on the same page.
             # Word can still split content exceeding a whole page.
             body_paragraphs = document.paragraphs[body_start:]

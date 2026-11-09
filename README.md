@@ -16,7 +16,7 @@
 <p><strong>好题留下来，备课接着用。</strong></p>
 <a href="skills/tizhuang-studio/README.md"><img src="assets/skill-family/studio-library.png" alt="工作台真实界面：知识点树、标签与本机保存的题目" width="100%" /></a>
 <ul><li>网站取题、PDF 导入、自编题，保存到自己的电脑。</li><li>知识点树、教材章节、标签和搜索，题目反复复用。</li><li>Agent 与页面共用组卷篮，调序改分，导出 Word 双版。</li></ul>
-<p><code>tizhuang-studio</code> · <strong>1.0.0</strong> · 2026-11-08 · 无需 Obsidian</p>
+<p><code>tizhuang-studio</code> · <strong>1.0.1</strong> · 2026-11-09 · 无需 Obsidian</p>
 <p><a href="docs/studio/INSTALL.md">介绍与安装 →</a> · <a href="docs/studio/USER_GUIDE.md">使用教程</a> · <a href="https://tizhuang.qcscience.cc/skills/tizhuang-studio">官网详情</a></p>
 </td></tr></table>
 
@@ -32,7 +32,7 @@ npx skills add weishao2/tizhuang-agent-skills --skill question-bank
 
 > 请按 https://tizhuang.qcscience.cc/studio/INSTALL.md 安装题庄题库工作台。没装就安装，旧版备份后更新，同版跳过，保留我的题目和配置。创建独立环境并体检，成功后打开工作台；两个旧 Skill 和 Obsidian 题库不要动。
 
-[下载工作台完整程序包 v1.0.0](downloads/studio/v1.0.0/tizhuang-studio-v1.0.0.zip) · [安装与更新](docs/studio/INSTALL.md) · [更新记录](skills/tizhuang-studio/CHANGELOG.md)
+[下载工作台完整程序包 v1.0.1](downloads/studio/v1.0.1/tizhuang-studio-v1.0.1.zip) · [安装与更新](docs/studio/INSTALL.md) · [更新记录](skills/tizhuang-studio/CHANGELOG.md)
 
 程序包不附用户题库、Key 或演示题。初次启动创建空白工作区，Key 在页面连接。PDF 需具备图像能力的 Agent 识别，正式出卷前由老师核对。基础功能免费，网站取题按账户额度；第三方 Agent 或模型可能收费。
 
