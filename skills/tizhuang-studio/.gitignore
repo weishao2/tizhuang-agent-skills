@@ -1,7 +1,0 @@
-__pycache__/
-.venv/
-.runtime/
-*.sqlite3*
-session.json
-.env*
-workspace/

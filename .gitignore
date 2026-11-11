@@ -12,3 +12,9 @@ dist/
 
 plugins/obsidian/node_modules/
 .runtime/
+
+# Temporarily withdrawn Studio distribution remains local.
+skills/tizhuang-studio/
+docs/studio/
+downloads/studio/
+assets/skill-family/studio-*
